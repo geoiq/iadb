@@ -1,0 +1,165 @@
+
+/* the overlayed element */
+.simple_overlay {
+	
+	/* must be initially hidden */
+	display:none;
+	
+	/* place overlay on top of other elements */
+	z-index:10000;
+	
+	/* styling */
+	background-color:#333;
+	
+	width:254px;	
+	min-height:321px;
+	border:0px solid #666;
+	
+	/* CSS3 styling for latest browsers */
+	-moz-box-shadow:0 0 90px 5px #000;
+	-webkit-box-shadow: 0 0 90px #000;	
+}
+
+/* close button positioned on upper right corner */
+.simple_overlay .close {
+	background-image:url(../images/overlay/close.png);
+	background-repeat: no-repeat;
+	position:absolute;
+right: -24px;
+top: -7px;
+	cursor:pointer;
+	height:35px;
+	width:35px;
+}
+
+/* some styling for triggers */
+	#triggers {
+		text-align:center;
+	}
+	
+	#triggers img {
+		cursor:pointer;
+		margin:0 5px;
+		border:0px;
+		padding:2px;
+	
+		-moz-border-radius:4px;
+		-webkit-border-radius:4px;
+		
+	}	
+	
+	
+	/* styling for elements inside overlay */
+	.details {
+		position:absolute;
+		top:15px;
+		right:15px;
+		font-size:11px;
+		color:#fff;
+		width:150px;
+	}
+	
+	.details h3 {
+		color:#aba;
+		font-size:15px;
+		margin:0 0 -10px 0;
+	}
+	
+	.popup2btns {
+	background: url(../images/overlay/popup2btns.png) no-repeat 0 0;
+	}
+	
+	.simple_overlay .featurednumber {
+	color: #000000;
+	font-size: 12px;
+	text-align: center;
+	padding: 10px 0;
+	margin: 0 10px;
+	border-bottom: 1px dotted #5a5b5d;
+	}
+	
+	.simple_overlay .popuptitle {
+	font-size: 11px;
+	color: #5a5b5d;
+	font-weight: 800;
+	font-family: Verdana;
+	float: left;
+display: block;
+width: 40%;
+margin-left: 10px;
+padding-top: 5px;
+	}
+	
+	.simple_overlay img.popimage {
+	float: right;
+	padding: 5px 10px 5px 5px;
+	}
+	
+	.simple_overlay .popupdesc {
+	font-size: 11px;
+	color: #5a5b5d;
+	font-weight: 500;
+	font-family: Verdana;
+	clear: left;
+float: left;
+padding: 5px 10px;
+border-top: 1px dotted #5A5B5D;
+margin-bottom: 5px;
+	}
+	.simple_overlay #popup-menu ul {
+	padding-left: 25px;
+	}
+	.simple_overlay #popup-menu li {
+	width: 32px;
+	margin: 0 5px;
+	}
+	.simple_overlay #popup-menu li:last-child {
+	width: 40px;
+	}	
+	.simple_overlay #popup-menu li a {
+	font-size: 10px;
+	color: #dbdcdd;
+	height: 15px;
+	}	
+	
+	.simple_overlay #popup-menu .news {
+	background: url(../images/overlay/popnews.jpg) no-repeat 50% 25px;
+	}
+	.simple_overlay #popup-menu .videos {
+	background: url(../images/overlay/popvideo.jpg) no-repeat 50% 25px;
+	}
+	.simple_overlay #popup-menu .photos {
+	background: url(../images/overlay/popphotos.jpg) no-repeat 50% 25px;
+	}
+	.simple_overlay #popup-menu .documents {
+	background: url(../images/overlay/popdoc.jpg) no-repeat 50% 25px;
+	}
+	
+	.simple_overlay .popupbtns {
+	position: absolute;
+bottom: 0;
+height: 51px;
+width: 100%;
+}
+
+.simple_overlay .popupbtns a {
+display: block;
+float: left;
+width: 50%;
+height: 51px
+}
+.simple_overlay .popupbtns a.related_projects:hover {
+background: url(../images/overlay/related-projects.png) no-repeat 0 0;
+}
+.simple_overlay .popupbtns a.related_outputs:hover {
+background: url(../images/overlay/related-outputs.png) no-repeat -2px -1px;
+}
+
+.simple_overlay .leftarrow {
+left: 10px;
+position: absolute;
+}
+.simple_overlay .rightarrow {
+right: 10px;
+position: absolute;
+}
