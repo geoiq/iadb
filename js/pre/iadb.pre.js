@@ -8,6 +8,8 @@
 			projects: 'Projects',
 			sectors: 'Sectors',
 			sector: 'Sector',
+			priorities: 'Themes',
+			priority: 'Theme',
 			results: 'Results',
 			dataLayers: 'Data Layers',
 			back: 'Back',
@@ -47,13 +49,16 @@
 			PA: 'Paraguay',
 			BO: 'Bolivia',
 			UR: 'Uruguay',
-			selectProject: 'Select a project in this location'
+			selectProject: 'Select a project in this location',
+			CC: 'Environmental Sustainability'
 		},
 		es: propotyped({
 			selectCountry: 'Seleccione el país',
 			projects: 'Proyectos',
 			sectors: 'Sectores',
 			sector: 'Sector',
+			priorities: 'Temas',
+			priority: 'Tema',
 			results: 'Resultados',
 			dataLayers: 'Capas de datos',
 			back: 'Volver',
@@ -93,13 +98,16 @@
 			PA: 'Paraguay',
 			BO: 'Bolivia',
 			UR: 'Uruguay',
-			selectProject: 'Seleccione un proyecto en esta ubicación'
+			selectProject: 'Seleccione un proyecto en esta ubicación',
+			CC: 'Sostenibilidad Ambiental'
 		}, en),
 		fr: propotyped({
 			selectCountry: 'Choisir le pays',
 			projects: 'Projets',
 			sectors: 'Secteurs',
 			sector: 'Secteur',
+			priorities: 'Thèmes',
+			priority: 'Thème',
 			results: 'Résultats',
 			dataLayers: 'Couches de données',
 			back: 'Retour',
@@ -139,13 +147,16 @@
 			PA: 'Paraguay',
 			BO: 'Bolivie',
 			UR: 'Uruguay',
-			selectProject: 'Selecione um projeto neste local'
+			selectProject: 'Selecione um projeto neste local',
+			CC: 'Durabilité Environnementale'
 		}, en),
 		pt: propotyped({
 			selectCountry: 'Selecione um país',
 			projects: 'Projetos',
 			sectors: 'Setores',
 			sector: 'Setor',
+			priorities: 'Temas',
+			priority: 'Tema',
 			results: 'Resultados',
 			dataLayers: 'Camada de dados',
 			back: 'Voltar',
@@ -185,7 +196,8 @@
 			PA: 'Paraguai',
 			BO: 'Bolívia',
 			UR: 'Uruguai',
-			selectProject: 'Sélectionnez un projet dans ce lieu'
+			selectProject: 'Sélectionnez un projet dans ce lieu',
+			CC: 'Sustentabilidade Ambiental'
 		}, en)
 	};
 

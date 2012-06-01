@@ -28,6 +28,7 @@
 			crossroads.addRoute('iadb/{language}/{country}/{zoom}/{centerLat}/{centerLon}/{basemap}/result/{resultId}').matched.add(function (language, country, zoom, centerLat, centerLon, basemap, resultId) { this.dispatch(language, country, zoom, centerLat, centerLon, basemap, vm.pickResult, vm, resultId) }, this);
 			crossroads.addRoute('iadb/{language}/{country}/{zoom}/{centerLat}/{centerLon}/{basemap}/all-projects').matched.add(function (language, country, zoom, centerLat, centerLon, basemap) { this.dispatch(language, country, zoom, centerLat, centerLon, basemap, vm.unpickProject, vm) }, this);
 			crossroads.addRoute('iadb/{language}/{country}/{zoom}/{centerLat}/{centerLon}/{basemap}/all-sectors').matched.add(function (language, country, zoom, centerLat, centerLon, basemap) { this.dispatch(language, country, zoom, centerLat, centerLon, basemap, vm.unpickSector, vm) }, this);
+			crossroads.addRoute('iadb/{language}/{country}/{zoom}/{centerLat}/{centerLon}/{basemap}/all-priorities').matched.add(function (language, country, zoom, centerLat, centerLon, basemap) { this.dispatch(language, country, zoom, centerLat, centerLon, basemap, vm.unpickPriority, vm) }, this);
 			crossroads.addRoute('iadb/{language}/{country}/{zoom}/{centerLat}/{centerLon}/{basemap}/all-results').matched.add(function (language, country, zoom, centerLat, centerLon, basemap) { this.dispatch(language, country, zoom, centerLat, centerLon, basemap, vm.unpickOutput, vm) }, this);
 			crossroads.addRoute('iadb/{language}/{country}/{zoom}/{centerLat}/{centerLon}/{basemap}/filter/{mode}/{filter}').matched.add(function (language, country, zoom, centerLat, centerLon, basemap, mode, filter) { this.dispatch(language, country, zoom, centerLat, centerLon, basemap, vm.applyFilters, vm, mode, filter) }, this);
 
@@ -36,9 +37,11 @@
 			vmSignals.resultPicked.add(function (resultId) { this.setHash('result/' + resultId); }, this);
 			vmSignals.projectUnpicked.add(function () { this.setHash('all-projects'); }, this);
 			vmSignals.sectorUnpicked.add(function () { this.setHash('all-sectors'); }, this);
+			vmSignals.priorityUnpicked.add(function () { this.setHash('all-priorities'); }, this);
 			vmSignals.outputUnpicked.add(function () { this.setHash('all-results'); }, this);
 			vmSignals.filterResults.add(function (filter) { this.setHash('filter/results/' + filter); }, this);
 			vmSignals.filterSectors.add(function (filter) { this.setHash('filter/sectors/' + filter); }, this);
+			vmSignals.filterPriorities.add(function (filter) { this.setHash('filter/priorities/' + filter); }, this);
 			vmSignals.filterProjects.add(function (filter) { this.setHash('filter/projects/' + filter); }, this);
 			vmSignals.pickCountry.add(function (country) {
 				this.country = country;

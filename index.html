@@ -1,402 +1,451 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" style="height: 100%;">
 <head runat="server">
-  <meta http-equiv="cache-control" content="no-cache" />
-  <meta http-equiv="pragma" content="no-cache" />
-  <meta http-equiv="expires" content="-1" />
-  <title>IADB Map prototype</title>
-  <link href="style/style.css" rel="Stylesheet" type="text/css" />
-  <script type="text/javascript" src="http://iadb.geoiq.com/javascripts/f1.api.js"></script>
-  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4ea86ca44f6327e5"></script>
-  <script type="text/javascript" src="js/pre/knockout-2.0.0.js"></script>
-  <script type="text/javascript" src="js/pre/iadb.pre.js"></script>
-  <script type="text/javascript" src="js/pre/linq.js"></script>
-  <script type="text/javascript" src="js/pre/signals.js"></script>
-  <!--    <script type="text/javascript" src="js/production/pre-min.js"></script>-->
-  <script type="text/javascript">
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="-1" />
+<title>IADB Map prototype</title>
+<link href="style/style.css" rel="Stylesheet" type="text/css" />
+<script type="text/javascript"
+	src="http://iadb.geoiq.com/javascripts/f1.api.js"></script>
+<script type="text/javascript"
+	src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4ea86ca44f6327e5"></script>
+<script type="text/javascript" src="js/pre/knockout-2.0.0.js"></script>
+<script type="text/javascript" src="js/pre/iadb.pre.js"></script>
+<script type="text/javascript" src="js/pre/linq.js"></script>
+<script type="text/javascript" src="js/pre/signals.js"></script>
+<!--    <script type="text/javascript" src="js/production/pre-min.js"></script>-->
+<script type="text/javascript">
   var lang = new iadb.Lang(iadb.getCurrentLanguage());
   </script>
 </head>
 <body style="height: 100%; overflow: hidden;" scroll="no">
-  <div class="plate topmost" id="share">
-    <div style="background: transparent url(../images/slider/popup-bg.png) repeat 0 0; padding: 5px;" class="addthis_toolbox addthis_default_style addthis_32x32_style">
-      <a class="addthis_button_preferred_1"></a>
-      <a class="addthis_button_preferred_2"></a>
-      <a class="addthis_button_preferred_3"></a>
-      <a class="addthis_button_preferred_4"></a>
-      <a class="addthis_button_compact"></a>
-      <a class="addthis_counter addthis_bubble_style"></a>
-    </div>
-  </div>
-  <div class="plate on-stripe" id="projects">
-    <div class="content">
-      <div style="padding-right: 16px;">
-        <table>
-          <thead>
-            <tr>
-              <th style="width: 1%">
-              </th>
-              <th style="width: 15%" data-bind="text: $root.lang.projectN">
-                <script type="text/javascript">                iadb.write(lang, 'projectN');</script>
-              </th>
-              <th style="width: 60%" data-bind="text: $root.lang.projectName">
-                <script type="text/javascript">                iadb.write(lang, 'projectName');</script>
-              </th>
-              <th style="width: 24%" class="middle">
-                <span data-bind="text: $root.lang.sector"><script type="text/javascript">                                                          iadb.write(lang, 'sector');</script></span> <input size=15 type="text" id="project-search" data-bind="value: search, valueUpdate: 'afterkeydown' " />
-                <img src="/images/overlay/close.png" data-bind="click: search.bind($data, ''), visible: search().length > 0" style="cursor: pointer" />
-              </th>
-            </tr>
-            <tr>
-              <td colspan="4">
-                <div class="delimiter"></div>
-              </td>
-            </tr>
-          </thead>
-          <tbody data-bind="visible: hasSomeProjects">
-            <!-- ko foreach: projects -->
-            <tr data-bind="visible: visible, css: {even: even}">
-              <td class="first">
-                <input type="checkbox" data-bind="checked:picked, attr: {id: 'proj' + pid}" />
-              </td>
-              <td class="nowrap">
-                <label class="clickable" data-bind="text: id, attr: {'for': 'proj' + pid}"></label>
-              </td>
-              <td>
-                <label class="clickable" data-bind="text: name, attr: {'for': 'proj' + pid}"></label>
-              </td>
-              <td>
-                <label class="clickable" data-bind="text: sector, attr: {'for': 'proj' + pid}"></label>
-              </td>
-            </tr>
-            <!-- /ko -->
-          </tbody>
-          <tfoot data-bind="visible: !(hasSomeProjects())">
-            <tr>
-              <td colspan="4" style="color: red" data-bind="text: $root.lang.noProjectsFound">
-                <script type="text/javascript">                iadb.write(lang, 'noProjectsFound');</script>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-    </div>
-  </div>
-  <div class="plate on-stripe" id="countries">
-    <div class="content">
-      <div>
-        <table style="width: 120px">
-          <tbody data-bind="template:{name:'countryMenuItem',foreach: countries}">
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-  <div class="plate on-stripe" id="sectors">
-    <div class="content" style="padding-right: 20px">
-      <div>
-        <table>
-          <thead>
-            <tr>
-              <td colspan=2>
-                <input type="checkbox" data-bind="checked: allSectors" id="allSectors" /> <label class="clickable" for="allSectors" data-bind="text: $root.lang.selectAll">
-                  <script type="text/javascript">                  iadb.write(lang, 'selectAll');</script>
-                </label>
-              </td>
-            </tr>
-            <tr height="7px">
-              <td colspan=2>
-                <div class="delimiter"></div>
-              </td>
-            </tr>
-          </thead>
-          <tbody data-bind="template:{name:'sectorMenuItem',foreach: sectors}">
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-  <div class="plate on-stripe" id="outputs">
-    <div class="content" style="padding-right: 20px; min-width: 400px">
-      <div>
-        <table style="width: 100%">
-          <thead>
-            <tr>
-              <td colspan=2>
-                <input type="checkbox" data-bind="checked: allOutputs" id="allOutputs" /> <label class="clickable" for="allOutputs" data-bind="text: $root.lang.selectAll">
-                  <script type="text/javascript">                  iadb.write(lang, 'selectAll');</script>
-                </label>
-              </td>
-            </tr>
-            <tr height="7px">
-              <td colspan=2>
-                <div class="delimiter"></div>
-              </td>
-            </tr>
-            <thead>
-              <tbody data-bind="template:{name:'outputMenuItem',foreach: outputs}">
-              </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-  <div class="plate on-stripe" id="basemaps">
-    <div class="content">
-      <table>
-        <tbody>
-          <!-- ko foreach: basemaps -->
-          <tr>
-            <td>
-              <div class="middle"><input type="radio" name="basemap" data-bind="value: id, checked: $root.pickedBasemap, attr: {id: 'basemap' + id}" /> <label class="clickable" data-bind="text: name, attr: {'for': 'basemap' + id}"></label></div>
-            </td>
-          </tr>
-          <!-- /ko -->
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div class="plate on-stripe" id="layers">
-    <div class="content" style="min-width: 310px">
-      <table style="width: 100%">
-        <thead>
-          <tr>
-            <td>
-              <div class="middle"><input type="checkbox" data-bind="checked: allLayers" id="allLayers" /> <label class="clickable" for="allLayers" data-bind="text: $root.lang.selectAll">
-                <script type="text/javascript">                iadb.write(lang, 'selectAll');</script>
-              </label></div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="delimiter"></div>
-            </td>
-          </tr>
-        </thead>
-        <tbody data-bind="template:{name:'layerMenuItem',foreach: layers}">
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div id="stripe" class="canvas topmost">
-    <div class="page shell">
-      <!--            <a class="tight" data-bind="menu: {id: 'countries', offset: 0, attachment:'anchorleft'}">
+<div class="plate topmost" id="share">
+<div
+	style="background: transparent url(../images/slider/popup-bg.png) repeat 0 0; padding: 5px;"
+	class="addthis_toolbox addthis_default_style addthis_32x32_style">
+<a class="addthis_button_preferred_1"></a> <a
+	class="addthis_button_preferred_2"></a> <a
+	class="addthis_button_preferred_3"></a> <a
+	class="addthis_button_preferred_4"></a> <a
+	class="addthis_button_compact"></a> <a
+	class="addthis_counter addthis_bubble_style"></a></div>
+</div>
+<div class="plate on-stripe" id="projects">
+<div class="content">
+<div style="padding-right: 16px;">
+<table>
+	<thead>
+		<tr>
+			<th style="width: 1%"></th>
+			<th style="width: 15%" data-bind="text: $root.lang.projectN"><script
+				type="text/javascript">                iadb.write(lang, 'projectN');</script>
+			</th>
+			<th style="width: 60%" data-bind="text: $root.lang.projectName">
+			<script type="text/javascript">                iadb.write(lang, 'projectName');</script>
+			</th>
+			<th style="width: 24%" class="middle"><span
+				data-bind="text: $root.lang.sector"><script
+				type="text/javascript">                                                          iadb.write(lang, 'sector');</script></span>
+			<input size=15 type="text" id="project-search"
+				data-bind="value: search, valueUpdate: 'afterkeydown' " /> <img
+				src="/images/overlay/close.png"
+				data-bind="click: search.bind($data, ''), visible: search().length > 0"
+				style="cursor: pointer" /></th>
+		</tr>
+		<tr>
+			<td colspan="4">
+			<div class="delimiter"></div>
+			</td>
+		</tr>
+	</thead>
+	<tbody data-bind="visible: hasSomeProjects">
+		<!-- ko foreach: projects -->
+		<tr data-bind="visible: visible, css: {even: even}">
+			<td class="first"><input type="checkbox"
+				data-bind="checked:picked, attr: {id: 'proj' + pid}" /></td>
+			<td class="nowrap"><label class="clickable"
+				data-bind="text: id, attr: {'for': 'proj' + pid}"></label></td>
+			<td><label class="clickable"
+				data-bind="text: name, attr: {'for': 'proj' + pid}"></label></td>
+			<td><label class="clickable"
+				data-bind="text: sector, attr: {'for': 'proj' + pid}"></label></td>
+				<td><label class="clickable"
+					data-bind="text: priority, attr: {'for': 'proj' + pid}"></label></td>
+		</tr>
+		<!-- /ko -->
+	</tbody>
+	<tfoot data-bind="visible: !(hasSomeProjects())">
+		<tr>
+			<td colspan="4" style="color: red"
+				data-bind="text: $root.lang.noProjectsFound"><script
+				type="text/javascript">                iadb.write(lang, 'noProjectsFound');</script>
+			</td>
+		</tr>
+	</tfoot>
+</table>
+</div>
+</div>
+</div>
+<div class="plate on-stripe" id="countries">
+<div class="content">
+<div>
+<table style="width: 120px">
+	<tbody data-bind="template:{name:'countryMenuItem',foreach: countries}">
+	</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="plate on-stripe" id="sectors">
+<div class="content" style="padding-right: 20px">
+<div>
+<table>
+	<thead>
+		<tr>
+			<td colspan=2><input type="checkbox"
+				data-bind="checked: allSectors" id="allSectors" /> <label
+				class="clickable" for="allSectors"
+				data-bind="text: $root.lang.selectAll"> <script
+				type="text/javascript">                  iadb.write(lang, 'selectAll');</script>
+			</label></td>
+		</tr>
+		<tr height="7px">
+			<td colspan=2>
+			<div class="delimiter"></div>
+			</td>
+		</tr>
+	</thead>
+	<tbody data-bind="template:{name:'sectorMenuItem',foreach: sectors}">
+	</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="plate on-stripe" id="priorities">
+<div class="content" style="padding-right: 20px">
+<div>
+<table>
+	<thead>
+		<tr>
+			<td colspan=2><input type="checkbox"
+				data-bind="checked: allPriorities" id="allPriorities" /> <label
+				class="clickable" for="allPriorities"
+				data-bind="text: $root.lang.selectAll"> <script
+				type="text/javascript">                  iadb.write(lang, 'selectAll');</script>
+			</label></td>
+		</tr>
+		<tr height="7px">
+			<td colspan=2>
+			<div class="delimiter"></div>
+			</td>
+		</tr>
+	</thead>
+	<tbody data-bind="template:{name:'priorityMenuItem',foreach: priorities}">
+	</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="plate on-stripe" id="outputs">
+<div class="content" style="padding-right: 20px; min-width: 400px">
+<div>
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<td colspan=2><input type="checkbox"
+				data-bind="checked: allOutputs" id="allOutputs" /> <label
+				class="clickable" for="allOutputs"
+				data-bind="text: $root.lang.selectAll"> <script
+				type="text/javascript">                  iadb.write(lang, 'selectAll');</script>
+			</label></td>
+		</tr>
+		<tr height="7px">
+			<td colspan=2>
+			<div class="delimiter"></div>
+			</td>
+		</tr>
+		<thead>
+			<tbody data-bind="template:{name:'outputMenuItem',foreach: outputs}">
+			</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="plate on-stripe" id="basemaps">
+<div class="content">
+<table>
+	<tbody>
+		<!-- ko foreach: basemaps -->
+		<tr>
+			<td>
+			<div class="middle"><input type="radio" name="basemap"
+				data-bind="value: id, checked: $root.pickedBasemap, attr: {id: 'basemap' + id}" />
+			<label class="clickable"
+				data-bind="text: name, attr: {'for': 'basemap' + id}"></label></div>
+			</td>
+		</tr>
+		<!-- /ko -->
+	</tbody>
+</table>
+</div>
+</div>
+<div class="plate on-stripe" id="layers">
+<div class="content" style="min-width: 310px">
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<td>
+			<div class="middle"><input type="checkbox"
+				data-bind="checked: allLayers" id="allLayers" /> <label
+				class="clickable" for="allLayers"
+				data-bind="text: $root.lang.selectAll"> <script
+				type="text/javascript">                iadb.write(lang, 'selectAll');</script>
+			</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div class="delimiter"></div>
+			</td>
+		</tr>
+	</thead>
+	<tbody data-bind="template:{name:'layerMenuItem',foreach: layers}">
+	</tbody>
+</table>
+</div>
+</div>
+<div id="stripe" class="canvas topmost">
+<div class="page shell"><!--            <a class="tight" data-bind="menu: {id: 'countries', offset: 0, attachment:'anchorleft'}">
 					<span data-bind="text: $root.lang.selectCountry"><script type="text/javascript">	
                         iadb.write(lang, 'selectCountry');</script></span>
 					<div class="pin">
 						<div></div>
 					</div>
 			</a>-->
-      <div class="clear"></div>
-      <div class="perl">
-        <a class="tight" data-bind="css:{active: areProjectsActive }, event:{mouseover:function(){$data.bottomPanel.showSectors();},mouseout:function(){if ($data.pickedProject()!=null){$data.bottomPanel.showProject();}}},menu: {id: 'projects', offset: 0, attachment:'anchorright', focus: 'project-search' }, click: unpickProject">
-          <span data-bind="text: $root.lang.projects">
-            <script type="text/javascript">            iadb.write(lang, 'projects');</script>
-          </span>
-          <div class="pin">
-            <div></div>
-          </div>
-        </a>
-        <a class="tight" data-bind="css:{active: areSectorsActive }, event:{mouseover:function(){$data.bottomPanel.showSectors()},mouseout:function(){if ($data.pickedProject()!=null){$data.bottomPanel.showProject();}}},menu: {id: 'sectors', offset: -20}, click: unpickSector">
-          <span data-bind="text: $root.lang.sectors">
-            <script type="text/javascript">            iadb.write(lang, 'sectors');</script>
-          </span>
-          <div class="pin">
-            <div></div>
-          </div>
-        </a>
-        <a class="tight" data-bind="css:{active: areResultsActive }, event:{mouseover:function(){$data.bottomPanel.showOutputs()},mouseout:function(){if ($data.pickedProject()!=null){$data.bottomPanel.showProject()}}},menu: {id: 'outputs', attachment:'anchorright'}, click: unpickOutput">
-          <span data-bind="text: $root.lang.results">
-            <script type="text/javascript">            iadb.write(lang, 'results');</script>
-          </span>
-          <div class="pin">
-            <div></div>
-          </div>
-        </a>
-        <a class="tight" data-bind="menu: {id: 'layers', attachment:'anchorright'}">
-          <span data-bind="text: $root.lang.dataLayers">
-            <script type="text/javascript">            iadb.write(lang, 'dataLayers');</script>
-          </span>
-          <div class="pin">
-            <div></div>
-          </div>
-        </a>
-        <a class="tight" data-bind="click: tryGoBack,css:{enabled:canGoBack,clickable:canGoBack}" href="#">
-          <span data-bind="text: $root.lang.back">
-            <script type="text/javascript">            iadb.write(lang, 'back');</script>
-          </span>
-        </a>
-        <a class="tight" data-bind="menu: {id: 'basemaps', offset:0, attachment: 'right'}">
-          <span data-bind="text: $root.lang.map">
-            <script type="text/javascript">            iadb.write(lang, 'map');</script>
-          </span>
-          <div class="pin">
-            <div></div>
-          </div>
-        </a>
-        <div class="clear"></div>
-      </div>
-    </div>
-  </div>
-  <div id="map"></div>
-  <div id="footer" class="canvas">
-    <div class="page" style="padding-top: 8px;">
-      <div id="sliders" class="middlemost canvas">
-        <div class="page">
-          <div class="handle" id="main-handle" data-bind="css:{clickable:$data.pickedProject()},click: function() { $data.pickedProjectDetailsVisible(!$data.pickedProjectDetailsVisible()&&$data.pickedProject()); $data.legendVisible(false); }"></div>
-          <!-- ko if: pickedProject -->
-          <div id="content" data-bind="template: {name: 'sliderTemplate', data: pickedProject}, slide: {value: pickedProjectDetailsVisible, handleSelector: '#main-handle'} "></div>
-          <!-- /ko -->
-        </div>
-      </div>
-      <div id="whatsShown">
-        <div class="page">
-          <div class="handle" data-bind="text: $root.lang.whatsShown">
-            <script type="text/javascript">            iadb.write(lang, 'whatsShown');</script>
-          </div>
-        </div>
-      </div>
-      <div id="legendSlider">
-        <div class="handle clickable" id="legend-handle" data-bind="click: function() { $data.legendVisible(!$data.legendVisible()); $data.pickedProjectDetailsVisible(false);}, text: $root.lang.legend">
-          <script type="text/javascript">          iadb.write(lang, 'legend');</script>
-        </div>
-        <div class="content" data-bind="slide: {value: legendVisible, handleSelector: '#legend-handle'},template: {name: 'legendTemplate' }"></div>
-      </div>
-      <div id="summary" class="shell">
-        <div class="tight" id="country-summary">
-          <span data-bind="text: $root.lang.countries">
-            <script type="text/javascript">            iadb.write(lang, 'countries');</script>
-          </span>
-          /
-          <b data-bind="text: $root.lang[iadb.getCurrentCountry().abbr]">
-            <script type="text/javascript">            iadb.write(lang, iadb.getCurrentCountry().abbr);</script>
-          </b>
-        </div>
-        <div class="tight" data-bind="template: {name: function() { return $data.bottomPanel.getMode() + 'SummaryTemplate'; },data:$data.bottomPanel }"></div>
-        <div class="clear"></div>
-        <div class="perl">
-          <!--<div class="tight">
+<div class="clear"></div>
+<div class="perl"><a class="tight"
+	data-bind="css:{active: areProjectsActive }, event:{mouseover:function(){$data.bottomPanel.showSectors();},mouseout:function(){if ($data.pickedProject()!=null){$data.bottomPanel.showProject();}}},menu: {id: 'projects', offset: 0, attachment:'anchorright', focus: 'project-search' }, click: unpickProject">
+<span data-bind="text: $root.lang.projects"> <script
+	type="text/javascript">            iadb.write(lang, 'projects');</script>
+</span>
+<div class="pin">
+<div></div>
+</div>
+</a> <a class="tight"
+	data-bind="css:{active: areSectorsActive }, event:{mouseover:function(){$data.bottomPanel.showSectors()},mouseout:function(){if ($data.pickedProject()!=null){$data.bottomPanel.showProject();}}},menu: {id: 'sectors', offset: -20}, click: unpickSector">
+<span data-bind="text: $root.lang.sectors"> <script
+	type="text/javascript">            iadb.write(lang, 'sectors');</script>
+</span>
+<div class="pin">
+<div></div>
+</div>
+</a> <a class="tight"
+	data-bind="css:{active: arePrioritiesActive }, event:{mouseover:function(){$data.bottomPanel.showPriorities()},mouseout:function(){if ($data.pickedProject()!=null){$data.bottomPanel.showProject();}}},menu: {id: 'priorities', offset: -40}, click: unpickPriority">
+<span data-bind="text: $root.lang.priorities"> <script
+	type="text/javascript">            iadb.write(lang, 'priorities');</script>
+</span>
+<div class="pin">
+<div></div>
+</div>
+</a> <a class="tight"
+	data-bind="css:{active: areResultsActive }, event:{mouseover:function(){$data.bottomPanel.showOutputs()},mouseout:function(){if ($data.pickedProject()!=null){$data.bottomPanel.showProject()}}},menu: {id: 'outputs', attachment:'anchorright'}, click: unpickOutput">
+<span data-bind="text: $root.lang.results"> <script
+	type="text/javascript">            iadb.write(lang, 'results');</script>
+</span>
+<div class="pin">
+<div></div>
+</div>
+</a> <a class="tight"
+	data-bind="menu: {id: 'layers', attachment:'anchorright'}"> <span
+	data-bind="text: $root.lang.dataLayers"> <script
+	type="text/javascript">            iadb.write(lang, 'dataLayers');</script>
+</span>
+<div class="pin">
+<div></div>
+</div>
+</a> <a class="tight"
+	data-bind="click: tryGoBack,css:{enabled:canGoBack,clickable:canGoBack}"
+	href="#"> <span data-bind="text: $root.lang.back"> <script
+	type="text/javascript">            iadb.write(lang, 'back');</script> </span>
+</a> <a class="tight"
+	data-bind="menu: {id: 'basemaps', offset:0, attachment: 'right'}">
+<span data-bind="text: $root.lang.map"> <script
+	type="text/javascript">            iadb.write(lang, 'map');</script> </span>
+<div class="pin">
+<div></div>
+</div>
+</a>
+<div class="clear"></div>
+</div>
+</div>
+</div>
+<div id="map"></div>
+<div id="footer" class="canvas">
+<div class="page" style="padding-top: 8px;">
+<div id="sliders" class="middlemost canvas">
+<div class="page">
+<div class="handle" id="main-handle"
+	data-bind="css:{clickable:$data.pickedProject()},click: function() { $data.pickedProjectDetailsVisible(!$data.pickedProjectDetailsVisible()&&$data.pickedProject()); $data.legendVisible(false); }"></div>
+<!-- ko if: pickedProject -->
+<div id="content"
+	data-bind="template: {name: 'sliderTemplate', data: pickedProject}, slide: {value: pickedProjectDetailsVisible, handleSelector: '#main-handle'} "></div>
+<!-- /ko --></div>
+</div>
+<div id="whatsShown">
+<div class="page">
+<div class="handle" data-bind="text: $root.lang.whatsShown"><script
+	type="text/javascript">            iadb.write(lang, 'whatsShown');</script>
+</div>
+</div>
+</div>
+<div id="legendSlider">
+<div class="handle clickable" id="legend-handle"
+	data-bind="click: function() { $data.legendVisible(!$data.legendVisible()); $data.pickedProjectDetailsVisible(false);}, text: $root.lang.legend">
+<script type="text/javascript">          iadb.write(lang, 'legend');</script>
+</div>
+<div class="content"
+	data-bind="slide: {value: legendVisible, handleSelector: '#legend-handle'},template: {name: 'legendTemplate' }"></div>
+</div>
+<div id="summary" class="shell">
+<div class="tight" id="country-summary"><span
+	data-bind="text: $root.lang.countries"> <script
+	type="text/javascript">            iadb.write(lang, 'countries');</script>
+</span> / <b data-bind="text: $root.lang[iadb.getCurrentCountry().abbr]"> <script
+	type="text/javascript">            iadb.write(lang, iadb.getCurrentCountry().abbr);</script>
+</b></div>
+<div class="tight"
+	data-bind="template: {name: function() { return $data.bottomPanel.getMode() + 'SummaryTemplate'; },data:$data.bottomPanel }"></div>
+<div class="clear"></div>
+<div class="perl"><!--<div class="tight">
             <a target="_blank" data-bind="attr:{'href':iadb.getProjectGalleryLink()}">
               <span data-bind="text: $root.lang.projectGallery">
                 <script type="text/javascript">                iadb.write(lang, 'projectGallery');</script>
               </span>
             </a>
           </div>-->
-          <div class="tight">
-            <div data-bind="menu: {id: 'share', offset:-80, bottom: true}">
-              <a href="#">
-                <span data-bind="text: $root.lang.share">
-                  <script type="text/javascript">                  iadb.write(lang, 'share');</script>
-                </span>
-              </a>
-            </div>
-          </div>
-          <div class="tight">
-            <a target="_blank" data-bind="attr:{'href':iadb.getPartnersLink()}">
-              <span data-bind="text: $root.lang.partners">
-                <script type="text/javascript">                iadb.write(lang, 'partners');</script>
-              </span>
-            </a>
-          </div>
-          <div class="clear"></div>
-        </div>
-      </div>
-    </div>
-    <div style="height: 8px; background-color: #0080b2; position: absolute; top: 0px; left: 0px; right: 0px;"></div>
-  </div>
-  <!-- ko with: callout -->
-  <div id="callout" class="middlemost" data-bind="css:{
+<div class="tight">
+<div data-bind="menu: {id: 'share', offset:-80, bottom: true}"><a
+	href="#"> <span data-bind="text: $root.lang.share"> <script
+	type="text/javascript">                  iadb.write(lang, 'share');</script>
+</span> </a></div>
+</div>
+<div class="tight"><a target="_blank"
+	data-bind="attr:{'href':iadb.getPartnersLink()}"> <span
+	data-bind="text: $root.lang.partners"> <script
+	type="text/javascript">                iadb.write(lang, 'partners');</script>
+</span> </a></div>
+<div class="clear"></div>
+</div>
+</div>
+</div>
+<div
+	style="height: 8px; background-color: #0080b2; position: absolute; top: 0px; left: 0px; right: 0px;"></div>
+</div>
+<!-- ko with: callout -->
+<div id="callout" class="middlemost"
+	data-bind="css:{
                 'lang-en':iadb.getCurrentLanguage()=='en',
                 'lang-es':iadb.getCurrentLanguage()=='es',
                 'lang-fr':iadb.getCurrentLanguage()=='fr',
                 'lang-pt':iadb.getCurrentLanguage()=='pt'},if:current,fadeVisible:visible">
-    <div class="navigation corners">
-      <div style="float: left; margin-left: 30px;">
-        <a style="padding-top: 10px;" id="prev" href="#" data-bind="click:prev" title="Previous">&nbsp;</a></div>
-      <div style="float: left;">
-        <span data-bind="text:$root.lang.showingResults1"></span>
-        &nbsp;<span data-bind="text: ordinal"></span>&nbsp;<span data-bind="text:$root.lang.showingResults2"></span>&nbsp;<span data-bind="text: count"></span>&nbsp;<span data-bind="text:$root.lang.showingResults3"></span></div>
-      <div style="float: left; width: 20px">
-        <a style="padding-top: 10px;" id="next" href="#" data-bind="click:next" title="Next">&nbsp;</a></div>
-      <div class="middle close clickable" data-bind="click: clear">
-        <img src="/images/overlay/close.png" />
-	  </div>
-    </div>
-    <!-- ko with: current -->
-    <div class="inner">
-      <div style="min-height: 70px; padding: 5px 0px; border: dotted 1px gray; border-width: 1px 0px;">
-        <!-- ko if: imageUrl -->
-        <img class="right" data-bind="attr: {src: imageUrl}" />
-        <!-- /ko -->
-        <h1 data-bind="text: title"></h1>
-        <div class="clear"></div>
-      </div>
-      <div data-bind="html: description" style="padding-bottom: 5px; height: 87px;overflow-y:auto; overflow-x:hidden;"></div>
-    </div>
-    <div class="media" data-bind="visible:hasmedia">
-      <div class="tight">
-        <a href="#" class="ico-news" data-bind="visible:hasnews, click: function() {return $root.showUrlForResult('news',outputid);}, text: $root.lang.news"></a>
-      </div>
-      <div class="tight">
-        <a href="#" class="ico-videos" data-bind="visible:hasvideos, click: function() {return $root.showUrlForResult('videos',outputid);}, text: $root.lang.videos"></a>
-      </div>
-      <div class="tight">
-        <a href="#" class="ico-photos" data-bind="visible:hasphotos, click: function() {return $root.showUrlForResult('photos',outputid);}, text: $root.lang.photos"></a>
-      </div>
-      <div class="tight">
-        <a href="#" class="ico-documents" data-bind="visible: hasdocuments, click: function() {return $root.showUrlForResult('documents',outputid);}, text: $root.lang.documents"></a>
-      </div>
-      <div class="clear"></div>
-    </div>
-    <div class="nomedia" data-bind="visible: !hasmedia">
-      <span style="position: relative; top: 25px;" data-bind="text: $root.lang.mediaNotAvaliable">
-        <script type="text/javascript">        iadb.write(lang, 'mediaNotAvaliable');</script>
-      </span>
-    </div>
-    <!-- /ko -->
-    <div class="related">
-      <div class="tight first">
-        <a id="showRelatedProjectButton" href="#" data-bind="css:{
+<div class="navigation corners">
+<div style="float: left; margin-left: 30px;"><a
+	style="padding-top: 10px;" id="prev" href="#" data-bind="click:prev"
+	title="Previous">&nbsp;</a></div>
+<div style="float: left;"><span
+	data-bind="text:$root.lang.showingResults1"></span> &nbsp;<span
+	data-bind="text: ordinal"></span>&nbsp;<span
+	data-bind="text:$root.lang.showingResults2"></span>&nbsp;<span
+	data-bind="text: count"></span>&nbsp;<span
+	data-bind="text:$root.lang.showingResults3"></span></div>
+<div style="float: left; width: 20px"><a
+	style="padding-top: 10px;" id="next" href="#" data-bind="click:next"
+	title="Next">&nbsp;</a></div>
+<div class="middle close clickable" data-bind="click: clear"><img
+	src="/images/overlay/close.png" /></div>
+</div>
+<!-- ko with: current -->
+<div class="inner">
+<div
+	style="min-height: 70px; padding: 5px 0px; border: dotted 1px gray; border-width: 1px 0px;">
+<!-- ko if: imageUrl --> <img class="right"
+	data-bind="attr: {src: imageUrl}" /> <!-- /ko -->
+<h1 data-bind="text: title"></h1>
+<div class="clear"></div>
+</div>
+<div data-bind="html: description"
+	style="padding-bottom: 5px; height: 87px; overflow-y: auto; overflow-x: hidden;"></div>
+</div>
+<div class="media" data-bind="visible:hasmedia">
+<div class="tight"><a href="#" class="ico-news"
+	data-bind="visible:hasnews, click: function() {return $root.showUrlForResult('news',outputid);}, text: $root.lang.news"></a>
+</div>
+<div class="tight"><a href="#" class="ico-videos"
+	data-bind="visible:hasvideos, click: function() {return $root.showUrlForResult('videos',outputid);}, text: $root.lang.videos"></a>
+</div>
+<div class="tight"><a href="#" class="ico-photos"
+	data-bind="visible:hasphotos, click: function() {return $root.showUrlForResult('photos',outputid);}, text: $root.lang.photos"></a>
+</div>
+<div class="tight"><a href="#" class="ico-documents"
+	data-bind="visible: hasdocuments, click: function() {return $root.showUrlForResult('documents',outputid);}, text: $root.lang.documents"></a>
+</div>
+<div class="clear"></div>
+</div>
+<div class="nomedia" data-bind="visible: !hasmedia"><span
+	style="position: relative; top: 25px;"
+	data-bind="text: $root.lang.mediaNotAvaliable"> <script
+	type="text/javascript">        iadb.write(lang, 'mediaNotAvaliable');</script>
+</span></div>
+<!-- /ko -->
+<div class="related">
+<div class="tight first"><a id="showRelatedProjectButton" href="#"
+	data-bind="css:{
                 'lang-en':iadb.getCurrentLanguage()=='en',
                 'lang-es':iadb.getCurrentLanguage()=='es',
                 'lang-fr':iadb.getCurrentLanguage()=='fr',
                 'lang-pt':iadb.getCurrentLanguage()=='pt'},click: showRelatedProject">&nbsp;</a></div>
-      <div class="tight">
-        <a id="showRelatedOutputsButton" href="#2" data-bind="css:{
+<div class="tight"><a id="showRelatedOutputsButton" href="#2"
+	data-bind="css:{
                 'lang-en':iadb.getCurrentLanguage()=='en',
                 'lang-es':iadb.getCurrentLanguage()=='es',
                 'lang-fr':iadb.getCurrentLanguage()=='fr',
                 'lang-pt':iadb.getCurrentLanguage()=='pt'},click: showRelatedOutputs">&nbsp;</a></div>
-      <div class="clear"></div>
-    </div>
-  </div>
-  <!-- /ko -->
-  <!-- ko with: layerCallout -->
-  <div id="layerCallout" class="middlemost" data-bind="if:current,fadeVisible:visible">
-    <div class="navigation corners">
-      <div style="float: left; margin-left: 30px;">
-        <a style="padding-top: 10px;" class="prev" href="#" data-bind="click:prev" title="Previous">&nbsp;</a></div>
-      <div style="float: left;">
-        <span data-bind="text:$root.lang.showingResults1"></span>
-        &nbsp;<span data-bind="text: ordinal"></span>&nbsp;<span data-bind="text:$root.lang.showingResults2"></span>&nbsp;<span data-bind="text: count"></span>&nbsp;<span data-bind="text:$root.lang.showingResults3"></span></div>
-      <div style="float: left; width: 20px">
-        <a style="padding-top: 10px;" class="next" href="#" data-bind="click:next" title="Next">&nbsp;</a></div>
-      <div class="middle close clickable" data-bind="click: clear">
-        <img src="/images/overlay/close.png" /></div>
-    </div>
-    <!-- ko if: current -->
-    <div class="inner">
-      <!-- ko foreach: current().properties -->
-      <div class="property">
-        <div class="name" data-bind="text:name"></div>
-        <div class="value" data-bind="text:value"></div>
-      </div>
-      <!-- /ko -->
-    </div>
-    <!-- /ko -->
-  </div>
-  <!-- /ko -->
-  <div id="popup" class="topmost" data-bind="template: {name: 'popupTemplate', data: popup}, display: popup.visible "></div>
-  <script type="text/html" id="popupTemplate">
+<div class="clear"></div>
+</div>
+</div>
+<!-- /ko -->
+<!-- ko with: layerCallout -->
+<div id="layerCallout" class="middlemost"
+	data-bind="if:current,fadeVisible:visible">
+<div class="navigation corners">
+<div style="float: left; margin-left: 30px;"><a
+	style="padding-top: 10px;" class="prev" href="#" data-bind="click:prev"
+	title="Previous">&nbsp;</a></div>
+<div style="float: left;"><span
+	data-bind="text:$root.lang.showingResults1"></span> &nbsp;<span
+	data-bind="text: ordinal"></span>&nbsp;<span
+	data-bind="text:$root.lang.showingResults2"></span>&nbsp;<span
+	data-bind="text: count"></span>&nbsp;<span
+	data-bind="text:$root.lang.showingResults3"></span></div>
+<div style="float: left; width: 20px"><a
+	style="padding-top: 10px;" class="next" href="#" data-bind="click:next"
+	title="Next">&nbsp;</a></div>
+<div class="middle close clickable" data-bind="click: clear"><img
+	src="/images/overlay/close.png" /></div>
+</div>
+<!-- ko if: current -->
+<div class="inner"><!-- ko foreach: current().properties -->
+<div class="property">
+<div class="name" data-bind="text:name"></div>
+<div class="value" data-bind="text:value"></div>
+</div>
+<!-- /ko --></div>
+<!-- /ko --></div>
+<!-- /ko -->
+<div id="popup" class="topmost"
+	data-bind="template: {name: 'popupTemplate', data: popup}, display: popup.visible "></div>
+<script type="text/html" id="popupTemplate">
 		<div class="content" data-bind="style: {width: $data.width() + 'px', height: $data.height() + 'px', left: (- ($data.width() + 20) / 2) + 'px', top: (- ($data.height() + 40) / 2 + 20) + 'px'}">
 			<div class="middle close clickable" data-bind="click: close">
 				<span data-bind="text: $root.lang.pressEsc"></span>
@@ -407,55 +456,51 @@
 			<!-- /ko -->
 		</div>
   </script>
-  <div id="project-picker" class="middlemost plate" data-bind="with: projectPicker, display: projectPicker.visible ">
-    <div style="color: white; margin-bottom: 10px; font-weight: bold; text-align: center;">
-      <script type="text/javascript">      iadb.write(lang, 'selectProject');</script>
-    </div>
-    <div class="content" style="padding-right: 0px;">
-      <table style="width: 100%;">
-        <tr>
-          <td colspan="3">
-          </td>
-        </tr>
-        <!-- ko foreach: items -->
-        <tr data-bind="click: $parent.pick.bind($parent, $data)" class="clickable">
-          <td>
-            <img data-bind="attr:{src:$root.repo.getSector($data.sector).imageurl}" />
-          </td>
-          <td>
-            <label data-bind="text: id" class="project"></label>
-          </td>
-          <td style="white-space: normal;">
-            <label data-bind="text: name"></label>
-          </td>
-        </tr>
-        <!-- /ko -->
-      </table>
-    </div>
-    <div class="middle close clickable" data-bind="click: hide">
-      <img src="/images/overlay/close.png"/>
-	</div>
-  </div>
-  <div id="modal" class="topmost" data-bind="visible: loading">
-    <table>
-      <tr>
-        <td>
-          <div class="content">
-            <div class="inner">
-              <div class="loading"></div>
-              <div class="text">
-                <span data-bind="text: $root.lang.loading">
-                  <script type="text/javascript">                  iadb.write(lang, 'loading');</script>
-                </span>
-              </div>
-              <div class="loading"></div>
-            </div>
-          </div>
-        </td>
-      </tr>
-    </table>
-  </div>
-  <script id="layerMenuItem" type="text/html">
+<div id="project-picker" class="middlemost plate"
+	data-bind="with: projectPicker, display: projectPicker.visible ">
+<div
+	style="color: white; margin-bottom: 10px; font-weight: bold; text-align: center;">
+<script type="text/javascript">      iadb.write(lang, 'selectProject');</script>
+</div>
+<div class="content" style="padding-right: 0px;">
+<table style="width: 100%;">
+	<tr>
+		<td colspan="3"></td>
+	</tr>
+	<!-- ko foreach: items -->
+	<tr data-bind="click: $parent.pick.bind($parent, $data)"
+		class="clickable">
+		<td><img
+			data-bind="attr:{src:$root.repo.getSector($data.sector).imageurl}" />
+		</td>
+		<td><label data-bind="text: id" class="project"></label></td>
+		<td style="white-space: normal;"><label data-bind="text: name"></label>
+		</td>
+	</tr>
+	<!-- /ko -->
+</table>
+</div>
+<div class="middle close clickable" data-bind="click: hide"><img
+	src="/images/overlay/close.png" /></div>
+</div>
+<div id="modal" class="topmost" data-bind="visible: loading">
+<table>
+	<tr>
+		<td>
+		<div class="content">
+		<div class="inner">
+		<div class="loading"></div>
+		<div class="text"><span data-bind="text: $root.lang.loading">
+		<script type="text/javascript">                  iadb.write(lang, 'loading');</script>
+		</span></div>
+		<div class="loading"></div>
+		</div>
+		</div>
+		</td>
+	</tr>
+</table>
+</div>
+<script id="layerMenuItem" type="text/html">
     <tr>
     <td>
     	<div class="middle">
@@ -465,7 +510,7 @@
     </td>
     </tr>
   </script>
-  <script id="sectorMenuItem" type="text/html">
+<script id="sectorMenuItem" type="text/html">
     <tr><td>
 			<input type="checkbox" data-bind="checked: picked, attr: {id: id}" />
 			<label class="clickable" data-bind="text: name, attr: {'for': id}"></label>
@@ -473,12 +518,20 @@
       <img data-bind="attr:{src:imageurl}"></img>
 	</td></tr>
   </script>
-  <script id="countryMenuItem" type="text/html">
+<script id="priorityMenuItem" type="text/html">
+    <tr><td>
+			<input type="checkbox" data-bind="checked: picked, attr: {id: 'pri' + id}" />
+			<label class="clickable" data-bind="text: eval ('$root.lang.' + name), attr: {'for': 'pri' + id}"></label>
+    </td><td>
+      <img data-bind="attr:{src:imageurl}"></img>
+	</td></tr>
+  </script>
+<script id="countryMenuItem" type="text/html">
     <tr data-bind="css:{even:even},click:pick" class="clickable"><td>
     <label class="clickable" data-bind="text: name"></label>
 	</td></tr>
   </script>
-  <script id="outputMenuItem" type="text/html">
+<script id="outputMenuItem" type="text/html">
     <tr><td>
 			<input type="checkbox" data-bind="checked: picked, attr: {id: 'chx' + id}" />
 			<label class="clickable" data-bind="text: name, attr: {'for': 'chx' + id}"></label>
@@ -486,7 +539,7 @@
       <img data-bind="attr:{src:imageurl}"></img>
     </td></tr>
   </script>
-  <script type="text/html" id="sectorsSummaryTemplate">
+<script type="text/html" id="sectorsSummaryTemplate">
 		<div class="tight" data-bind="text: $root.lang.sectors"></div>
 		<div class="tight" id="results-summary">
 			<div class="sectors">
@@ -498,7 +551,19 @@
 		</div>
 		<div class="clear"></div>
   </script>
-  <script type="text/html" id="resultsSummaryTemplate">
+<script type="text/html" id="prioritiesSummaryTemplate">
+		<div class="tight" data-bind="text: $root.lang.priorities"></div>
+		<div class="tight" id="results-summary">
+			<div class="priorities">
+        <!-- ko foreach: priorities -->
+				  <label data-bind="text: count"></label>
+				  <img data-bind="attr: {src: imageurl, title: name}" />
+				<!-- /ko -->
+			</div>
+		</div>
+		<div class="clear"></div>
+  </script>
+<script type="text/html" id="resultsSummaryTemplate">
 		<div class="tight" data-bind="text: $root.lang.results"></div>
 		<div class="tight" id="results-summary">
 			<!-- ko foreach: outputs -->
@@ -508,7 +573,7 @@
 		</div>
 		<div class="clear"></div>
   </script>
-  <script type="text/html" id="projectsSummaryTemplate">
+<script type="text/html" id="projectsSummaryTemplate">
     <!-- ko if: project -->
       <div class="tight">
 			  <span data-bind="text: $root.lang.project"></span>&nbsp;/&nbsp;<b class="project" data-bind="text: project().id"></b>&nbsp;<span data-bind="text: $root.lang.sector"></span>&nbsp;/&nbsp;<b data-bind="text:project().sector"></b>&nbsp;<img data-bind="attr:{src:repo.getSector(project().sector).imageurl,title:project().sector}" />
@@ -523,7 +588,7 @@
 		  <div class="clear"></div>
     <!-- /ko -->
   </script>
-  <script type="text/html" id="legendTemplate">
+<script type="text/html" id="legendTemplate">
     <div class="middle close clickable" data-bind="click: hideLegend">
 			<span data-bind="text: $root.lang.pressEsc"></span>
 				<img src="/images/overlay/close.png" />
@@ -559,7 +624,7 @@
     </ul>
 </div>
   </script>
-  <script type="text/html" id="Haiti2003PopulationDensityTemplate">
+<script type="text/html" id="Haiti2003PopulationDensityTemplate">
         <div class="middle" style="line-height:25px;margin-left:15px">       
         <table>
         <tr><td style="width:20px;background: transparent url(../images/legend/pd_icons.png) no-repeat 0px 5px"></td><td>277 ~ 79860</td></tr>
@@ -569,7 +634,8 @@
         <tr><td style="width:20px;background: transparent url(../images/legend/pd_icons.png) no-repeat 0px -95px"></td><td>318600 ~ 398600</td></tr>
         </table>
         </div>    </script>
-  <script type="text/html" id="AggregationOfLatestCollapsedBuildingsInHaitiTemplate">
+<script type="text/html"
+	id="AggregationOfLatestCollapsedBuildingsInHaitiTemplate">
         <div class="middle" style="line-height:25px;margin-left:15px">
         <table>
         <tr><td style="width:20px;background: transparent url(../images/legend/bc_icons.png) no-repeat 0px 5px"></td><td>0 ~ 40</td></tr>
@@ -580,7 +646,7 @@
         </table>
         </div>
   </script>
-  <script type="text/html" id="InfantMortalityTemplate">
+<script type="text/html" id="InfantMortalityTemplate">
         <div class="middle" style="line-height:25px;margin-left:15px">
         <table>
         <tr><td style="width:20px;background: transparent url(../images/legend/im_icons.png) no-repeat 0px 5px"></td><td>47.53 ~ 58.14</td></tr>
@@ -591,12 +657,12 @@
         </table>
         </div>
   </script>
-  <script type="text/html" id="Layer Template">
+<script type="text/html" id="Layer Template">
     <div class="middle">
         <img src="/images/legend/Railroad.png"/><label></label>
     </div>
   </script>
-  <script type="text/html" id="sliderTemplate">
+<script type="text/html" id="sliderTemplate">
 		<div class="tight">
 			<div class="inner">
 				<h1><span data-bind="text: $root.lang.projectNumber"></span> <span class="emphasized" data-bind="text:id">#</span></h1>
@@ -636,13 +702,14 @@
 		<div class="middle close clickable" data-bind="click: function(){$root.pickedProjectDetailsVisible(false);}"><span data-bind="text: $root.lang.pressEsc"></span> <img src="/images/overlay/close.png"></div>
 		<div class="clear"></div>
   </script>
-  <div id="flashWarning">
-    <div style="position: relative; top: 40%">Your version of flash is lower than 10.1 required for this application.<br />
-      <a href="http://www.adobe.com/go/getflashplayer" target="_new">
-        <img src="http://www.adobe.com/macromedia/style_guide/images/160x41_Get_Flash_Player.jpg" /></a>
-    </div>
-  </div>
-  <script id="checkFlash" type="text/javascript">
+<div id="flashWarning">
+<div style="position: relative; top: 40%">Your version of flash is
+lower than 10.1 required for this application.<br />
+<a href="http://www.adobe.com/go/getflashplayer" target="_new"> <img
+	src="http://www.adobe.com/macromedia/style_guide/images/160x41_Get_Flash_Player.jpg" /></a>
+</div>
+</div>
+<script id="checkFlash" type="text/javascript">
   function getFlashVersion() {
     // ie
     try {
@@ -927,7 +994,7 @@
   }
   
   </script>
-  <!--[if lt IE 8]>
+<!--[if lt IE 8]>
 
   <script type="text/javascript">
     

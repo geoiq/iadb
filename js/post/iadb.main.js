@@ -57,10 +57,12 @@ var iadb = (function (root, ko, global, $) {
 			projectPicked: new signals.Signal(),
 			projectUnpicked: new signals.Signal(),
 			sectorUnpicked: new signals.Signal(),
+			priorityUnpicked: new signals.Signal(),
 			outputUnpicked: new signals.Signal(),
 			filterResults: new signals.Signal(),
 			filterProjects: new signals.Signal(),
 			filterSectors: new signals.Signal(),
+			filterPriorities: new signals.Signal(),
 			resultPicked: new signals.Signal(),
 			goBack: new signals.Signal(),
 			pickCountry: new signals.Signal()
@@ -68,14 +70,17 @@ var iadb = (function (root, ko, global, $) {
 		this.mainSignals.projectPicked.add(function () { this.mode('projects'); }, this);
 		this.mainSignals.projectUnpicked.add(function () { this.mode('projects'); }, this);
 		this.mainSignals.sectorUnpicked.add(function () { this.mode('sectors'); }, this);
+		this.mainSignals.priorityUnpicked.add(function () { this.mode('priority'); }, this);
 		this.mainSignals.outputUnpicked.add(function () { this.mode('results'); }, this);
 		this.mainSignals.filterResults.add(function () { this.mode('results'); }, this);
 		this.mainSignals.filterProjects.add(function () { this.mode('projects'); }, this);
 		this.mainSignals.filterSectors.add(function () { this.mode('sectors'); }, this);
+		this.mainSignals.filterPriorities.add(function () { this.mode('priority'); }, this);
 		this.mainSignals.resultPicked.add(function () { this.mode('results'); }, this);
 
 		this.areProjectsActive = ko.dependentObservable(function () { return this.mode() == "projects"; }, this);
 		this.areSectorsActive = ko.dependentObservable(function () { return this.mode() == "sectors"; }, this);
+		this.arePrioritiesActive = ko.dependentObservable(function () { return this.mode() == "priorities"; }, this);
 		this.areResultsActive = ko.dependentObservable(function () { return this.mode() == "results"; }, this);
 
 		this.loading = ko.observable(false);
@@ -123,6 +128,7 @@ var iadb = (function (root, ko, global, $) {
 			return false;
 		}, this);
 		this.sectors = ko.observableArray([]);
+		this.priorities = ko.observableArray([]);
 		this.outputs = ko.observableArray([]);
 		this.layers = ko.observableArray([]);
 
@@ -154,6 +160,20 @@ var iadb = (function (root, ko, global, $) {
 			sectorSetChangedId = window.setTimeout(this.filterSectors.bind(this), 100);
 		}, this);
 		this.allSectors = ko.dependentObservable(iadb.createPickableListAllHandle(this.sectors, this));
+		
+		// trigger when anything in priority menu is changed
+		this.prioritySetChanged = new signals.Signal();
+		var prioritySetChangedId = 0;
+		this.prioritySetChanged.add(function () {
+
+			if (prioritySetChangedId > 0) {
+				window.clearTimeout(prioritySetChangedId);
+				prioritySetChangedId = 0;
+			}
+			// gives user a second since the last change before recalculation starts
+			prioritySetChangedId = window.setTimeout(this.filterPriorities.bind(this), 100);
+		}, this);
+		this.allPriorities = ko.dependentObservable(iadb.createPickableListAllHandle(this.priorities, this));
 
 		//trigger when anything is changed in result menu
 		this.outputSetChanged = new signals.Signal();
@@ -215,6 +235,12 @@ var iadb = (function (root, ko, global, $) {
 			for (var i = 0; i < sectors.length; i++) {
 				var vm = new main.SectorVm(sectors[i], this.sectorSetChanged);
 				this.sectors.push(vm);
+			}
+			
+			var priorities = this.repo.getPriorities();
+			for (var i = 0; i < priorities.length; i++) {
+				var vm = new main.PriorityVm(priorities[i], this.prioritySetChanged);
+				this.priorities.push(vm);
 			}
 
 			this.bottomPanel.updateSectors();
@@ -319,7 +345,7 @@ var iadb = (function (root, ko, global, $) {
 			var visibleIndex = 0;
 			for (var i = 0; i < projects.length; i++) {
 				var project = projects[i];
-				var visible = (project.name || "").toLowerCase().indexOf(pattern) >= 0 || (project.sector || "").toLowerCase().indexOf(pattern) >= 0 || (project.id || "").toLowerCase().indexOf(pattern) >= 0;
+				var visible = (project.name || "").toLowerCase().indexOf(pattern) >= 0 || (project.sector || "").toLowerCase().indexOf(pattern) >= 0 || (project.priority || "").toLowerCase().indexOf(pattern) >=0 || (project.id || "").toLowerCase().indexOf(pattern) >= 0;
 				if (visible) {
 					project.even(visibleIndex++ % 2 == 0);
 				}
@@ -339,6 +365,7 @@ var iadb = (function (root, ko, global, $) {
 			map.makeSureHidden(resultLayer);
 			this.resetOutput(false);
 			this.resetSector(true);
+			this.resetPriority(true);
 
 			// changing url for result filters           
 			this.mainSignals.filterProjects.dispatch(Enumerable.From(this.projects()).Where("$.picked()").Select("$.id").ToArray().join(';'));
@@ -350,6 +377,7 @@ var iadb = (function (root, ko, global, $) {
 
 			this.bottomPanel.updateProjects();
 			this.bottomPanel.showSectors();
+			this.bottomPanel.showPriorities();
 		},
 		buildProjectFilter: function (projects) {
 			var filter = [];
@@ -372,6 +400,8 @@ var iadb = (function (root, ko, global, $) {
 			//map.makeSureVisible(projectLayer);
 			map.makeSureHidden(resultLayer);
 			this.resetOutput(false);
+			this.resetSector(true);
+			this.resetPriority(true);
 			this.resetProject();
 			//map.removeFilters(projectLayer);
 			this.pickedProject(null);
@@ -397,7 +427,59 @@ var iadb = (function (root, ko, global, $) {
 				if (!sector.picked()) continue;
 				filter.push("$[prosectoren] == '" + sector.name + "'");
 			}
-			return filter.length > 0 ? (filter.length == sectors.length ? null : filter.join(' OR ')) : 'false';
+			return filter.length > 0 ? filter.join(' OR ') : 'false';
+		},
+		filterPriorities: function () {
+			this.resetZoomToDefaults();
+			this.callout.clear();
+			this.layerCallout.clear();
+			var map = this.map;
+			var projectLayer = map.getProjectLayer();
+			var resultLayer = map.getResultLayer();
+			var linesLayer = map.getLinesLayer();
+			map.setVisibility(linesLayer, false);
+			//map.makeSureVisible(projectLayer);
+			map.makeSureHidden(resultLayer);
+			this.resetOutput(false);
+			this.resetSector(true);
+			this.resetProject();
+			//map.removeFilters(projectLayer);
+			this.pickedProject(null);
+			var priorities = this.priorities();
+			var filter = this.buildPriorityFilter(priorities);
+
+			// changing url for priorities filters           
+			if (this.allPriorities()) {
+				this.mainSignals.priorityUnpicked.dispatch();
+			}
+			else {
+				this.mainSignals.filterPriorities.dispatch(Enumerable.From(priorities).Where("$.picked()").Select("$.id").ToArray().join(';'));
+			}
+			map.addFilter(projectLayer, filter);
+
+			this.bottomPanel.updatePriorities();
+			this.bottomPanel.showPriorities();
+		},
+		buildPriorityFilter: function (priorities) {
+			var filter = [];
+			
+			if(this.allPriorities())
+			{
+				for(var i = 0; i < priorities.length; i++)
+				{
+					var priority = priorities[i];
+					filter.push("$[priority] == '" + priority.name + "'")
+				}
+			}
+			else
+			{
+				for (var i = 0; i < priorities.length; i++) {
+					var priority = priorities[i];
+					if (!priority.picked()) continue;
+					filter.push("$[priority] == '" + priority.name + "'");
+				}
+			}
+			return  filter.join(' OR ');
 		},
 		filterOutputs: function () {
 			this.resetZoomToDefaults();
@@ -476,6 +558,12 @@ var iadb = (function (root, ko, global, $) {
 					// could not find a sector setting to other;
 					sector = iadb.globals.sectors.Other;
 				}
+				
+				var priority = iadb.globals.priorities[project.priority];
+				if (priority == undefined) {
+					// could not find a sector setting to other;
+					priority = iadb.globals.priorities.Other;
+				}
 
 				//console.log("," + new Date().getTime() + ",setLayerStyle," + map.getLinesLayer().title);
 				map.setLayerStyle(map.getLinesLayer().guid, { type: "LINE", fill: { lineStyle: "thick", color: 0x0000FF, opacity: 1 }, stroke: { color: sector.color, alpha: 1, weight: 2} });
@@ -512,6 +600,7 @@ var iadb = (function (root, ko, global, $) {
 				map.setVisibility(linesLayer, true);
 			}
 			this.resetSector(false);
+			this.resetPriority(false);
 			this.legendVisible(false);
 			this.callout.clear();
 			this.layerCallout.clear();
@@ -541,10 +630,12 @@ var iadb = (function (root, ko, global, $) {
 			this.pickedProjectDetailsVisible(false);
 			this.resetProject();
 			this.resetSector(true);
+			this.resetPriority(true);
 			this.resetOutput(false);
 			this.pickedProject(null);
 			this.bottomPanel.updateProjects();
 			this.bottomPanel.showSectors();
+			this.bottomPanel.showPriorities();
 			this.mainSignals.projectUnpicked.dispatch();
 		},
 		resetProject: function () {
@@ -573,11 +664,33 @@ var iadb = (function (root, ko, global, $) {
 			this.pickedProjectDetailsVisible(false);
 			this.pickedProject(null);
 			this.resetSector(true);
+			this.resetPriority(true);
 			this.resetOutput(false);
 			map.removeFilters(projectLayer);
 			this.bottomPanel.updateSectors();
 			this.bottomPanel.showSectors();
 			this.mainSignals.sectorUnpicked.dispatch();
+		},
+		unpickPriority: function () {
+			console.log('unpickPriority');
+			this.resetMapToDefaults();
+			this.callout.clear();
+			this.layerCallout.clear();
+			var map = this.map;
+			var projectLayer = map.getProjectLayer();
+			var resultLayer = map.getResultLayer();
+			var linesLayer = map.getLinesLayer()
+			map.setVisibility(projectLayer, true);
+			map.setVisibility(linesLayer, false);
+			map.setVisibility(resultLayer, false);
+			this.pickedProjectDetailsVisible(false);
+			this.pickedProject(null);
+			this.resetPriority(true);
+			this.resetOutput(false);
+			map.removeFilters(projectLayer);
+			this.bottomPanel.updatePriorities();
+			this.bottomPanel.showPriorities();
+			this.mainSignals.priorityUnpicked.dispatch();
 		},
 		resetSector: function (state) {
 			console.log('start resetSector');
@@ -590,6 +703,19 @@ var iadb = (function (root, ko, global, $) {
 			}
 			this.sectorSetChanged.active = true;
 			console.log('end resetSector');
+		},
+		resetPriority: function (state) {
+			console.log('start resetPriority');
+			this.projectPicker.hide();
+			// restoring the menu
+			this.prioritySetChanged.active = false;
+			var priorities = this.priorities();
+			for (var i = 0; i < priorities.length; i++) {
+				priorities[i].picked(!state);
+				console.log(state);
+			}
+			this.prioritySetChanged.active = true;
+			console.log('end resetPriority');
 		},
 		unpickOutput: function () {
 			console.log('unpickOutput');
@@ -608,6 +734,7 @@ var iadb = (function (root, ko, global, $) {
 			map.removeFilters(resultLayer);
 			this.resetOutput(true);
 			this.resetSector(false);
+			this.resetPriority(false);
 			this.bottomPanel.updateOutputs();
 			this.bottomPanel.showOutputs();
 			this.mainSignals.outputUnpicked.dispatch();
@@ -647,6 +774,10 @@ var iadb = (function (root, ko, global, $) {
 				case "sectors":
 					var enumArray = Enumerable.From(filter.split(';'));
 					Enumerable.From(this.sectors()).ForEach(function (x) { x.picked(enumArray.Contains(x.id.toString())); });
+					break;
+				case "priorities":
+					var enumArray = Enumerable.From(filter.split(';'));
+					Enumerable.From(this.priorities()).ForEach(function (x) { x.picked(enumArray.Contains(x.id.toString())); });
 					break;
 				case "results":
 					var enumArray = Enumerable.From(filter.split(';'));
@@ -691,6 +822,18 @@ var iadb = (function (root, ko, global, $) {
 	}).prototype = {
 	};
 
+	(main.PriorityVm = function (data, prioritySetChanged) {
+		this.id = data.id;
+		this.name = data.name;
+		this.imageurl = data.imageurl;
+		this.count = data.count;
+		this.picked = ko.observable(true);
+		this.picked.subscribe(function (value) {
+			prioritySetChanged.dispatch();
+		}, this);
+	}).prototype = {
+	};
+	
 	(main.ResultVm = function (data) {
 		this.title = data.title;
 		this.description = data.description;
@@ -737,15 +880,26 @@ var iadb = (function (root, ko, global, $) {
 	}).prototype = {
 	};
 
+	(main.BottomPanelPriorityVm = function (data, count) {
+		this.id = data.id;
+		this.name = data.name;
+		this.count = count;
+		this.imageurl = data.imageurl;
+	}).prototype = {
+	};
+	
 	(main.BottomPanelVm = function (parent) {
 		this.parent = parent;
 		this.repo = parent.repo;
 		this.mode = ko.observable("sectors");
+		this.mode = ko.observable("priorities");
 		this.project = ko.observable(null);
 		this.outputs = ko.observable([]);
 		this.sectors = ko.observable([]);
+		this.priorities = ko.observable([]);
 	}).prototype = {
 		showSectors: function () { this.mode("sectors"); },
+		showPriorities: function () { this.mode("priorities"); },
 		showProject: function () {
 			this.mode("projects");
 		},
@@ -759,6 +913,11 @@ var iadb = (function (root, ko, global, $) {
 		updateSectors: function () {
 			this.sectors(Enumerable.From(this.parent.sectors()).Where("$.picked()&&$.count>0").Select(function (x) {
 				return new main.BottomPanelSectorVm(x, x.count);
+			}).Where("$").ToArray());
+		},
+		updatePriorities: function () {
+			this.priorities(Enumerable.From(this.parent.priorities()).Where("$.picked()&&$.count>0").Select(function (x) {
+				return new main.BottomPanelPriorityVm(x, x.count);
 			}).Where("$").ToArray());
 		},
 		updateProjects: function () {

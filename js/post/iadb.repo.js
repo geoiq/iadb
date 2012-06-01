@@ -21,6 +21,7 @@
 					id: x.pronumber,
 					name: x.proname,
 					sector: x.prosectoren,
+					priority: x.priority,
 					description: x.prodescription,
 					lat: x.latitude,
 					"long": x.longitude,
@@ -34,6 +35,15 @@
 			}).Select(function (x) {
 				var count = Enumerable.From(projects).Where(function (y) { return y.sector == x.Key }).Count();
 				return { name: x.Key, id: x.Value.id, count: count, imageurl: encodeURI(iadb.globals.imageurl + "/images/icons/sectors/" + x.Value.filename + ".png") };
+			}).Where("$.count>0").ToArray();
+			
+			// create priorities array
+			var priorityIndex = 0;
+			var priorities = this.priorities = Enumerable.From(iadb.globals.priorities).OrderBy(function (x) {
+				return x.Key == "" ? "zzz" : x.Key
+			}).Select(function (x) {
+				var count = Enumerable.From(projects).Where(function (y) { return y.priority == x.Key }).Count();
+				return { name: x.Key, id: x.Value.id, count: count, imageurl: encodeURI(iadb.globals.imageurl + "/images/icons/priorities/" + x.Value.filename + ".png") };
 			}).Where("$.count>0").ToArray();
 
 
@@ -62,6 +72,7 @@
 		dispose: function () {
 			this.projects = null;
 			this.sectors = null;
+			this.priorities = null;
 			this.outputs = null;
 			this.results = null;
 			this.basemaps = null;
@@ -82,9 +93,14 @@
 		getSector: function (sector) {
 			return Enumerable.From(this.getSectors()).Where(function (x) { return x.name == sector }).FirstOrDefault(null);
 		},
-
+		getPriority: function (priority) {
+			return Enumerable.From(this.getPriorities()).Where(function (x) { return x.name == priority }).FirstOrDefault(null);
+		},
 		getSectors: function () {
 			return this.sectors || [];
+		},
+		getPriorities: function () {
+			return this.priorities || [];
 		},
 		getOutput: function (sector) {
 			return Enumerable.From(this.getOutputs()).Where(function (x) { return x.name == sector }).FirstOrDefault(null);

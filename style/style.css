@@ -1,4 +1,4 @@
-﻿body { margin: 0px; padding: 0px; }
+body { margin: 0px; padding: 0px; }
 
 body, h1, h2, h3, h4, h5, h6, p { font-family: Verdana; font-size: 11px; }
 h1, h2, h3, h4, h5, h6, p { margin: 0px; padding: 0px; }
@@ -199,6 +199,8 @@ h1, h2, h3, h4, h5, h6, p { margin: 0px; padding: 0px; }
 #outputs td {background: white;padding-left:0px;}
 #sectors img { width: 20px }
 #sectors td {background: white;padding-left:0px;}
+#priorities img { width: 20px }
+#priorities td {background: white;padding-left:0px;}
 #layers td {background: white;padding-left:0px;}
 #basemaps td {background: white;padding-left:0px;}
 

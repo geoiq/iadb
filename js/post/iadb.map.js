@@ -108,6 +108,7 @@
             var id = 0;
             outputfeatures = Enumerable.From(outputfeatures).Join(projectFeatures, "x=>x['project number']", "y=>y.pronumber", function (inner, outer) {
                 var sectorName = outer.prosectoren;
+                var priorityName = outer.priority;
                 var category = inner['category'] || "Other";
                 inner["custom category"] = sectorName + "-" + category;
                 //inner.rf = id++;
