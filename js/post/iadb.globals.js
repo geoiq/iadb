@@ -8,7 +8,7 @@
 	};
 	iadb.globals = {
 		url: "http://iadb.geoiq.com",
-		imageurl: "http://idb.local",
+		imageurl: "http://iadb.demo.eastbanctech.com",
 		sectors: {
 			"Agriculture and Rural Development": new sector("AG", 0x296e28, 1),
 			"Capital Markets": new sector("CM", 0x002882, 2),
