@@ -240,15 +240,19 @@
 <div class="pin">
 <div></div>
 </div>
-</a> <a class="tight"
+</a>
+<!-- ko if: priorities().length > 0 -->
+<a class="tight"
 	data-bind="css:{active: arePrioritiesActive }, event:{mouseover:function(){$data.bottomPanel.showPriorities()},mouseout:function(){if ($data.pickedProject()!=null){$data.bottomPanel.showProject();}}},menu: {id: 'priorities', offset: -40}, click: unpickPriority">
 <span data-bind="text: $root.lang.priorities"> <script
-	type="text/javascript">            iadb.write(lang, 'priorities');</script>
+	type="text/javascript">            iadb.write(lang, 'priorities');</script> 
 </span>
 <div class="pin">
 <div></div>
 </div>
-</a> <a class="tight"
+</a>
+<!-- /ko -->
+<a class="tight"
 	data-bind="css:{active: areResultsActive }, event:{mouseover:function(){$data.bottomPanel.showOutputs()},mouseout:function(){if ($data.pickedProject()!=null){$data.bottomPanel.showProject()}}},menu: {id: 'outputs', attachment:'anchorright'}, click: unpickOutput">
 <span data-bind="text: $root.lang.results"> <script
 	type="text/javascript">            iadb.write(lang, 'results');</script>
