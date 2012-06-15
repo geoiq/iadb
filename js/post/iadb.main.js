@@ -400,8 +400,8 @@ var iadb = (function (root, ko, global, $) {
 			//map.makeSureVisible(projectLayer);
 			map.makeSureHidden(resultLayer);
 			this.resetOutput(false);
-			this.resetSector(true);
-			this.resetPriority(true);
+			//this.resetSector(true);
+			this.resetPriority(false);
 			this.resetProject();
 			//map.removeFilters(projectLayer);
 			this.pickedProject(null);
@@ -425,7 +425,7 @@ var iadb = (function (root, ko, global, $) {
 			for (var i = 0; i < sectors.length; i++) {
 				var sector = sectors[i];
 				if (!sector.picked()) continue;
-				filter.push("$[prosectoren] == '" + sector.name + "'");
+				filter.push("$[prosector] == '" + sector.name + "'");
 			}
 			return filter.length > 0 ? filter.join(' OR ') : 'false';
 		},
@@ -441,7 +441,7 @@ var iadb = (function (root, ko, global, $) {
 			//map.makeSureVisible(projectLayer);
 			map.makeSureHidden(resultLayer);
 			this.resetOutput(false);
-			this.resetSector(true);
+			//this.resetSector(true);
 			this.resetProject();
 			//map.removeFilters(projectLayer);
 			this.pickedProject(null);

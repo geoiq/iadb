@@ -517,7 +517,7 @@
 <script id="sectorMenuItem" type="text/html">
     <tr><td>
 			<input type="checkbox" data-bind="checked: picked, attr: {id: id}" />
-			<label class="clickable" data-bind="text: name, attr: {'for': id}"></label>
+			<label class="clickable" data-bind="text: eval ('$root.lang.' + 's' + name), attr: {'for': id}"></label>
     </td><td>
       <img data-bind="attr:{src:imageurl}"></img>
 	</td></tr>

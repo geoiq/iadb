@@ -20,7 +20,7 @@
 					pid: iadb.nextId(),
 					id: x.pronumber,
 					name: x.proname,
-					sector: x.prosectoren,
+					sector: x.prosector,
 					priority: x.priority,
 					description: x.prodescription,
 					lat: x.latitude,

@@ -86,7 +86,7 @@
             this.setLayerStyle(resultLayer.guid, slsOptions);
 
             console.log("," + new Date().getTime() + ",addLayerCategoryFilter," + projectLayer.title);
-            f1.addLayerCategoryFilter(projectLayer.guid, { attribute: "prosectoren", categories: sectorIcons });
+            f1.addLayerCategoryFilter(projectLayer.guid, { attribute: "prosector", categories: sectorIcons });
 
         },
 
@@ -107,7 +107,7 @@
 
             var id = 0;
             outputfeatures = Enumerable.From(outputfeatures).Join(projectFeatures, "x=>x['project number']", "y=>y.pronumber", function (inner, outer) {
-                var sectorName = outer.prosectoren;
+                var sectorName = outer.prosector;
                 var priorityName = outer.priority;
                 var category = inner['category'] || "Other";
                 inner["custom category"] = sectorName + "-" + category;
