@@ -11,7 +11,7 @@
 		imageurl: "http://portal.iadb.geoiq.com",
 		sectors: {
 			"AG": new sector("AG", 0x296e28, 1),
-			"AS": new sector("AS", 0x296e28, 2),
+			"AS": new sector("AS", 0x8cf4c5, 2),
 			"DU": new sector("DU", 0xcd7333, 3),
 			"ED": new sector("ED", 0xa11016, 4),
 			"EN": new sector("EN", 0xffab00, 5),

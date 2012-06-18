@@ -447,16 +447,28 @@ var iadb = (function (root, ko, global, $) {
 			this.pickedProject(null);
 			var priorities = this.priorities();
 			var filter = this.buildPriorityFilter(priorities);
-
+							
 			// changing url for priorities filters           
 			if (this.allPriorities()) {
+				//this.mainSignals.sectorUnpicked.dispatch();
 				this.mainSignals.priorityUnpicked.dispatch();
 			}
 			else {
 				this.mainSignals.filterPriorities.dispatch(Enumerable.From(priorities).Where("$.picked()").Select("$.id").ToArray().join(';'));
 			}
-			map.addFilter(projectLayer, filter);
-
+			if(filter.length == 0)
+			{
+				this.resetOutput(true);
+				//this.resetSector(true);
+				//this.resetPriority(false);
+				this.resetProject();
+				map.removeFilters(projectLayer);
+				this.pickedProject(null);
+			}
+			else
+			{
+				map.addFilter(projectLayer, filter);
+			}
 			this.bottomPanel.updatePriorities();
 			this.bottomPanel.showPriorities();
 		},
@@ -685,9 +697,11 @@ var iadb = (function (root, ko, global, $) {
 			map.setVisibility(resultLayer, false);
 			this.pickedProjectDetailsVisible(false);
 			this.pickedProject(null);
+			this.resetSector(false);
 			this.resetPriority(true);
 			this.resetOutput(false);
-			map.removeFilters(projectLayer);
+			this.filterPriorities();
+			//map.removeFilters(projectLayer);
 			this.bottomPanel.updatePriorities();
 			this.bottomPanel.showPriorities();
 			this.mainSignals.priorityUnpicked.dispatch();

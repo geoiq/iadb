@@ -243,7 +243,7 @@
 </a>
 <!-- ko if: priorities().length > 0 -->
 <a class="tight"
-	data-bind="css:{active: arePrioritiesActive }, event:{mouseover:function(){$data.bottomPanel.showPriorities()},mouseout:function(){if ($data.pickedProject()!=null){$data.bottomPanel.showProject();}}},menu: {id: 'priorities', offset: -40}, click: unpickPriority">
+	data-bind="css:{active: arePrioritiesActive }, event:{mouseover:function(){$data.bottomPanel.showPriorities()},mouseout:function(){if ($data.pickedProject()!=null){$data.bottomPanel.showProject();}}},menu: {id: 'priorities', offset: -40}, click: allPriorities">
 <span data-bind="text: $root.lang.priorities"> <script
 	type="text/javascript">            iadb.write(lang, 'priorities');</script> 
 </span>
@@ -527,7 +527,6 @@
 			<input type="checkbox" data-bind="checked: picked, attr: {id: 'pri' + id}" />
 			<label class="clickable" data-bind="text: eval ('$root.lang.' + name), attr: {'for': 'pri' + id}"></label>
     </td><td>
-      <img data-bind="attr:{src:imageurl}"></img>
 	</td></tr>
   </script>
 <script id="countryMenuItem" type="text/html">
