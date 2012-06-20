@@ -377,7 +377,6 @@ var iadb = (function (root, ko, global, $) {
 
 			this.bottomPanel.updateProjects();
 			this.bottomPanel.showSectors();
-			this.bottomPanel.showPriorities();
 		},
 		buildProjectFilter: function (projects) {
 			var filter = [];
@@ -647,7 +646,6 @@ var iadb = (function (root, ko, global, $) {
 			this.pickedProject(null);
 			this.bottomPanel.updateProjects();
 			this.bottomPanel.showSectors();
-			this.bottomPanel.showPriorities();
 			this.mainSignals.projectUnpicked.dispatch();
 		},
 		resetProject: function () {
@@ -898,7 +896,6 @@ var iadb = (function (root, ko, global, $) {
 		this.id = data.id;
 		this.name = data.name;
 		this.count = count;
-		this.imageurl = data.imageurl;
 	}).prototype = {
 	};
 	
