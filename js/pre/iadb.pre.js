@@ -104,7 +104,8 @@
 			Vulnerable_people_support:	'Vulnerable people support',
 			Wastewater_system:	'Wastewater system',
 			Wastewater_treatment:	'Wastewater treatment',
-			Water_resource_management:	'Water resource management'
+			Water_resource_management:	'Water resource management',
+			Other: "Other"
 			
 		},
 		es: propotyped({
@@ -208,7 +209,8 @@
 		   Vulnerable_people_support:	'Apoyo a grupos vulnerables',
 		   Wastewater_system:	'Sistemas de saneamiento básico',
 		   Wastewater_treatment:	'Manejo de aguas residuales ',
-		   Water_resource_management:	'Manejo de recursos hídricos'
+		   Water_resource_management:	'Manejo de recursos hídricos',
+		   Other: "Otro"
 		   
 		}, en),
 		fr: propotyped({
@@ -312,7 +314,8 @@
 		   Vulnerable_people_support:	'Soutien aux Personnes Vulnérables',
 		   Wastewater_system:	'Système de Traitement des Eaux Usées',
 		   Wastewater_treatment:	'Gestion des Ressources en Eau',
-		   Water_resource_management:	'La gestion des ressources en eau'
+		   Water_resource_management:	'La gestion des ressources en eau',
+		   Other: "Autre"
 		   
 		}, en),
 		pt: propotyped({
@@ -416,7 +419,8 @@
 		   Vulnerable_people_support:	'Apoio as pessoas mais vulneráveis',
 		   Wastewater_system:	'Sistema sanitário',
 		   Wastewater_treatment:	'Tratamento de águas residuais',
-		   Water_resource_management:	'Gestão dos recursos hídricos'
+		   Water_resource_management:	'Gestão dos recursos hídricos',
+		   Other: "Outro"
 		   
 		}, en)
 	};

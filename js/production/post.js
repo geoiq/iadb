@@ -1184,7 +1184,10 @@ return hasher;
 			"Land demarcation and titling": "32",
 			"Citizen security": "33",
 			"Institutional support": "35",
-			"NO VISUALIZABLE": "1"
+			"NO VISUALIZABLE": "1",
+			"Alternative renewable energy": "4",
+			"Civil, birth registry & identification": "34",
+			"Drinking water distribution": "11"
 
 			//			"Other": "42",
 			//			"Airports and port rehabilitated": "9",//
