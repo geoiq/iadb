@@ -7,8 +7,8 @@
 		return { color: color, filename: filename, id: id };
 	};
 	iadb.globals = {
-		url: "http://iadb.geoiq.com",
-		imageurl: "http://portal.iadb.geoiq.com",
+		url: "http://staging.iadb.geoiq.com",
+		imageurl: "http://staging.portal.iadb.geoiq.com",
 		sectors: {
 			"AG": new sector("AG", 0x296e28, 1),
 			"AS": new sector("AS", 0x8cf4c5, 2),
