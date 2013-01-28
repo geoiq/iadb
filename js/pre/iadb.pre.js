@@ -517,7 +517,17 @@
         { "name": "Guyana", abbr: "GY", maps: { "en": 102, "es": 101, "pt": 123, "fr": 119} },
         { "name": "Honduras", abbr: "HO", maps: { "en": 100, "es": 99, "pt": 125, "fr": 124} },
         { "name": "Nicaragua", abbr: "NI", maps: { "en": 98, "es": 97, "pt": 127, "fr": 126} },
-        { "name": "Uruguay", abbr: "UR", maps: { "en": 131, "es": 132, "pt": 134, "fr": 133} }
+        { "name": "Uruguay", abbr: "UR", maps: { "en": 131, "es": 132, "pt": 134, "fr": 133} },
+
+        { "name": "Argentina", abbr: "AR", maps: { "en": 183, "es": 182, "pt": 180, "fr": 181 } }, 
+		{ "name": "Bahamas", abbr: "BA", maps: { "en": 211, "es": 210, "pt": 208, "fr": 209 } },
+		{ "name": "Venezuela", abbr: "VE", maps: { "en": 215, "es": 214, "pt": 218, "fr": 212 } }, 
+		{ "name": "Trinidad and Tobago", abbr: "TT", maps: { "en": 220, "es": 217, "pt": 219, "fr": 218 } }, 
+		{ "name": "Suriname", abbr: "SU", maps: { "en": 221, "es": 222, "pt": 223, "fr": 224} },
+		{ "name": "Paraguay", abbr: "PR", maps: { "en": 225, "es": 226, "pt": 227, "fr": 228 } }, 
+		{ "name": "Panama", abbr: "PN", maps: { "en": 229, "es": 230, "pt": 231, "fr": 232 } },
+		{ "name": "Peru", abbr: "PE", maps: { "en": 234, "es": 235, "pt": 236, "fr": 237 } },	
+		{ "name": "Mexico", abbr: "ME", maps: { "en": 238, "es": 239, "pt": 240, "fr": 241 } }
         ],
 		getMapId: function () {
 			var currentCountryName = ns.getCurrentCountry().name.toLowerCase();
