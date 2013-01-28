@@ -521,12 +521,12 @@
 
 	ns['Country'] = {
 		countries: [
-        { "name": "Haiti", abbr: "HA", maps: { "en": 37, "es": 81, "pt": 83, "fr": 82} },
-        { "name": "Bolivia", abbr: "BO", maps: { "en": 103, "es": 104, "pt": 116, "fr": 115} },
-        { "name": "Guyana", abbr: "GY", maps: { "en": 102, "es": 101, "pt": 123, "fr": 119} },
-        { "name": "Honduras", abbr: "HO", maps: { "en": 100, "es": 99, "pt": 125, "fr": 124} },
-        { "name": "Nicaragua", abbr: "NI", maps: { "en": 98, "es": 97, "pt": 127, "fr": 126} },
-        { "name": "Uruguay", abbr: "UR", maps: { "en": 131, "es": 132, "pt": 134, "fr": 133} },
+		{ "name": "Haiti", abbr: "HA", maps: { "en": 171, "es": 179, "pt": 172, "fr": 178} },
+		{ "name": "Bolivia", abbr: "BO", maps: { "en": 200, "es": 205, "pt": 204, "fr": 201} },
+		{ "name": "Guyana", abbr: "GY", maps: { "en": 199, "es": 198, "pt": 196, "fr": 197} },
+		{ "name": "Honduras", abbr: "HO", maps: { "en": 195, "es": 193, "pt": 192, "fr": 194} },
+		{ "name": "Nicaragua", abbr: "NI", maps: { "en": 189, "es": 190, "pt": 188, "fr": 191} },
+		{ "name": "Uruguay", abbr: "UR", maps: { "en": 187, "es": 184, "pt": 186, "fr": 185} },
 
         { "name": "Argentina", abbr: "AR", maps: { "en": 183, "es": 182, "pt": 180, "fr": 181 } }, 
 		{ "name": "Bahamas", abbr: "BA", maps: { "en": 211, "es": 210, "pt": 208, "fr": 209 } },
