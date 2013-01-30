@@ -563,8 +563,20 @@
 		{ "name": "Paraguay", abbr: "PR", maps: { "en": 225, "es": 226, "pt": 227, "fr": 228 } }, 
 		{ "name": "Panama", abbr: "PN", maps: { "en": 229, "es": 230, "pt": 231, "fr": 232 } },
 		{ "name": "Peru", abbr: "PE", maps: { "en": 234, "es": 235, "pt": 236, "fr": 237 } },	
-		{ "name": "Mexico", abbr: "ME", maps: { "en": 238, "es": 239, "pt": 240, "fr": 241 } }
-        ],
+		{ "name": "Mexico", abbr: "ME", maps: { "en": 238, "es": 239, "pt": 240, "fr": 241 } },
+        
+		{ "name": "Jamaica", abbr: "JA", maps: { "en": 244 , "es": 249 , "pt": 251 , "fr": 252 } },
+		{ "name": "Brazil", abbr: "BR", maps: { "en": 257 , "es": 258, "pt": 259 , "fr": 260 } },
+		{ "name": "Chile", abbr: "CH", maps: { "en": 261, "es": 262 , "pt": 263, "fr":264  } },
+		{ "name": "Colombia", abbr: "CO", maps: { "en": 265 , "es": 266 , "pt": 268, "fr": 267 } },
+		{ "name": "Costa Rica", abbr: "CR", maps: { "en": 269 , "es": 270, "pt": 271 , "fr": 272 } },
+		{ "name": "Dominican Republic", abbr: "DR", maps: { "en":273 , "es": 274 , "pt": 275 , "fr": 277 } },
+		{ "name": "Ecuador", abbr: "EC", maps: { "en": 278 , "es": 279 , "pt": 280 , "fr": 281 } },
+		{ "name": "Belize", abbr: "BL", maps: { "en": 282 , "es": 283 , "pt": 284, "fr": 285 } },
+		{ "name": "Barbados", abbr: "BA", maps: { "en": 286 , "es": 287 , "pt": 288 , "fr": 289 } },
+		{ "name": "El Salvador", abbr: "ES", maps: { "en":294 , "es": 295 , "pt": 296 , "fr": 297 } },
+		{ "name": "Guatemala", abbr: "", maps: { "en": 290, "es": 291 , "pt": 292 , "fr": 293 } }
+		],
 		getMapId: function () {
 			var currentCountryName = ns.getCurrentCountry().name.toLowerCase();
 			var currentCountry = ko.utils.arrayFirst(ns['Country'].countries, function (value) {
