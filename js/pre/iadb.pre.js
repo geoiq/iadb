@@ -616,7 +616,7 @@
 		{ "name": "Belize", abbr: "BL", maps: { "en": 282 , "es": 283 , "pt": 284, "fr": 285 } },
 		{ "name": "Barbados", abbr: "BA", maps: { "en": 286 , "es": 287 , "pt": 288 , "fr": 289 } },
 		{ "name": "El Salvador", abbr: "ES", maps: { "en":294 , "es": 295 , "pt": 296 , "fr": 297 } },
-		{ "name": "Guatemala", abbr: "", maps: { "en": 290, "es": 291 , "pt": 292 , "fr": 293 } }
+		{ "name": "Guatemala", abbr: "GU", maps: { "en": 290, "es": 291 , "pt": 292 , "fr": 293 } }
 		],
 		getMapId: function () {
 			var currentCountryName = ns.getCurrentCountry().name.toLowerCase();
