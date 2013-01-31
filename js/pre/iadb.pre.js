@@ -602,7 +602,7 @@
 
         { "name": "Argentina", abbr: "AR", maps: { "en": 183, "es": 182, "pt": 180, "fr": 181 } }, 
 		{ "name": "Bahamas", abbr: "BH", maps: { "en": 211, "es": 210, "pt": 208, "fr": 209 } },
-		{ "name": "Venezuela", abbr: "VE", maps: { "en": 215, "es": 214, "pt": 218, "fr": 212 } }, 
+		{ "name": "Venezuela", abbr: "VE", maps: { "en": 215, "es": 214, "pt": 216, "fr": 212 } }, 
 		{ "name": "Trinidad and Tobago", abbr: "TT", maps: { "en": 220, "es": 217, "pt": 219, "fr": 218 } }, 
 		{ "name": "Suriname", abbr: "SU", maps: { "en": 221, "es": 222, "pt": 223, "fr": 224} },
 		{ "name": "Paraguay", abbr: "PR", maps: { "en": 225, "es": 226, "pt": 227, "fr": 228 } }, 
