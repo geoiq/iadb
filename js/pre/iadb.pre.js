@@ -6,6 +6,8 @@
 		en: en = {
 			selectCountry: 'Select Country',
 			projects: 'Projects',
+			projectTypes: 'Project Types',
+			projectType: 'Project Type',
 			sectors: 'Sectors',
 			sector: 'Sector',
 			priorities: 'Targets',
@@ -72,6 +74,7 @@
 			GU: 'Guatemala',
 			selectProject: 'Select a project in this location',
 			CC: 'Environmental Sustainability',
+			SG: 'Public',
 			sAG: 'Agriculture and Rural Development',
 			sAS: 'Water and Sanitation',
 			sDU: 'Urban Development and Housing',
@@ -611,7 +614,7 @@
 		{ "name": "Mexico", abbr: "ME", maps: { "en": 238, "es": 239, "pt": 240, "fr": 241 } },
         
 		{ "name": "Jamaica", abbr: "JA", maps: { "en": 244 , "es": 249 , "pt": 251 , "fr": 252 } },
-		{ "name": "Brazil", abbr: "BR", maps: { "en": 257 , "es": 258, "pt": 259 , "fr": 260 } },
+		{ "name": "Brazil", abbr: "BR", maps: { "en": 331 , "es": 258, "pt": 259 , "fr": 260 } },
 		{ "name": "Chile", abbr: "CH", maps: { "en": 261, "es": 262 , "pt": 263, "fr":264  } },
 		{ "name": "Colombia", abbr: "CO", maps: { "en": 265 , "es": 266 , "pt": 268, "fr": 267 } },
 		{ "name": "Costa Rica", abbr: "CR", maps: { "en": 269 , "es": 270, "pt": 271 , "fr": 272 } },

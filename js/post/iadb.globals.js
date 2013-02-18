@@ -6,6 +6,9 @@
 	function priority(filename, color, id) {
 		return { color: color, filename: filename, id: id };
 	};
+	function projectType(filename, color, id) {
+		return { color: color, filename: filename, id: id };
+	};
 	iadb.globals = {
 		url: "http://staging.iadb.geoiq.com",
 		imageurl: "http://staging.portal.iadb.geoiq.com",
@@ -31,6 +34,9 @@
 		},
 		priorities: {
 			"CC": new priority("CC", 0x89be89 , 1)
+		},
+		projectTypes: {
+			"SG": new projectType("SG", 0xffffff , 1)
 		},
 		outputs: {
 			"Other": "1",
@@ -113,6 +119,15 @@
 			}).ToArray();
 			return returnObject;
 		},
+		getOutputByProjectTypesIcons: function () {
+			var returnObject = {};
+			var outputs = Enumerable.From(this.outputs).Join(this.projectTypes, "x=>true", "x=>true", function (outer, inner) {
+				var filename = iadb.globals.projectTypes[inner.Key].filename;
+				returnObject[inner.Key + "-" + outer.Key] = encodeURI(iadb.globals.imageurl + "/images/icons/projectTypes/" + filename + "_" + outer.Value + ".png");
+				return null;
+			}).ToArray();
+			return returnObject;
+		},
 		getOutputIcons: function () {
 			var returnObject = {};
 			// Using transportation for generic images
@@ -129,6 +144,9 @@
 			return "";
 		},
 		getPriorityIcon: function (priority) {
+			return "";
+		},
+		getProjectTypeIcon: function (projectType) {
 			return "";
 		},
 		getResultIcon: function (sector, result) {
