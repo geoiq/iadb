@@ -36,7 +36,9 @@
 			"CC": new priority("CC", 0x89be89 , 1)
 		},
 		projectTypes: {
-			"SG": new projectType("SG", 0xffffff , 1)
+			"PUBLIC": new projectType("PUBLIC", 0xffffff , 1),
+			"PRIVATE": new projectType("PRIVATE", 0xffffff , 1),
+			"MIF": new projectType("MIF", 0xffffff , 1)
 		},
 		outputs: {
 			"Other": "1",

@@ -508,7 +508,7 @@ var iadb = (function (root, ko, global, $) {
 				for(var i = 0; i < projectTypes.length; i++)
 				{
 					var projectType = projectTypes[i];
-					filter.push("$[projecttype] == '" + projectType.name + "'")
+					filter.push("$[nsgtype] == '" + projectType.name + "'")
 				}
 			}
 			else
@@ -516,7 +516,7 @@ var iadb = (function (root, ko, global, $) {
 				for (var i = 0; i < projectTypes.length; i++) {
 					var projectType = projectTypes[i];
 					if (!projectType.picked()) continue;
-					filter.push("$[projecttype] == '" + projectType.name + "'");
+					filter.push("$[nsgtype] == '" + projectType.name + "'");
 				}
 			}
 			return  filter.join(' OR ');

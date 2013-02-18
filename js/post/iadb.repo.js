@@ -22,7 +22,7 @@
 					name: x.proname,
 					sector: x.prosector,
 					priority: x.priority,
-					projectType: x.projecttype,
+					projectType: x.nsgtype,
 					description: x.prodescription,
 					lat: x.latitude,
 					"long": x.longitude,
