@@ -38,7 +38,8 @@
 		projectTypes: {
 			"PUBLIC": new projectType("PUBLIC", 0xffffff , 1),
 			"PRIVATE": new projectType("PRIVATE", 0xffffcf , 2),
-			"MIF": new projectType("MIF", 0xfffcff , 3)
+			"MIF": new projectType("MIF", 0xfffcff , 3),
+			"IIC": new projectType("IIC", 0xffcfff , 4)
 		},
 		outputs: {
 			"Other": "1",

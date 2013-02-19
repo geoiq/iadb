@@ -264,10 +264,21 @@ var iadb = (function (root, ko, global, $) {
 				this.priorities.push(vm);
 			}
 
+			var layers = this.repo.getLayers();
+			for (var i = 0; i < layers.length; i++) {
+				this.layers.push(new main.LayerVm(layers[i], this.layerSetChanged));
+			}
+
 			var projectTypes = this.repo.getProjectTypes();
 			for (var i = 0; i < projectTypes.length; i++) {
 				var vm = new main.ProjectTypeVm(projectTypes[i], this.projectTypeSetChanged);
 				this.projectTypes.push(vm);
+			}
+			//adding the data layer check box to the list of projectTypes
+			for (var i = 0; i < layers.length; i++) {
+				if(layers[i].title == 'iic'){
+					this.projectTypes.push(new main.LayerVm(layers[0], this.layerSetChanged));
+				}
 			}
 
 			this.bottomPanel.updateSectors();
@@ -294,11 +305,6 @@ var iadb = (function (root, ko, global, $) {
 				this.countries.push(country);
 			}
 
-
-			var layers = this.repo.getLayers();
-			for (var i = 0; i < layers.length; i++) {
-				this.layers.push(new main.LayerVm(layers[i], this.layerSetChanged));
-			}
 
 			// handling escape to close project details
 			$(document).keydown((function (e) {
