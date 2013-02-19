@@ -77,6 +77,7 @@
 			PUBLIC: 'Public',
 			PRIVATE: 'Private',
 			MIF: 'MIF',
+			iic: 'IIC',
 			sAG: 'Agriculture and Rural Development',
 			sAS: 'Water and Sanitation',
 			sDU: 'Urban Development and Housing',
