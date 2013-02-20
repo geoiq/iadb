@@ -64,6 +64,7 @@
         var projects = [];
         var results = [];
         var layerfeatures = [];
+        var iics = [];
         if (iadb.type(features) === 'array') {
             for (var i = 0; i < features.length; i++) {
                 var feature = features[i];
@@ -71,18 +72,25 @@
                     projects.push(feature);
                 } else if (iadb.isResultFeature(feature)) {
                     results.push(feature);
+                }else if(iadb.isIicFeature(feature)){
+                	iics.push(feature);
                 }
                 else layerfeatures.push(feature);
             }
-            return { results: results, projects: projects, layerfeatures:layerfeatures };
+            return { results: results, projects: projects, layerfeatures:layerfeatures, iics: iics };
         } else {
-            return { results: [], projects: [], layerfeatures:[] };
+            return { results: [], projects: [], layerfeatures:[] , iics:[]};
         }
     }
 
     iadb.isProjectFeature = function (feature) {
         if (!feature) return false;
         return !!feature.pronumber;
+    };
+
+    iadb.isIicFeature = function (feature) {
+        if (!feature) return false;
+        return !!feature.iicnumber;
     };
 
     iadb.isResultFeature = function (feature) {
