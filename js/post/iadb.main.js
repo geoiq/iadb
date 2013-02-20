@@ -45,6 +45,14 @@ var iadb = (function (root, ko, global, $) {
 				var projectId = analysis.projects[0].pronumber;
 				this.pickProject(projectId);
 			}
+			else if ((features = analysis.iics).length > 0) {
+				this.map.setCenter({ latitude: features[0].latitude, longitude: features[0].longitude });
+				this.centerMap({ latitude: features[0].latitude, longitude: features[0].longitude });
+				var items = Enumerable.From(features).Select(function (x) { return new main.ResultVm(new iadb.Repo.Result(x, repo)); }).ToArray();
+				this.callout.show(items);
+				this.layerCallout.clear();
+				this.projectPicker.hide();
+			}
 			else if ((features = analysis.layerfeatures).length > 0) {
 				this.callout.clear();
 				this.projectPicker.hide();
