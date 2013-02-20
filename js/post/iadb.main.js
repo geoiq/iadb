@@ -48,7 +48,7 @@ var iadb = (function (root, ko, global, $) {
 			else if ((features = analysis.iics).length > 0) {
 				this.map.setCenter({ latitude: features[0].latitude, longitude: features[0].longitude });
 				this.centerMap({ latitude: features[0].latitude, longitude: features[0].longitude });
-				var items = Enumerable.From(features).Select(function (x) { return new main.ResultVm(new iadb.Repo.Result(x, repo)); }).ToArray();
+				var items = Enumerable.From(features).Select(function (x) { return new main.IicVm(new iadb.Repo.Iic(x, repo)); }).ToArray();
 				this.callout.show(items);
 				this.layerCallout.clear();
 				this.projectPicker.hide();
@@ -1026,6 +1026,21 @@ var iadb = (function (root, ko, global, $) {
 		this.hasnews = data.hasnews;
 		this.hasphotos = data.hasphotos;
 		this.hasvideos = data.hasvideos;
+		this.hasmedia = this.hasphotos || this.hasdocuments || this.hasnews || this.hasvideos;
+		this.latitude = data.lat;
+		this.longitude = data['long'];
+	}).prototype = {
+	};
+
+	(main.IicVm = function (data) {
+		this.title = data.title;
+		this.description = data.description;
+		this.imageUrl = data.imageUrl;
+		this.outputid = data.iicid;
+		this.hasdocuments = false;
+		this.hasnews = false;
+		this.hasphotos = false;
+		this.hasvideos = false;
 		this.hasmedia = this.hasphotos || this.hasdocuments || this.hasnews || this.hasvideos;
 		this.latitude = data.lat;
 		this.longitude = data['long'];
