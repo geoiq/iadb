@@ -659,6 +659,7 @@ var iadb = (function (root, ko, global, $) {
 		},
 		pickResult: function (resultId) {
 			this.callout.clear();
+			this.iicCallout.clear();
 			this.layerCallout.clear();
 			var result = this.repo.getResult(resultId);
 			var projectId = result.project;
