@@ -753,6 +753,7 @@ var iadb = (function (root, ko, global, $) {
 		unpickProject: function () {
 			console.log('unpickProject');
 			this.resetMapToDefaults();
+			this.iicCallout.clear();
 			this.callout.clear();
 			this.layerCallout.clear();
 			this.search("");
