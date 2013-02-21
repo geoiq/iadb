@@ -487,6 +487,40 @@
 <!-- /ko --></div>
 <!-- /ko --></div>
 <!-- /ko -->
+<!-- ko with: iicCallout -->
+<div id="iicCallout" class="middlemost" data-bind="css:{'lang-en':iadb.getCurrentLanguage()=='en',
+													'lang-es':iadb.getCurrentLanguage()=='es',
+													'lang-fr':iadb.getCurrentLanguage()=='fr',
+													'lang-pt':iadb.getCurrentLanguage()=='pt'},if:current,fadeVisible:visible">
+	<div class="navigation corners">
+		<div style="float: left; margin-left: 30px;">
+			<a style="padding-top: 10px;" id="prev" href="#" data-bind="click:prev" title="Previous">&nbsp;</a>
+		</div>
+		<div style="float: left;">
+			<span data-bind="text:$root.lang.showingResults1"></span> &nbsp;
+			<span data-bind="text: ordinal"></span>&nbsp;
+			<span data-bind="text:$root.lang.showingResults2"></span>&nbsp;
+			<span data-bind="text: count"></span>&nbsp;
+			<span data-bind="text:$root.lang.showingResults3"></span>
+		</div>
+		<div style="float: left; width: 20px">
+			<a style="padding-top: 10px;" id="next" href="#" data-bind="click:next" title="Next">&nbsp;</a>
+		</div>
+		<div class="middle close clickable" data-bind="click: clear">
+			<img src="/images/overlay/close.png" />
+		</div>
+	</div>
+	<!-- ko with: current -->
+		<div class="inner">
+			<div style="padding: 5px 0px; border: dotted 1px gray; border-width: 1px 0px;">
+				<h1 data-bind="text: title"></h1>
+				<div class="clear"></div>
+			</div>
+			<div data-bind="html: description" style="padding-bottom: 5px; overflow-y: auto; overflow-x: hidden;"></div>
+		</div>
+	<!-- /ko -->
+</div>
+<!-- /ko -->
 <div id="popup" class="topmost"
 	data-bind="template: {name: 'popupTemplate', data: popup}, display: popup.visible "></div>
 <script type="text/html" id="popupTemplate">
@@ -1036,9 +1070,10 @@ lower than 10.1 required for this application.<br />
     repo.initialize(map, iadb.Map.basemaps, iadb.Country.countries);
 
     var callout = new iadb.Callout([], jQuery("#callout"));
+    var iicCallout = new iadb.IicCallout([], jQuery("#iicCallout"));
     var layerCallout = new iadb.LayoutCallout([], jQuery("#layerCallout"));
     var projectPicker = new iadb.ProjectPicker([]);
-    this.vm = new iadb.Main.Vm(repo, map, callout, layerCallout, projectPicker, lang);
+    this.vm = new iadb.Main.Vm(repo, map, callout, layerCallout, projectPicker, lang, iicCallout);
     this.vm.initialize();
     ko.applyBindings(this.vm);
     //map.setup(repo.getSectors());
