@@ -904,6 +904,7 @@ var iadb = (function (root, ko, global, $) {
 			console.log('unpickOutput');
 			this.resetMapToDefaults();
 			this.callout.clear();
+			this.iicCallout.clear();
 			this.layerCallout.clear();
 			var map = this.map;
 			var projectLayer = map.getProjectLayer();
