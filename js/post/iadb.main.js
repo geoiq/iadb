@@ -328,6 +328,8 @@ var iadb = (function (root, ko, global, $) {
 						this.pickedProjectDetailsVisible(false);
 					} else if (this.callout.visible()) {
 						this.callout.clear();
+					} else if (this.iicCallout.visible()) {
+						this.iicCallout.clear();
 					} else if (this.layerCallout.visible()) {
 						this.layerCallout.clear();
 					} else if (this.projectPicker.visible()) {
