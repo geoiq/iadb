@@ -601,7 +601,7 @@ var iadb = (function (root, ko, global, $) {
 				for(var i = 0; i < priorities.length; i++)
 				{
 					var priority = priorities[i];
-					filter.push("$[priority] == '" + priority.name + "'")
+					filter.push("$[target_cc] == '1'")
 				}
 			}
 			else
@@ -609,7 +609,7 @@ var iadb = (function (root, ko, global, $) {
 				for (var i = 0; i < priorities.length; i++) {
 					var priority = priorities[i];
 					if (!priority.picked()) continue;
-					filter.push("$[priority] == '" + priority.name + "'");
+					filter.push("$[target_cc] == '1'")
 				}
 			}
 			return  filter.join(' OR ');

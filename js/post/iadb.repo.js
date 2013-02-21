@@ -21,7 +21,7 @@
 					id: x.pronumber,
 					name: x.proname,
 					sector: x.prosector,
-					priority: x.priority,
+					priority: x.target_cc,
 					projectType: x.nsgtype,
 					description: x.prodescription,
 					lat: x.latitude,
