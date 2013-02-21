@@ -549,6 +549,7 @@ var iadb = (function (root, ko, global, $) {
 		filterPriorities: function () {
 			this.resetZoomToDefaults();
 			this.callout.clear();
+			this.iicCallout.clear();
 			this.layerCallout.clear();
 			var map = this.map;
 			var projectLayer = map.getProjectLayer();
