@@ -439,6 +439,7 @@ var iadb = (function (root, ko, global, $) {
 		},
 		filterSectors: function () {
 			this.resetZoomToDefaults();
+			this.iicCallout.clear();
 			this.callout.clear();
 			this.layerCallout.clear();
 			var map = this.map;
