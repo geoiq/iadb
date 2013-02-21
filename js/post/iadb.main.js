@@ -740,6 +740,7 @@ var iadb = (function (root, ko, global, $) {
 			this.resetPriority(false);
 			this.legendVisible(false);
 			this.callout.clear();
+			this.iicCallout.clear();
 			this.layerCallout.clear();
 			this.pickedProjectDetailsVisible(true);
 			this.bottomPanel.showProject();
