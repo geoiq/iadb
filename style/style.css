@@ -173,6 +173,27 @@ h1, h2, h3, h4, h5, h6, p { margin: 0px; padding: 0px; }
 #layerCallout .property .name {min-height:13px;width:50%;float:left;font-weight:bold;overflow:hidden;}
 #layerCallout .property .value {min-height:13px;width:50%;float:left;overflow:hidden;}
 
+#iicCallout { position: absolute; top: 120px; right: 50px; width: 253px; display: none; color: Gray; background: url('../images/overlay/popup2btns_en.png') no-repeat center bottom; }
+#iicCallout.lang-en {background-image: url('../images/overlay/popup2btns_en.png');}
+#iicCallout.lang-es {background-image: url('../images/overlay/popup2btns_es.png');}
+#iicCallout.lang-fr {background-image: url('../images/overlay/popup2btns_fr.png');}
+#iicCallout.lang-pt {background-image: url('../images/overlay/popup2btns_pt.png');}
+#iicCallout .inner { padding: 0px 10px; background-color: White; min-height:193px }
+#iicCallout h1 { font-weight: bold; }
+#iicCallout .nomedia {min-height:71px;background-color: #2B2B2B;color:White;text-align:center;position:relative;}
+#iicCallout .media { background-color: #2B2B2B; min-height:71px; }
+#iicCallout .media .tight { width: 60px; }
+#iicCallout .media .tight a { font-size: 9px; }
+#iicCallout .related .tight { width: 49.999%; text-align: right; position: relative; }
+#iicCallout .related .tight a { display: block; width: 100%; top: 0px; left: 0px; line-height: 50px; text-decoration: none; }
+#iicCallout .related .first { text-align: left; }
+#iicCallout .related .first a { left: auto; right: 0px; text-decoration: none; }
+#iicCallout .navigation {background: transparent url(../images/overlay/popupTop.png) no-repeat;position: relative; height: 30px; line-height: 30px; text-align: center;}
+#iicCallout .navigation a { text-decoration: none; }
+#iicCallout .navigation #prev, #callout .navigation #next { top: 6px; display: block; background-position: center center; background-repeat: no-repeat; background-color: Transparent; width: 20px; height: 20px; }
+#iicCallout .navigation #prev { background-image: url(../images/overlay/left-arrow.png); left: 5px; }
+#iicCallout .navigation #next { background-image: url(../images/overlay/right-arrow.png); right: 5px; }
+#iicCallout .navigation .close { top: -5px; right: -5px; }
 
 #project-picker {position:absolute;top:200px;right:20px;max-width:420px; position: absolute; display:none;padding:4px;background: transparent url(../images/slider/popup-bg.png) repeat 0 0;}
 #project-picker .close {top:-5px;right:-5px}

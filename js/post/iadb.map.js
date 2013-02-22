@@ -49,6 +49,12 @@
         getProjectLayer: function () {
         	return this.getLayer(this.mapOptions.isProjectLayer);
         },
+        getIics: function () {
+            return this.f1.getFeatures(this.getIicLayer().guid);
+        },
+        getIicLayer: function () {
+        	return this.getLayer(this.mapOptions.isIicLayer);
+        },
         getResults: function () {
             return this.f1.getFeatures(this.getResultLayer().guid);
         },

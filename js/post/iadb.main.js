@@ -3,7 +3,7 @@
 var iadb = (function (root, ko, global, $) {
 	var main = root['Main'] = {};
 	main["MapDelay"] = 1000;
-	main['Vm'] = function (repo, map, callout, layerCallout, projectPicker, lang) {
+	main['Vm'] = function (repo, map, callout, layerCallout, projectPicker, lang, iicCallout) {
 		if (!repo) throw 'repo is not provided';
 		if (!map) throw 'map is not provided';
 
@@ -33,20 +33,32 @@ var iadb = (function (root, ko, global, $) {
 				this.pickedBasemap(408);
 				var items = Enumerable.From(features).Select(function (x) { return new main.ResultVm(new iadb.Repo.Result(x, repo)); }).ToArray();
 				this.callout.show(items);
+				this.iicCallout.clear();
 				this.layerCallout.clear();
 				this.projectPicker.hide();
 			} else if ((features = analysis.projects).length > 1) {
 				var selectedProjects = this.repo.getProject(Enumerable.From(features).Select("$.pronumber").ToArray())
 				this.projectPicker.items(selectedProjects);
 				this.callout.clear();
+				this.iicCallout.clear();
 				this.layerCallout.clear();
 			}
 			else if (analysis.projects.length > 0) {
 				var projectId = analysis.projects[0].pronumber;
 				this.pickProject(projectId);
 			}
+			else if ((features = analysis.iics).length > 0) {
+				this.map.setCenter({ latitude: features[0].latitude, longitude: features[0].longitude });
+				this.centerMap({ latitude: features[0].latitude, longitude: features[0].longitude });
+				var items = Enumerable.From(features).Select(function (x) { return new main.IicVm(new iadb.Repo.Iic(x, repo)); }).ToArray();
+				this.iicCallout.show(items);
+				this.callout.clear();
+				this.layerCallout.clear();
+				this.projectPicker.hide();
+			}
 			else if ((features = analysis.layerfeatures).length > 0) {
 				this.callout.clear();
+				this.iicCallout.clear();
 				this.projectPicker.hide();
 				this.layerCallout.show(features);
 			}
@@ -98,6 +110,7 @@ var iadb = (function (root, ko, global, $) {
 
 
 		this.layerCallout = layerCallout;
+		this.iicCallout = iicCallout;
 
 		this.callout = callout;
 		this.callout.resultPicked.add(function (resultId) {
@@ -266,7 +279,10 @@ var iadb = (function (root, ko, global, $) {
 
 			var layers = this.repo.getLayers();
 			for (var i = 0; i < layers.length; i++) {
-				this.layers.push(new main.LayerVm(layers[i], this.layerSetChanged));
+				//do not display IIC as Data Layer, it is displayed in Project Type
+				if(layers[i].title != 'iic'){
+					this.layers.push(new main.LayerVm(layers[i], this.layerSetChanged));
+				}
 			}
 
 			var projectTypes = this.repo.getProjectTypes();
@@ -315,6 +331,8 @@ var iadb = (function (root, ko, global, $) {
 						this.pickedProjectDetailsVisible(false);
 					} else if (this.callout.visible()) {
 						this.callout.clear();
+					} else if (this.iicCallout.visible()) {
+						this.iicCallout.clear();
 					} else if (this.layerCallout.visible()) {
 						this.layerCallout.clear();
 					} else if (this.projectPicker.visible()) {
@@ -388,6 +406,7 @@ var iadb = (function (root, ko, global, $) {
 		filterProjects: function () {
 			this.resetZoomToDefaults();
 			this.callout.clear();
+			this.iicCallout.clear();
 			this.layerCallout.clear();
 			var map = this.map;
 			var projectLayer = map.getProjectLayer();
@@ -423,6 +442,7 @@ var iadb = (function (root, ko, global, $) {
 		},
 		filterSectors: function () {
 			this.resetZoomToDefaults();
+			this.iicCallout.clear();
 			this.callout.clear();
 			this.layerCallout.clear();
 			var map = this.map;
@@ -466,6 +486,7 @@ var iadb = (function (root, ko, global, $) {
 
 		filterProjectTypes: function () {
 			this.resetZoomToDefaults();
+			this.iicCallout.clear();
 			this.callout.clear();
 			this.layerCallout.clear();
 			var map = this.map;
@@ -531,6 +552,7 @@ var iadb = (function (root, ko, global, $) {
 		filterPriorities: function () {
 			this.resetZoomToDefaults();
 			this.callout.clear();
+			this.iicCallout.clear();
 			this.layerCallout.clear();
 			var map = this.map;
 			var projectLayer = map.getProjectLayer();
@@ -640,6 +662,7 @@ var iadb = (function (root, ko, global, $) {
 		},
 		pickResult: function (resultId) {
 			this.callout.clear();
+			this.iicCallout.clear();
 			this.layerCallout.clear();
 			var result = this.repo.getResult(resultId);
 			var projectId = result.project;
@@ -720,6 +743,7 @@ var iadb = (function (root, ko, global, $) {
 			this.resetPriority(false);
 			this.legendVisible(false);
 			this.callout.clear();
+			this.iicCallout.clear();
 			this.layerCallout.clear();
 			this.pickedProjectDetailsVisible(true);
 			this.bottomPanel.showProject();
@@ -732,6 +756,7 @@ var iadb = (function (root, ko, global, $) {
 		unpickProject: function () {
 			console.log('unpickProject');
 			this.resetMapToDefaults();
+			this.iicCallout.clear();
 			this.callout.clear();
 			this.layerCallout.clear();
 			this.search("");
@@ -770,6 +795,7 @@ var iadb = (function (root, ko, global, $) {
 			console.log('unpickSector');
 			this.resetMapToDefaults();
 			this.callout.clear();
+			this.iicCallout.clear();
 			this.layerCallout.clear();
 			var map = this.map;
 			var projectLayer = map.getProjectLayer();
@@ -793,6 +819,7 @@ var iadb = (function (root, ko, global, $) {
 			console.log('unpickPriority');
 			this.resetMapToDefaults();
 			this.callout.clear();
+			this.iicCallout.clear();
 			this.layerCallout.clear();
 			var map = this.map;
 			var projectLayer = map.getProjectLayer();
@@ -817,6 +844,7 @@ var iadb = (function (root, ko, global, $) {
 			console.log('unpickProjectType');
 			this.resetMapToDefaults();
 			this.callout.clear();
+			this.iicCallout.clear();
 			this.layerCallout.clear();
 			var map = this.map;
 			var projectLayer = map.getProjectLayer();
@@ -879,6 +907,7 @@ var iadb = (function (root, ko, global, $) {
 			console.log('unpickOutput');
 			this.resetMapToDefaults();
 			this.callout.clear();
+			this.iicCallout.clear();
 			this.layerCallout.clear();
 			var map = this.map;
 			var projectLayer = map.getProjectLayer();
@@ -1019,6 +1048,14 @@ var iadb = (function (root, ko, global, $) {
 		this.hasphotos = data.hasphotos;
 		this.hasvideos = data.hasvideos;
 		this.hasmedia = this.hasphotos || this.hasdocuments || this.hasnews || this.hasvideos;
+		this.latitude = data.lat;
+		this.longitude = data['long'];
+	}).prototype = {
+	};
+
+	(main.IicVm = function (data) {
+		this.title = data.title;
+		this.description = data.description;
 		this.latitude = data.lat;
 		this.longitude = data['long'];
 	}).prototype = {
