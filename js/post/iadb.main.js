@@ -718,7 +718,6 @@ var iadb = (function (root, ko, global, $) {
 			}
 			this.resetSector(false);
 			this.resetPriority(false);
-			this.resetProjectType(false);
 			this.legendVisible(false);
 			this.callout.clear();
 			this.layerCallout.clear();
