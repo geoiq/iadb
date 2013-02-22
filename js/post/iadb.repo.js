@@ -44,7 +44,7 @@
 				return x.Key == "" ? "zzz" : x.Key
 			}).Select(function (x) {
 				var count = Enumerable.From(projects).Where(function (y) { return y.priority == x.Key }).Count();
-				return { name: x.Key, id: x.Value.id, count: count, imageurl: encodeURI(iadb.globals.imageurl + "/images/icons/priorities/" + x.Value.filename + ".png") };
+				return { name: x.Key, id: x.Value.id, count: count};
 			}).Where("$.count>0").ToArray();
 			
 			// create projectTypes array
