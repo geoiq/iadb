@@ -168,9 +168,6 @@
 		this.description = data.iicdescription+'<br/><br/>'+data.iicnumber;
 		this.lat = data.latitude;
 		this['long'] = data.longitude;
-		// TODO: Get category
-		//this.category = repo.getOutput(data['category'] || "Other");
-		//this.imageUrl = data['photo filename'] == null ? null : encodeURI('http://services.iadb.org/wmsfiles/images/datavis/thumbs/' + data['photo filename']);
 	}).prototype = {
 	};
 
