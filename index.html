@@ -72,6 +72,9 @@
 				data-bind="text: sector, attr: {'for': 'proj' + pid}"></label></td>
 				<td><label class="clickable"
 					data-bind="text: priority, attr: {'for': 'proj' + pid}"></label></td>
+				<td>
+					<label class="clickable" data-bind="text: projectType, attr: {'for': 'proj' + pid}"></label>
+				</td>
 		</tr>
 		<!-- /ko -->
 	</tbody>
@@ -117,6 +120,31 @@
 		</tr>
 	</thead>
 	<tbody data-bind="template:{name:'sectorMenuItem',foreach: sectors}">
+	</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="plate on-stripe" id="projectTypes">
+<div class="content" style="padding-right: 20px">
+<div>
+<table>
+	<thead>
+		<tr>
+			<td colspan=2><input type="checkbox"
+				data-bind="checked: allProjectTypes" id="allProjectTypes" /> <label
+				class="clickable" for="allProjectTypes"
+				data-bind="text: $root.lang.selectAll"> <script
+				type="text/javascript">                  iadb.write(lang, 'selectAll');</script>
+			</label></td>
+		</tr>
+		<tr height="7px">
+			<td colspan=2>
+			<div class="delimiter"></div>
+			</td>
+		</tr>
+	</thead>
+	<tbody data-bind="template:{name:'projectTypeMenuItem',foreach: projectTypes}">
 	</tbody>
 </table>
 </div>
@@ -232,7 +260,19 @@
 <div class="pin">
 <div></div>
 </div>
-</a> <a class="tight"
+</a>
+	<a class="tight"
+		data-bind="css:{active: areProjectTypesActive }, event:{mouseover:function(){$data.bottomPanel.showSectors();},mouseout:function(){if ($data.pickedProject()!=null){$data.bottomPanel.showProject();}}},menu: {id: 'projectTypes', offset: 0}, click: unpickProject">
+		<span data-bind="text: $root.lang.projectTypes">
+			<script	type="text/javascript">
+				iadb.write(lang, 'projectTypes');
+			</script>
+		</span>
+		<div class="pin">
+			<div></div>
+		</div>
+	</a>
+ <a class="tight"
 	data-bind="css:{active: areSectorsActive }, event:{mouseover:function(){$data.bottomPanel.showSectors()},mouseout:function(){if ($data.pickedProject()!=null){$data.bottomPanel.showProject();}}},menu: {id: 'sectors', offset: -20}, click: unpickSector">
 <span data-bind="text: $root.lang.sectors"> <script
 	type="text/javascript">            iadb.write(lang, 'sectors');</script>
@@ -514,6 +554,13 @@
     </td>
     </tr>
   </script>
+<script id="projectTypeMenuItem" type="text/html">
+    <tr><td>
+			<input type="checkbox" data-bind="checked: picked, attr: {id: 'ptype' + id}" />
+			<label class="clickable" data-bind="text: eval ('$root.lang.' + name), attr: {'for': 'ptype' + id}"></label>
+    </td><td>
+	</td></tr>
+  </script>
 <script id="sectorMenuItem" type="text/html">
     <tr><td>
 			<input type="checkbox" data-bind="checked: picked, attr: {id: id}" />
@@ -549,6 +596,17 @@
         <!-- ko foreach: sectors -->
 				  <label data-bind="text: count"></label>
 				  <img data-bind="attr: {src: imageurl, title: name}" />
+				<!-- /ko -->
+			</div>
+		</div>
+		<div class="clear"></div>
+  </script>
+<script type="text/html" id="projectTypesSummaryTemplate">
+		<div class="tight" data-bind="text: $root.lang.projectTypes"></div>
+		<div class="tight" id="results-summary">
+			<div class="projectTypes">
+        <!-- ko foreach: projectTypes -->
+				  <label data-bind="text: count"></label>
 				<!-- /ko -->
 			</div>
 		</div>
