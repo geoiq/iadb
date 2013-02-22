@@ -1054,7 +1054,6 @@ var iadb = (function (root, ko, global, $) {
 		this.title = data.title;
 		this.description = data.description;
 		this.imageUrl = '';
-		this.outputid = data.iicid;
 		this.hasdocuments = false;
 		this.hasnews = false;
 		this.hasphotos = false;

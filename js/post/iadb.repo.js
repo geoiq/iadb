@@ -164,7 +164,6 @@
 	};
 
 	(iadb.Repo.Iic = function (data, repo) {
-		this.iicid = data['object-id'];
 		this.title = data.iicname;
 		this.description = data.iicdescription+'<br/><br/>'+data.iicnumber;
 		this.lat = data.latitude;
