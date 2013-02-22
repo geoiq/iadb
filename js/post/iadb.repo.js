@@ -21,7 +21,7 @@
 					id: x.pronumber,
 					name: x.proname,
 					sector: x.prosector,
-					priority: x.priority,
+					priority: (x.target_cc == '1' ? 'CC' : null),
 					projectType: x.nsgtype,
 					description: x.prodescription,
 					lat: x.latitude,
@@ -44,7 +44,7 @@
 				return x.Key == "" ? "zzz" : x.Key
 			}).Select(function (x) {
 				var count = Enumerable.From(projects).Where(function (y) { return y.priority == x.Key }).Count();
-				return { name: x.Key, id: x.Value.id, count: count, imageurl: encodeURI(iadb.globals.imageurl + "/images/icons/priorities/" + x.Value.filename + ".png") };
+				return { name: x.Key, id: x.Value.id, count: count};
 			}).Where("$.count>0").ToArray();
 			
 			// create projectTypes array
