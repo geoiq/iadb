@@ -279,7 +279,10 @@ var iadb = (function (root, ko, global, $) {
 
 			var layers = this.repo.getLayers();
 			for (var i = 0; i < layers.length; i++) {
-				this.layers.push(new main.LayerVm(layers[i], this.layerSetChanged));
+				//do not display IIC as Data Layer, it is displayed in Project Type
+				if(layers[i].title != 'iic'){
+					this.layers.push(new main.LayerVm(layers[i], this.layerSetChanged));
+				}
 			}
 
 			var projectTypes = this.repo.getProjectTypes();
