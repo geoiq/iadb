@@ -3,7 +3,7 @@
 var iadb = (function (root, ko, global, $) {
 	var main = root['Main'] = {};
 	main["MapDelay"] = 1000;
-	main['Vm'] = function (repo, map, callout, layerCallout, projectPicker, lang, iicCallout) {
+	main['Vm'] = function (repo, map, callout, layerCallout, projectPicker, lang, iicCallout, tffpCallout) {
 		if (!repo) throw 'repo is not provided';
 		if (!map) throw 'map is not provided';
 
@@ -111,6 +111,7 @@ var iadb = (function (root, ko, global, $) {
 
 		this.layerCallout = layerCallout;
 		this.iicCallout = iicCallout;
+		this.tffpCallout = tffpCallout;
 
 		this.callout = callout;
 		this.callout.resultPicked.add(function (resultId) {
