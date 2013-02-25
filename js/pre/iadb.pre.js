@@ -6,7 +6,7 @@
 		en: en = {
 			selectCountry: 'Select Country',
 			projects: 'Projects',
-			projectTypes: 'Project Types',
+			projectTypes: 'Project Type',
 			projectType: 'Project Type',
 			sectors: 'Sectors',
 			sector: 'Sector',
@@ -138,7 +138,7 @@
 		es: propotyped({
 			selectCountry: 'Seleccione el país',
 			projects: 'Proyectos',
-			projectTypes: 'Tipos de Proyecto',
+			projectTypes: 'Tipo de Proyecto',
 			projectType: 'Tipo de Proyecto',
 			sectors: 'Sectores',
 			sector: 'Sector',
@@ -269,7 +269,7 @@
 		fr: propotyped({
 			selectCountry: 'Choisir le pays',
 			projects: 'Projets',
-			projectTypes: 'Types de Projet',
+			projectTypes: 'Type de Projet',
 			projectType: 'Type de Projet',
 			sectors: 'Secteurs',
 			sector: 'Secteur',
@@ -400,7 +400,7 @@
 		pt: propotyped({
 			selectCountry: 'Selecione um país',
 			projects: 'Projetos',
-			projectTypes: 'Tipos de projetos',
+			projectTypes: 'Tipo de projeto',
 			projectType: 'Tipo de projeto',
 			sectors: 'Setores',
 			sector: 'Setor',
