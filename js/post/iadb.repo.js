@@ -171,6 +171,13 @@
 	}).prototype = {
 	};
 
+	(iadb.Repo.Tffp = function (data, repo) {
+		this.tffpphoto = data.tffpphoto;
+		this.lat = data.latitude;
+		this['long'] = data.longitude;
+	}).prototype = {
+	};
+
 	return iadb;
 
 } (iadb || {}));
