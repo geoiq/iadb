@@ -73,7 +73,7 @@
         retValue.preProcessItem = function (item) {
             item.properties = [];
             for (var property in item) {
-                if (typeof (item[property]) != "object") {
+                if (typeof (item[property]) != "object" && property != 'id' && property != 'layer' && property != 'geometry' && property != 'latitude' && property != 'longitude') {
                     item.properties.push({ name: property, value: item[property].toString() ? item[property].toString() : " " });
                 }
             }
