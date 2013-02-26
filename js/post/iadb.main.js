@@ -773,7 +773,7 @@ var iadb = (function (root, ko, global, $) {
 			this.resetProject();
 			this.resetSector(true);
 			this.resetPriority(true);
-			this.resetProjectType(true);
+			this.resetProjectType(false);
 			this.resetOutput(false);
 			this.pickedProject(null);
 			this.bottomPanel.updateProjects();
