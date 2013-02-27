@@ -280,7 +280,7 @@ var iadb = (function (root, ko, global, $) {
 			var layers = this.repo.getLayers();
 			for (var i = 0; i < layers.length; i++) {
 				//do not display IIC as Data Layer, it is displayed in Project Type
-				if(layers[i].title != 'iic'){
+				if(layers[i].title != 'IIC'){
 					this.layers.push(new main.LayerVm(layers[i], this.layerSetChanged));
 				}
 			}
@@ -292,7 +292,7 @@ var iadb = (function (root, ko, global, $) {
 			}
 			//adding the data layer check box to the list of projectTypes
 			for (var i = 0; i < layers.length; i++) {
-				if(layers[i].title == 'iic'){
+				if(layers[i].title == 'IIC'){
 					this.projectTypes.push(new main.LayerVm(layers[0], this.layerSetChanged));
 				}
 			}
