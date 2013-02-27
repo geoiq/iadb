@@ -50,7 +50,7 @@
 			// create projectTypes array
 			var projectTypeIndex = 0;
 			var projectTypes = this.projectTypes = Enumerable.From(iadb.globals.projectTypes).OrderBy(function (x) {
-				return x.Key == "" ? "zzz" : x.Key
+				return x.Value['id'] == null ? 0 : x.Value['id']
 			}).Select(function (x) {
 				var count = Enumerable.From(projects).Where(function (y) { return y.projectType == x.Key }).Count();
 				return { name: x.Key, id: x.Value.id, count: count };
@@ -166,6 +166,13 @@
 	(iadb.Repo.Iic = function (data, repo) {
 		this.title = data.iicname;
 		this.description = data.iicdescription+'<br/><br/>'+data.iicnumber;
+		this.lat = data.latitude;
+		this['long'] = data.longitude;
+	}).prototype = {
+	};
+
+	(iadb.Repo.Tffp = function (data, repo) {
+		this.tffpphoto = data.tffpphoto;
 		this.lat = data.latitude;
 		this['long'] = data.longitude;
 	}).prototype = {

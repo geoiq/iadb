@@ -521,6 +521,20 @@
 	<!-- /ko -->
 </div>
 <!-- /ko -->
+<!-- ko with: tffpCallout -->
+<div id="tffpCallout" class="middlemost" data-bind="css:{'lang-en':iadb.getCurrentLanguage()=='en',
+													'lang-es':iadb.getCurrentLanguage()=='es',
+													'lang-fr':iadb.getCurrentLanguage()=='fr',
+													'lang-pt':iadb.getCurrentLanguage()=='pt'},if:current,fadeVisible:visible">
+	<!-- ko with: current -->
+		<div class="inner">
+			<!-- ko if: imageUrl -->
+				<img class="right" data-bind="attr: {src: imageUrl}" />
+			<!-- /ko -->
+		</div>
+	<!-- /ko -->
+</div>
+<!-- /ko -->
 <div id="popup" class="topmost"
 	data-bind="template: {name: 'popupTemplate', data: popup}, display: popup.visible "></div>
 <script type="text/html" id="popupTemplate">
@@ -695,7 +709,7 @@
     <!-- ko foreach: layers -->
     <!-- ko if: picked() -->
     <li style="padding-top:10px;height:20px;">
-    <!-- ko if: $data.name!="Infant Mortality" && $data.name!="Haiti 2003 Population Density" && $data.name!="Aggregation of Latest Collapsed Buildings in Haiti" -->
+    <!-- ko if: $data.name!="Infant Mortality" && $data.name!="Haiti 2003 Population Density" && $data.name!="Aggregation of Latest Collapsed Buildings in Haiti" && $data.name!="TFFP"-->
         <img width="15px" data-bind="attr:{src:imageurl}"/>
     <!-- /ko -->
         <label style="font-size:15px" data-bind="text: name"/>
@@ -1070,9 +1084,10 @@ lower than 10.1 required for this application.<br />
 
     var callout = new iadb.Callout([], jQuery("#callout"));
     var iicCallout = new iadb.IicCallout([], jQuery("#iicCallout"));
+    var tffpCallout = new iadb.TffpCallout([], jQuery("#tffpCallout"));
     var layerCallout = new iadb.LayoutCallout([], jQuery("#layerCallout"));
     var projectPicker = new iadb.ProjectPicker([]);
-    this.vm = new iadb.Main.Vm(repo, map, callout, layerCallout, projectPicker, lang, iicCallout);
+    this.vm = new iadb.Main.Vm(repo, map, callout, layerCallout, projectPicker, lang, iicCallout, tffpCallout);
     this.vm.initialize();
     ko.applyBindings(this.vm);
     //map.setup(repo.getSectors());

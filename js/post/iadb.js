@@ -65,6 +65,7 @@
         var results = [];
         var layerfeatures = [];
         var iics = [];
+        var tffps = [];
         if (iadb.type(features) === 'array') {
             for (var i = 0; i < features.length; i++) {
                 var feature = features[i];
@@ -74,12 +75,14 @@
                     results.push(feature);
                 }else if(iadb.isIicFeature(feature)){
                 	iics.push(feature);
+                }else if(iadb.isTffpFeature(feature)){
+                	tffps.push(feature);
                 }
                 else layerfeatures.push(feature);
             }
-            return { results: results, projects: projects, layerfeatures:layerfeatures, iics: iics };
+            return { results: results, projects: projects, layerfeatures:layerfeatures, iics: iics, tffps: tffps };
         } else {
-            return { results: [], projects: [], layerfeatures:[] , iics:[]};
+            return { results: [], projects: [], layerfeatures:[] , iics:[], tffps:[]};
         }
     }
 
@@ -91,6 +94,11 @@
     iadb.isIicFeature = function (feature) {
         if (!feature) return false;
         return !!feature.iicnumber;
+    };
+
+    iadb.isTffpFeature = function (feature) {
+        if (!feature) return false;
+        return !!feature.tffpphoto;
     };
 
     iadb.isResultFeature = function (feature) {

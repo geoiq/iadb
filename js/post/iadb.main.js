@@ -3,7 +3,7 @@
 var iadb = (function (root, ko, global, $) {
 	var main = root['Main'] = {};
 	main["MapDelay"] = 1000;
-	main['Vm'] = function (repo, map, callout, layerCallout, projectPicker, lang, iicCallout) {
+	main['Vm'] = function (repo, map, callout, layerCallout, projectPicker, lang, iicCallout, tffpCallout) {
 		if (!repo) throw 'repo is not provided';
 		if (!map) throw 'map is not provided';
 
@@ -34,6 +34,7 @@ var iadb = (function (root, ko, global, $) {
 				var items = Enumerable.From(features).Select(function (x) { return new main.ResultVm(new iadb.Repo.Result(x, repo)); }).ToArray();
 				this.callout.show(items);
 				this.iicCallout.clear();
+				this.tffpCallout.clear();
 				this.layerCallout.clear();
 				this.projectPicker.hide();
 			} else if ((features = analysis.projects).length > 1) {
@@ -41,6 +42,7 @@ var iadb = (function (root, ko, global, $) {
 				this.projectPicker.items(selectedProjects);
 				this.callout.clear();
 				this.iicCallout.clear();
+				this.tffpCallout.clear();
 				this.layerCallout.clear();
 			}
 			else if (analysis.projects.length > 0) {
@@ -52,13 +54,25 @@ var iadb = (function (root, ko, global, $) {
 				this.centerMap({ latitude: features[0].latitude, longitude: features[0].longitude });
 				var items = Enumerable.From(features).Select(function (x) { return new main.IicVm(new iadb.Repo.Iic(x, repo)); }).ToArray();
 				this.iicCallout.show(items);
+				this.tffpCallout.clear();
 				this.callout.clear();
 				this.layerCallout.clear();
 				this.projectPicker.hide();
 			}
+			else if ((features = analysis.tffps).length > 0) {
+				this.map.setCenter({ latitude: features[0].latitude, longitude: features[0].longitude });
+				this.centerMap({ latitude: features[0].latitude, longitude: features[0].longitude });
+				var items = Enumerable.From(features).Select(function (x) { return new main.TffpVm(new iadb.Repo.Tffp(x, repo)); }).ToArray();
+				this.tffpCallout.show(items);
+				//this.iicCallout.clear();
+				//this.callout.clear();
+				//this.layerCallout.clear();
+				//this.projectPicker.hide();
+			}
 			else if ((features = analysis.layerfeatures).length > 0) {
 				this.callout.clear();
 				this.iicCallout.clear();
+				this.tffpCallout.clear();
 				this.projectPicker.hide();
 				this.layerCallout.show(features);
 			}
@@ -111,6 +125,7 @@ var iadb = (function (root, ko, global, $) {
 
 		this.layerCallout = layerCallout;
 		this.iicCallout = iicCallout;
+		this.tffpCallout = tffpCallout;
 
 		this.callout = callout;
 		this.callout.resultPicked.add(function (resultId) {
@@ -280,7 +295,7 @@ var iadb = (function (root, ko, global, $) {
 			var layers = this.repo.getLayers();
 			for (var i = 0; i < layers.length; i++) {
 				//do not display IIC as Data Layer, it is displayed in Project Type
-				if(layers[i].title != 'iic'){
+				if(layers[i].title != 'IIC'){
 					this.layers.push(new main.LayerVm(layers[i], this.layerSetChanged));
 				}
 			}
@@ -292,7 +307,7 @@ var iadb = (function (root, ko, global, $) {
 			}
 			//adding the data layer check box to the list of projectTypes
 			for (var i = 0; i < layers.length; i++) {
-				if(layers[i].title == 'iic'){
+				if(layers[i].title == 'IIC'){
 					this.projectTypes.push(new main.LayerVm(layers[0], this.layerSetChanged));
 				}
 			}
@@ -333,6 +348,8 @@ var iadb = (function (root, ko, global, $) {
 						this.callout.clear();
 					} else if (this.iicCallout.visible()) {
 						this.iicCallout.clear();
+					}else if (this.tffpCallout.visible()) {
+						this.tffpCallout.clear();
 					} else if (this.layerCallout.visible()) {
 						this.layerCallout.clear();
 					} else if (this.projectPicker.visible()) {
@@ -407,6 +424,7 @@ var iadb = (function (root, ko, global, $) {
 			this.resetZoomToDefaults();
 			this.callout.clear();
 			this.iicCallout.clear();
+			this.tffpCallout.clear();
 			this.layerCallout.clear();
 			var map = this.map;
 			var projectLayer = map.getProjectLayer();
@@ -443,6 +461,7 @@ var iadb = (function (root, ko, global, $) {
 		filterSectors: function () {
 			this.resetZoomToDefaults();
 			this.iicCallout.clear();
+			this.tffpCallout.clear();
 			this.callout.clear();
 			this.layerCallout.clear();
 			var map = this.map;
@@ -487,6 +506,7 @@ var iadb = (function (root, ko, global, $) {
 		filterProjectTypes: function () {
 			this.resetZoomToDefaults();
 			this.iicCallout.clear();
+			this.tffpCallout.clear();
 			this.callout.clear();
 			this.layerCallout.clear();
 			var map = this.map;
@@ -553,6 +573,7 @@ var iadb = (function (root, ko, global, $) {
 			this.resetZoomToDefaults();
 			this.callout.clear();
 			this.iicCallout.clear();
+			this.tffpCallout.clear();
 			this.layerCallout.clear();
 			var map = this.map;
 			var projectLayer = map.getProjectLayer();
@@ -663,6 +684,7 @@ var iadb = (function (root, ko, global, $) {
 		pickResult: function (resultId) {
 			this.callout.clear();
 			this.iicCallout.clear();
+			this.tffpCallout.clear();
 			this.layerCallout.clear();
 			var result = this.repo.getResult(resultId);
 			var projectId = result.project;
@@ -744,6 +766,7 @@ var iadb = (function (root, ko, global, $) {
 			this.legendVisible(false);
 			this.callout.clear();
 			this.iicCallout.clear();
+			this.tffpCallout.clear();
 			this.layerCallout.clear();
 			this.pickedProjectDetailsVisible(true);
 			this.bottomPanel.showProject();
@@ -757,6 +780,7 @@ var iadb = (function (root, ko, global, $) {
 			console.log('unpickProject');
 			this.resetMapToDefaults();
 			this.iicCallout.clear();
+			this.tffpCallout.clear();
 			this.callout.clear();
 			this.layerCallout.clear();
 			this.search("");
@@ -773,7 +797,7 @@ var iadb = (function (root, ko, global, $) {
 			this.resetProject();
 			this.resetSector(true);
 			this.resetPriority(true);
-			this.resetProjectType(true);
+			this.resetProjectType(false);
 			this.resetOutput(false);
 			this.pickedProject(null);
 			this.bottomPanel.updateProjects();
@@ -796,6 +820,7 @@ var iadb = (function (root, ko, global, $) {
 			this.resetMapToDefaults();
 			this.callout.clear();
 			this.iicCallout.clear();
+			this.tffpCallout.clear();
 			this.layerCallout.clear();
 			var map = this.map;
 			var projectLayer = map.getProjectLayer();
@@ -820,6 +845,7 @@ var iadb = (function (root, ko, global, $) {
 			this.resetMapToDefaults();
 			this.callout.clear();
 			this.iicCallout.clear();
+			this.tffpCallout.clear();
 			this.layerCallout.clear();
 			var map = this.map;
 			var projectLayer = map.getProjectLayer();
@@ -845,6 +871,7 @@ var iadb = (function (root, ko, global, $) {
 			this.resetMapToDefaults();
 			this.callout.clear();
 			this.iicCallout.clear();
+			this.tffpCallout.clear();
 			this.layerCallout.clear();
 			var map = this.map;
 			var projectLayer = map.getProjectLayer();
@@ -908,6 +935,7 @@ var iadb = (function (root, ko, global, $) {
 			this.resetMapToDefaults();
 			this.callout.clear();
 			this.iicCallout.clear();
+			this.tffpCallout.clear();
 			this.layerCallout.clear();
 			var map = this.map;
 			var projectLayer = map.getProjectLayer();
@@ -1056,6 +1084,14 @@ var iadb = (function (root, ko, global, $) {
 	(main.IicVm = function (data) {
 		this.title = data.title;
 		this.description = data.description;
+		this.latitude = data.lat;
+		this.longitude = data['long'];
+	}).prototype = {
+	};
+
+	//data param received in this method is what built from iadb.repo
+	(main.TffpVm = function (data) {
+		this.imageUrl = data.tffpphoto;
 		this.latitude = data.lat;
 		this.longitude = data['long'];
 	}).prototype = {
