@@ -190,7 +190,7 @@ h1, h2, h3, h4, h5, h6, p { margin: 0px; padding: 0px; }
 #iicCallout .related .first a { left: auto; right: 0px; text-decoration: none; }
 #iicCallout .navigation {background: transparent url(../images/overlay/popupTop.png) no-repeat;position: relative; height: 30px; line-height: 30px; text-align: center;}
 #iicCallout .navigation a { text-decoration: none; }
-#iicCallout .navigation #prev, #callout .navigation #next { top: 6px; display: block; background-position: center center; background-repeat: no-repeat; background-color: Transparent; width: 20px; height: 20px; }
+#iicCallout .navigation #prev, #iicCallout .navigation #next { top: 6px; display: block; background-position: center center; background-repeat: no-repeat; background-color: Transparent; width: 20px; height: 20px; }
 #iicCallout .navigation #prev { background-image: url(../images/overlay/left-arrow.png); left: 5px; }
 #iicCallout .navigation #next { background-image: url(../images/overlay/right-arrow.png); right: 5px; }
 #iicCallout .navigation .close { top: -5px; right: -5px; }
