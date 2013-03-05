@@ -522,6 +522,14 @@ var iadb = (function (root, ko, global, $) {
 			//map.removeFilters(projectLayer);
 			this.pickedProject(null);
 			var projectTypes = this.projectTypes();
+			//display TFFP layer and info window if 'Private' is selected 
+			for (var i = 0; i < projectTypes.length; i++) {
+				if (projectTypes[i].name == 'PRIVATE' && projectTypes[i].picked()) {
+					map.setVisibility(map.getTffpLayer(), true);
+					var items = Enumerable.From(map.getTffps()).Select(function (x) { return new main.TffpVm(new iadb.Repo.Tffp(x, this.repo)); }).ToArray();
+					this.tffpCallout.show(items);
+				}
+			}
 			var filter = this.buildProjectTypeFilter(projectTypes);
 							
 			// changing url for projectTypes filters           

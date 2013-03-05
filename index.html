@@ -1068,6 +1068,7 @@ lower than 10.1 required for this application.<br />
   function isProjectLayer(layer) { return layer.title.toLowerCase() == "projects"; }
   function isResultLayer(layer) { return layer.title.toString().toLowerCase() == "outputs"; }
   function isIicLayer(layer) { return layer.title.toString().toLowerCase() == "iic"; }
+  function isTffpLayer(layer) { return layer.title.toString().toLowerCase() == "tffp"; }
   function startApp() {
     // this == mapSignals
     window.console.log('application is about to start');
@@ -1078,7 +1079,7 @@ lower than 10.1 required for this application.<br />
 
     jQuery(window).resize(this.resized.dispatch.bind(this.resized));
 
-    var map = new iadb.Map(this.f1, { isLinesLayer: isLinesLayer, isProjectLayer: isProjectLayer, isResultLayer: isResultLayer, isIicLayer: isIicLayer}, this);
+    var map = new iadb.Map(this.f1, { isLinesLayer: isLinesLayer, isProjectLayer: isProjectLayer, isResultLayer: isResultLayer, isIicLayer: isIicLayer, isTffpLayer: isTffpLayer}, this);
     //map.replaceFeatures();
     var repo = new iadb.Repo();
     repo.initialize(map, iadb.Map.basemaps, iadb.Country.countries);
