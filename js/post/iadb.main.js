@@ -865,22 +865,27 @@ var iadb = (function (root, ko, global, $) {
 		unpickProjectType: function () {
 			console.log('unpickProjectType');
 			this.resetMapToDefaults();
-			this.callout.clear();
 			this.iicCallout.clear();
 			this.tffpCallout.clear();
+			this.callout.clear();
 			this.layerCallout.clear();
+			this.search("");
 			var map = this.map;
 			var projectLayer = map.getProjectLayer();
 			var resultLayer = map.getResultLayer();
-			var linesLayer = map.getLinesLayer()
-			map.setVisibility(projectLayer, true);
+			var linesLayer = map.getLinesLayer();
+			
+
 			map.setVisibility(linesLayer, false);
+			map.setVisibility(projectLayer, true);
 			map.setVisibility(resultLayer, false);
 			this.pickedProjectDetailsVisible(false);
-			this.pickedProject(null);
+			this.resetProject();
 			this.resetSector(false);
-			this.resetProjectType(true);
+			this.resetPriority(true);
+			this.resetProjectType(false);
 			this.resetOutput(false);
+			this.pickedProject(null);
 			this.filterProjectTypes();
 			//map.removeFilters(projectLayer);
 			this.bottomPanel.updateProjectTypes();
