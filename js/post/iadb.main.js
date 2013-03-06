@@ -474,7 +474,7 @@ var iadb = (function (root, ko, global, $) {
 			this.resetOutput(false);
 			//this.resetSector(true);
 			this.resetPriority(false);
-			this.resetProjectType(false);
+			this.resetProjectType(true);
 			this.resetProject();
 			//map.removeFilters(projectLayer);
 			this.pickedProject(null);
