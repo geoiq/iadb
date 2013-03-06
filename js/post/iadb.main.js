@@ -640,7 +640,7 @@ var iadb = (function (root, ko, global, $) {
 			//map.removeFilters(resultLayer);
 			this.resetSector(false);
 			this.resetProject();
-
+			this.resetProjectType(true);
 			// changing url for result filters           
 			if (this.allOutputs()) {
 				this.mainSignals.outputUnpicked.dispatch();
