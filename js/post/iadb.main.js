@@ -522,14 +522,6 @@ var iadb = (function (root, ko, global, $) {
 			//map.removeFilters(projectLayer);
 			this.pickedProject(null);
 			var projectTypes = this.projectTypes();
-			//display TFFP layer and info window if 'Private' is selected 
-			for (var i = 0; i < projectTypes.length; i++) {
-				if (projectTypes[i].name == 'PRIVATE' && projectTypes[i].picked()) {
-					map.setVisibility(map.getTffpLayer(), true);
-					var items = Enumerable.From(map.getTffps()).Select(function (x) { return new main.TffpVm(new iadb.Repo.Tffp(x, this.repo)); }).ToArray();
-					this.tffpCallout.show(items);
-				}
-			}
 			var filter = this.buildProjectTypeFilter(projectTypes);
 							
 			// changing url for projectTypes filters           
@@ -551,6 +543,7 @@ var iadb = (function (root, ko, global, $) {
 				for(var i = 0; i < projectTypes.length; i++)
 				{
 					var projectType = projectTypes[i];
+					this.toggle_tffp(projectType);
 					filter.push("$[nsgtype] == '" + projectType.name + "'")
 				}
 			}
@@ -558,6 +551,7 @@ var iadb = (function (root, ko, global, $) {
 			{
 				for (var i = 0; i < projectTypes.length; i++) {
 					var projectType = projectTypes[i];
+					this.toggle_tffp(projectType);
 					if (!projectType.picked()) continue;
 					filter.push("$[nsgtype] == '" + projectType.name + "'");
 				}
@@ -927,6 +921,7 @@ var iadb = (function (root, ko, global, $) {
 			for (var i = 0; i < projectTypes.length; i++) {
 				projectTypes[i].picked(!state);
 				console.log(state);
+				this.toggle_tffp(projectTypes[i]);//toggle TFFP when anyone reset Project type
 			}
 			this.projectTypeSetChanged.active = true;
 			console.log('end resetProjectType');
@@ -1012,6 +1007,20 @@ var iadb = (function (root, ko, global, $) {
 		},
 		hideLegend: function () {
 			this.legendVisible(false);
+		},
+	
+		//toggle TFFP layer and info window if 'Private' projec type is (un)checked
+		toggle_tffp: function(project_type){
+			if (project_type.name == 'PRIVATE') {
+				if (project_type.picked()){
+					this.map.setVisibility(this.map.getTffpLayer(), true);
+					var items = Enumerable.From(this.map.getTffps()).Select(function (x) { return new main.TffpVm(new iadb.Repo.Tffp(x, this.repo)); }).ToArray();
+					this.tffpCallout.show(items);
+				}else{
+					this.map.setVisibility(this.map.getTffpLayer(), false);
+					this.tffpCallout.clear();
+				}
+			}
 		}
 	};
 
