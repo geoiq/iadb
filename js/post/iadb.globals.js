@@ -78,7 +78,8 @@
 			"NO VISUALIZABLE": "1",
 			"Alternative renewable energy": "4",
 			"Civil, birth registry & identification": "34",
-			"Drinking water distribution": "11"
+			"Drinking water distribution": "11",
+			"Other infrastructure": "41",
 
 			//			"Other": "42",
 			//			"Airports and port rehabilitated": "9",//
