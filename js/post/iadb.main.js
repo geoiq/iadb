@@ -323,9 +323,18 @@ var iadb = (function (root, ko, global, $) {
 			this.bottomPanel.updateOutputs();
 
 			var basemaps = this.repo.getBasemaps();
-			for (var i = 0; i < basemaps.length; i++) {
-				var basemap = basemaps[i];
-				this.basemaps.push(basemap);
+			//limit the basemaps for Suriname
+			if (iadb.getCurrentCountry().name == 'Suriname'){
+				var validBasemaps = ["Microsoft Road", "Microsoft Hybrid", "Microsoft Aerial"]
+				for (var i = 0; i < basemaps.length; i++) {
+					if($.inArray(basemaps[i].name,validBasemaps) >= 0){
+						this.basemaps.push(basemaps[i]);
+					}
+				}
+			}else{
+				for (var i = 0; i < basemaps.length; i++) {
+					this.basemaps.push(basemaps[i]);
+				}
 			}
 
 			var countries = this.repo.getCountries();
