@@ -1014,11 +1014,8 @@ var iadb = (function (root, ko, global, $) {
 			if (project_type.name == 'PRIVATE') {
 				if (project_type.picked()){
 					this.map.setVisibility(this.map.getTffpLayer(), true);
-					var items = Enumerable.From(this.map.getTffps()).Select(function (x) { return new main.TffpVm(new iadb.Repo.Tffp(x, this.repo)); }).ToArray();
-					this.tffpCallout.show(items);
 				}else{
 					this.map.setVisibility(this.map.getTffpLayer(), false);
-					this.tffpCallout.clear();
 				}
 			}
 		}
