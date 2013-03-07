@@ -1012,10 +1012,14 @@ var iadb = (function (root, ko, global, $) {
 		//toggle TFFP layer and info window if 'Private' projec type is (un)checked
 		toggle_tffp: function(project_type){
 			if (project_type.name == 'PRIVATE') {
-				if (project_type.picked()){
-					this.map.setVisibility(this.map.getTffpLayer(), true);
-				}else{
-					this.map.setVisibility(this.map.getTffpLayer(), false);
+				try{
+					if (project_type.picked()){
+						this.map.setVisibility(this.map.getTffpLayer(), true);
+					}else{
+						this.map.setVisibility(this.map.getTffpLayer(), false);
+					}
+				}catch(error){
+					console.log('No TFFP layer to be toggle')
 				}
 			}
 		}
