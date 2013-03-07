@@ -7,7 +7,7 @@
 <title>MapAmericas - Mapping Results for Latin America and the Caribbean - Inter-American Development Bank</title>
 <link href="style/style.css" rel="Stylesheet" type="text/css" />
 <script type="text/javascript"
-	src="http://iadb.geoiq.com/javascripts/f1.api.js"></script>
+	src="http://staging.iadb.geoiq.com/javascripts/f1.api.js"></script>
 <script type="text/javascript"
 	src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4ea86ca44f6327e5"></script>
 <script type="text/javascript" src="js/pre/knockout-2.0.0.js"></script>
@@ -72,6 +72,9 @@
 				data-bind="text: sector, attr: {'for': 'proj' + pid}"></label></td>
 				<td><label class="clickable"
 					data-bind="text: priority, attr: {'for': 'proj' + pid}"></label></td>
+				<td>
+					<label class="clickable" data-bind="text: projectType, attr: {'for': 'proj' + pid}"></label>
+				</td>
 		</tr>
 		<!-- /ko -->
 	</tbody>
@@ -117,6 +120,31 @@
 		</tr>
 	</thead>
 	<tbody data-bind="template:{name:'sectorMenuItem',foreach: sectors}">
+	</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="plate on-stripe" id="projectTypes">
+<div class="content" style="padding-right: 20px">
+<div>
+<table>
+	<thead>
+		<tr>
+			<td colspan=2><input type="checkbox"
+				data-bind="checked: allProjectTypes" id="allProjectTypes" /> <label
+				class="clickable" for="allProjectTypes"
+				data-bind="text: $root.lang.selectAll"> <script
+				type="text/javascript">                  iadb.write(lang, 'selectAll');</script>
+			</label></td>
+		</tr>
+		<tr height="7px">
+			<td colspan=2>
+			<div class="delimiter"></div>
+			</td>
+		</tr>
+	</thead>
+	<tbody data-bind="template:{name:'projectTypeMenuItem',foreach: projectTypes}">
 	</tbody>
 </table>
 </div>
@@ -232,7 +260,19 @@
 <div class="pin">
 <div></div>
 </div>
-</a> <a class="tight"
+</a>
+	<a class="tight"
+		data-bind="css:{active: areProjectTypesActive }, event:{mouseover:function(){$data.bottomPanel.showSectors();},mouseout:function(){if ($data.pickedProject()!=null){$data.bottomPanel.showProject();}}},menu: {id: 'projectTypes', offset: 0}, click: unpickProject">
+		<span data-bind="text: $root.lang.projectTypes">
+			<script	type="text/javascript">
+				iadb.write(lang, 'projectTypes');
+			</script>
+		</span>
+		<div class="pin">
+			<div></div>
+		</div>
+	</a>
+ <a class="tight"
 	data-bind="css:{active: areSectorsActive }, event:{mouseover:function(){$data.bottomPanel.showSectors()},mouseout:function(){if ($data.pickedProject()!=null){$data.bottomPanel.showProject();}}},menu: {id: 'sectors', offset: -20}, click: unpickSector">
 <span data-bind="text: $root.lang.sectors"> <script
 	type="text/javascript">            iadb.write(lang, 'sectors');</script>
@@ -260,7 +300,7 @@
 <div class="pin">
 <div></div>
 </div>
-</a> <a class="tight"
+</a> <a class="tight" style="display:none;"
 	data-bind="menu: {id: 'layers', attachment:'anchorright'}"> <span
 	data-bind="text: $root.lang.dataLayers"> <script
 	type="text/javascript">            iadb.write(lang, 'dataLayers');</script>
@@ -447,6 +487,55 @@
 <!-- /ko --></div>
 <!-- /ko --></div>
 <!-- /ko -->
+<!-- ko with: iicCallout -->
+<div id="iicCallout" class="middlemost" data-bind="css:{'lang-en':iadb.getCurrentLanguage()=='en',
+													'lang-es':iadb.getCurrentLanguage()=='es',
+													'lang-fr':iadb.getCurrentLanguage()=='fr',
+													'lang-pt':iadb.getCurrentLanguage()=='pt'},if:current,fadeVisible:visible">
+	<div class="navigation corners">
+		<div style="float: left; margin-left: 30px;">
+			<a style="padding-top: 10px;" id="prev" href="#" data-bind="click:prev" title="Previous">&nbsp;</a>
+		</div>
+		<div style="float: left;">
+			<span data-bind="text:$root.lang.showingResults1"></span> &nbsp;<span data-bind="text: ordinal"></span>&nbsp;<span data-bind="text:$root.lang.showingResults2"></span>&nbsp;<span data-bind="text: count"></span>&nbsp;<span data-bind="text:$root.lang.showingResults3"></span>
+		</div>
+		<div style="float: left; width: 20px">
+			<a style="padding-top: 10px;" id="next" href="#" data-bind="click:next" title="Next">&nbsp;</a>
+		</div>
+		<div class="middle close clickable" data-bind="click: clear">
+			<img src="/images/overlay/close.png" />
+		</div>
+	</div>
+	<!-- ko with: current -->
+		<div class="inner">
+			<div style="padding: 5px 0px; border: dotted 1px gray; border-width: 1px 0px;">
+				<h1 data-bind="text: title"></h1>
+				<div class="clear"></div>
+			</div>
+			<div data-bind="html: description" style="padding-bottom: 5px; overflow-y: auto; overflow-x: hidden;"></div>
+		</div>
+	<!-- /ko -->
+</div>
+<!-- /ko -->
+<!-- ko with: tffpCallout -->
+<div id="tffpCallout" class="middlemost" data-bind="css:{'lang-en':iadb.getCurrentLanguage()=='en',
+													'lang-es':iadb.getCurrentLanguage()=='es',
+													'lang-fr':iadb.getCurrentLanguage()=='fr',
+													'lang-pt':iadb.getCurrentLanguage()=='pt'},if:current,fadeVisible:visible">
+	<div class="navigation corners">
+		<div class="middle tffp-close clickable" data-bind="click: clear">
+			<img src="/images/overlay/close.png" />
+		</div>
+	</div>
+	<!-- ko with: current -->
+		<div class="inner">
+			<!-- ko if: imageUrl -->
+				<img class="right" data-bind="attr: {src: imageUrl}" />
+			<!-- /ko -->
+		</div>
+	<!-- /ko -->
+</div>
+<!-- /ko -->
 <div id="popup" class="topmost"
 	data-bind="template: {name: 'popupTemplate', data: popup}, display: popup.visible "></div>
 <script type="text/html" id="popupTemplate">
@@ -514,6 +603,13 @@
     </td>
     </tr>
   </script>
+<script id="projectTypeMenuItem" type="text/html">
+    <tr><td>
+			<input type="checkbox" data-bind="checked: picked, attr: {id: 'ptype' + id}" />
+			<label class="clickable" data-bind="text: eval ('$root.lang.' + name), attr: {'for': 'ptype' + id}"></label>
+    </td><td>
+	</td></tr>
+  </script>
 <script id="sectorMenuItem" type="text/html">
     <tr><td>
 			<input type="checkbox" data-bind="checked: picked, attr: {id: id}" />
@@ -554,13 +650,23 @@
 		</div>
 		<div class="clear"></div>
   </script>
+<script type="text/html" id="projectTypesSummaryTemplate">
+		<div class="tight" data-bind="text: $root.lang.projectTypes"></div>
+		<div class="tight" id="results-summary">
+			<div class="projectTypes">
+        <!-- ko foreach: projectTypes -->
+				  <label data-bind="text: count"></label>
+				<!-- /ko -->
+			</div>
+		</div>
+		<div class="clear"></div>
+  </script>
 <script type="text/html" id="prioritiesSummaryTemplate">
 		<div class="tight" data-bind="text: $root.lang.priorities"></div>
 		<div class="tight" id="results-summary">
 			<div class="priorities">
         <!-- ko foreach: priorities -->
 				  <label data-bind="text: count"></label>
-				  <img data-bind="attr: {src: imageurl, title: name}" />
 				<!-- /ko -->
 			</div>
 		</div>
@@ -604,7 +710,7 @@
     <!-- ko foreach: layers -->
     <!-- ko if: picked() -->
     <li style="padding-top:10px;height:20px;">
-    <!-- ko if: $data.name!="Infant Mortality" && $data.name!="Haiti 2003 Population Density" && $data.name!="Aggregation of Latest Collapsed Buildings in Haiti" -->
+    <!-- ko if: $data.name!="Infant Mortality" && $data.name!="Haiti 2003 Population Density" && $data.name!="Aggregation of Latest Collapsed Buildings in Haiti" && $data.name!="TFFP"-->
         <img width="15px" data-bind="attr:{src:imageurl}"/>
     <!-- /ko -->
         <label style="font-size:15px" data-bind="text: name"/>
@@ -823,8 +929,9 @@ lower than 10.1 required for this application.<br />
   }
 
   function onMapInitialized(mapLoadingStatus) {
-    if (!mapLoadingStatus || !this.f1 || !this.f1.layers) debugger;
-    var layers = this.f1.layers;
+    //if (!mapLoadingStatus || !this.f1 || !this.f1.layers) debugger;
+    //var layers = this.f1.layers;
+    var layers = F1.Maker.current_map.layers;
     mapLoadingStatus.layersTotal = layers.length;
     for (var i = 0; i < layers.length; i++) {
       layers[i].visible = false;
@@ -961,6 +1068,8 @@ lower than 10.1 required for this application.<br />
   function isLinesLayer(layer) { return layer.title.toString().toLowerCase() == "lines"; }
   function isProjectLayer(layer) { return layer.title.toLowerCase() == "projects"; }
   function isResultLayer(layer) { return layer.title.toString().toLowerCase() == "outputs"; }
+  function isIicLayer(layer) { return layer.title.toString().toLowerCase() == "iic"; }
+  function isTffpLayer(layer) { return layer.title.toString().toLowerCase() == "tffp"; }
   function startApp() {
     // this == mapSignals
     window.console.log('application is about to start');
@@ -971,15 +1080,17 @@ lower than 10.1 required for this application.<br />
 
     jQuery(window).resize(this.resized.dispatch.bind(this.resized));
 
-    var map = new iadb.Map(this.f1, { isLinesLayer: isLinesLayer, isProjectLayer: isProjectLayer, isResultLayer: isResultLayer }, this);
+    var map = new iadb.Map(this.f1, { isLinesLayer: isLinesLayer, isProjectLayer: isProjectLayer, isResultLayer: isResultLayer, isIicLayer: isIicLayer, isTffpLayer: isTffpLayer}, this);
     //map.replaceFeatures();
     var repo = new iadb.Repo();
     repo.initialize(map, iadb.Map.basemaps, iadb.Country.countries);
 
     var callout = new iadb.Callout([], jQuery("#callout"));
+    var iicCallout = new iadb.IicCallout([], jQuery("#iicCallout"));
+    var tffpCallout = new iadb.TffpCallout([], jQuery("#tffpCallout"));
     var layerCallout = new iadb.LayoutCallout([], jQuery("#layerCallout"));
     var projectPicker = new iadb.ProjectPicker([]);
-    this.vm = new iadb.Main.Vm(repo, map, callout, layerCallout, projectPicker, lang);
+    this.vm = new iadb.Main.Vm(repo, map, callout, layerCallout, projectPicker, lang, iicCallout, tffpCallout);
     this.vm.initialize();
     ko.applyBindings(this.vm);
     //map.setup(repo.getSectors());

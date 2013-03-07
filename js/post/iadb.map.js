@@ -49,6 +49,15 @@
         getProjectLayer: function () {
         	return this.getLayer(this.mapOptions.isProjectLayer);
         },
+        getIics: function () {
+            return this.f1.getFeatures(this.getIicLayer().guid);
+        },
+        getIicLayer: function () {
+        	return this.getLayer(this.mapOptions.isIicLayer);
+        },
+        getTffpLayer: function () {
+        	return this.getLayer(this.mapOptions.isTffpLayer);
+        },
         getResults: function () {
             return this.f1.getFeatures(this.getResultLayer().guid);
         },
@@ -109,6 +118,7 @@
             outputfeatures = Enumerable.From(outputfeatures).Join(projectFeatures, "x=>x['project number']", "y=>y.pronumber", function (inner, outer) {
                 var sectorName = outer.prosector;
                 var priorityName = outer.priority;
+                var projectTypeName = outer.nsgtype;
                 var category = inner['category'] || "Other";
                 inner["custom category"] = sectorName + "-" + category;
                 //inner.rf = id++;
