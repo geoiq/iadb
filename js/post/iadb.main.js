@@ -532,19 +532,7 @@ var iadb = (function (root, ko, global, $) {
 			else {
 				this.mainSignals.filterProjectTypes.dispatch(Enumerable.From(projectTypes).Where("$.picked()").Select("$.id").ToArray().join(';'));
 			}
-			if(filter.length == 0)
-			{
-				this.resetOutput(true);
-				//this.resetSector(true);
-				//this.resetPriority(false);
-				this.resetProject();
-				map.removeFilters(projectLayer);
-				this.pickedProject(null);
-			}
-			else
-			{
-				map.addFilter(projectLayer, filter);
-			}
+			map.addFilter(projectLayer, filter);
 			this.bottomPanel.updateProjectTypes();
 			this.bottomPanel.showProjectTypes();
 		},

@@ -497,11 +497,7 @@
 			<a style="padding-top: 10px;" id="prev" href="#" data-bind="click:prev" title="Previous">&nbsp;</a>
 		</div>
 		<div style="float: left;">
-			<span data-bind="text:$root.lang.showingResults1"></span> &nbsp;
-			<span data-bind="text: ordinal"></span>&nbsp;
-			<span data-bind="text:$root.lang.showingResults2"></span>&nbsp;
-			<span data-bind="text: count"></span>&nbsp;
-			<span data-bind="text:$root.lang.showingResults3"></span>
+			<span data-bind="text:$root.lang.showingResults1"></span> &nbsp;<span data-bind="text: ordinal"></span>&nbsp;<span data-bind="text:$root.lang.showingResults2"></span>&nbsp;<span data-bind="text: count"></span>&nbsp;<span data-bind="text:$root.lang.showingResults3"></span>
 		</div>
 		<div style="float: left; width: 20px">
 			<a style="padding-top: 10px;" id="next" href="#" data-bind="click:next" title="Next">&nbsp;</a>
@@ -526,6 +522,11 @@
 													'lang-es':iadb.getCurrentLanguage()=='es',
 													'lang-fr':iadb.getCurrentLanguage()=='fr',
 													'lang-pt':iadb.getCurrentLanguage()=='pt'},if:current,fadeVisible:visible">
+	<div class="navigation corners">
+		<div class="middle tffp-close clickable" data-bind="click: clear">
+			<img src="/images/overlay/close.png" />
+		</div>
+	</div>
 	<!-- ko with: current -->
 		<div class="inner">
 			<!-- ko if: imageUrl -->
