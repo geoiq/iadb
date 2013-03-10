@@ -22,8 +22,8 @@
 			var hasher = this.hasher;
 
 			crossroads.addRoute('').matched.add(function () { this.dispatch(this.language, this.country, this.zoom, this.centerLat, this.centerLon, this.basemap, vm.unpickProject, vm) }, this)
-			crossroads.addRoute('iadb/{language}/{country}/').matched.add(function (language, country) { this.dispatch(language, country, this.zoom, this.centerLat, this.centerLon, this.basemap, vm.unpickProject, vm) }, this);
-			crossroads.addRoute('iadb/{language}/{country}/{zoom}/{centerLat}/{centerLon}/{basemap}').matched.add(function (language, country, zoom, centerLat, centerLon, basemap) { this.dispatch(language, country, zoom, centerLat, centerLon, basemap, vm.unpickProject, vm) }, this)
+			crossroads.addRoute('iadb/{language}/{country}/').matched.add(function (language, country) { this.dispatch(language, country, this.zoom, this.centerLat, this.centerLon, this.basemap, vm.unpickProjectType, vm) }, this);
+			crossroads.addRoute('iadb/{language}/{country}/{zoom}/{centerLat}/{centerLon}/{basemap}').matched.add(function (language, country, zoom, centerLat, centerLon, basemap) { this.dispatch(language, country, zoom, centerLat, centerLon, basemap, vm.unpickProjectType, vm) }, this)
 			crossroads.addRoute('iadb/{language}/{country}/{zoom}/{centerLat}/{centerLon}/{basemap}/project/{projectId}').matched.add(function (language, country, zoom, centerLat, centerLon, basemap, projectId) { this.dispatch(language, country, zoom, centerLat, centerLon, basemap, vm.pickProject, vm, projectId) }, this);
 			crossroads.addRoute('iadb/{language}/{country}/{zoom}/{centerLat}/{centerLon}/{basemap}/result/{resultId}').matched.add(function (language, country, zoom, centerLat, centerLon, basemap, resultId) { this.dispatch(language, country, zoom, centerLat, centerLon, basemap, vm.pickResult, vm, resultId) }, this);
 			crossroads.addRoute('iadb/{language}/{country}/{zoom}/{centerLat}/{centerLon}/{basemap}/all-projects').matched.add(function (language, country, zoom, centerLat, centerLon, basemap) { this.dispatch(language, country, zoom, centerLat, centerLon, basemap, vm.unpickProject, vm) }, this);

@@ -55,6 +55,9 @@
         getIicLayer: function () {
         	return this.getLayer(this.mapOptions.isIicLayer);
         },
+        getTffpLayer: function () {
+        	return this.getLayer(this.mapOptions.isTffpLayer);
+        },
         getResults: function () {
             return this.f1.getFeatures(this.getResultLayer().guid);
         },
