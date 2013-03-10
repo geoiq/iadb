@@ -929,12 +929,16 @@ lower than 10.1 required for this application.<br />
   }
 
   function onMapInitialized(mapLoadingStatus) {
-    if (!mapLoadingStatus || !this.f1 || !this.f1.layers) debugger;
-    var layers = this.f1.layers;
-    mapLoadingStatus.layersTotal = layers.length;
-    for (var i = 0; i < layers.length; i++) {
-      layers[i].visible = false;
-    }
+      if (!mapLoadingStatus || !this.f1 || !this.f1.layers) {
+          this.f1.build_layers();
+      }
+      else {
+          var layers = this.f1.layers;
+          mapLoadingStatus.layersTotal = layers.length;
+          for (var i = 0; i < layers.length; i++) {
+              layers[i].visible = false;
+          }
+      }
     loadScripts(mapLoadingStatus);
   }
 
