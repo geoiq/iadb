@@ -80,6 +80,8 @@
 			"Civil, birth registry & identification": "34",
 			"Drinking water distribution": "11",
 			"Other infrastructure": "41",
+			"Rural Potable water": "49",
+			"Urban Sanitation": "52"
 
 			//			"Other": "42",
 			//			"Airports and port rehabilitated": "9",//
