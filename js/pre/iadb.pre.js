@@ -630,11 +630,11 @@
 		{ "name": "Trinidad and Tobago", abbr: "TT", maps: { "en": 177, "es": 178, "pt": 180, "fr": 179 } },
 		{ "name": "Suriname", abbr: "SU", maps: { "en": 181, "es": 182, "pt": 184, "fr": 183} },
 		{ "name": "Paraguay", abbr: "PR", maps: { "en": 185, "es": 186, "pt": 188, "fr": 187 } },
-		{ "name": "Panama", abbr: "PN", maps: { "en": 189, "es": 190, "pt": 192, "fr": 191 } },
+		{ "name": "Panama", abbr: "PN", maps: { "en": 295, "es": 296, "pt": 298, "fr": 297 } },
 		{ "name": "Peru", abbr: "PE", maps: { "en": 193, "es": 194, "pt": 196, "fr": 195 } },              
 		{ "name": "Mexico", abbr: "ME", maps: { "en": 197, "es": 198, "pt": 200, "fr": 199 } },
 		{ "name": "Jamaica", abbr: "JA", maps: { "en": 201 , "es": 202, "pt": 204 , "fr": 203 } },
-		{ "name": "Brazil", abbr: "BR", maps: { "en": 205 , "es": 206, "pt": 208 , "fr": 207 } },
+		{ "name": "Brazil", abbr: "BR", maps: { "en": 299 , "es": 300, "pt": 302 , "fr": 301 } },
 		{ "name": "Chile", abbr: "CH", maps: { "en": 209, "es": 210 , "pt": 212, "fr": 211 } },
 		{ "name": "Colombia", abbr: "CO", maps: { "en": 213 , "es": 214 , "pt": 216, "fr": 215 } },
 		{ "name": "Costa Rica", abbr: "CR", maps: { "en": 217 , "es": 218, "pt": 220 , "fr": 219 } },
@@ -642,8 +642,8 @@
 		{ "name": "Ecuador", abbr: "EC", maps: { "en": 225 , "es": 226 , "pt": 228 , "fr": 227 } },
 		{ "name": "Belize", abbr: "BL", maps: { "en": 229 , "es": 230 , "pt": 232, "fr": 231 } },
 		{ "name": "Barbados", abbr: "BA", maps: { "en": 233 , "es": 234 , "pt": 236 , "fr": 235 } },
-		{ "name": "El Salvador", abbr: "ES", maps: { "en": 237 , "es": 238 , "pt": 240 , "fr": 239 } },
-		{ "name": "Guatemala", abbr: "GU", maps: { "en": 241, "es": 242 , "pt": 244 , "fr": 243 } }
+		{ "name": "El Salvador", abbr: "ES", maps: { "en": 303 , "es": 304 , "pt": 306 , "fr": 305 } },
+		{ "name": "Guatemala", abbr: "GU", maps: { "en": 307, "es": 308 , "pt": 310 , "fr": 309 } }
 		],
 		getMapId: function () {
 			var currentCountryName = ns.getCurrentCountry().name.toLowerCase();
