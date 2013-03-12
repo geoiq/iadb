@@ -81,7 +81,11 @@
 			"Drinking water distribution": "11",
 			"Other infrastructure": "41",
 			"Rural Potable water": "49",
-			"Urban Sanitation": "52"
+			"Urban Sanitation": "52",
+			"Urban Potable water": "12",
+			"Disaster prevention": "38",
+			"Irrigation": "40",
+			"Rural Sanitation": "14"
 
 			//			"Other": "42",
 			//			"Airports and port rehabilitated": "9",//
