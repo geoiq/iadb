@@ -824,10 +824,10 @@ lower than 10.1 required for this application.<br />
 
   function onMapInitialized(mapLoadingStatus) {
       if (!mapLoadingStatus || !this.f1 || !this.f1.layers) {
-          this.f1.build_layers();
+          F1.Maker.current_map.build_layers();
       }
       else {
-          var layers = this.f1.layers;
+          var layers = F1.Maker.current_map.layers;
           mapLoadingStatus.layersTotal = layers.length;
           for (var i = 0; i < layers.length; i++) {
               layers[i].visible = false;
