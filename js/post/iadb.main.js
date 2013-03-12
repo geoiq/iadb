@@ -323,9 +323,18 @@ var iadb = (function (root, ko, global, $) {
 			this.bottomPanel.updateOutputs();
 
 			var basemaps = this.repo.getBasemaps();
-			for (var i = 0; i < basemaps.length; i++) {
-				var basemap = basemaps[i];
-				this.basemaps.push(basemap);
+			//limit the basemaps for Suriname
+			if (iadb.getCurrentCountry().name == 'Suriname'){
+				var validBasemaps = ["Microsoft Road", "Microsoft Hybrid", "Microsoft Aerial"]
+				for (var i = 0; i < basemaps.length; i++) {
+					if($.inArray(basemaps[i].name,validBasemaps) >= 0){
+						this.basemaps.push(basemaps[i]);
+					}
+				}
+			}else{
+				for (var i = 0; i < basemaps.length; i++) {
+					this.basemaps.push(basemaps[i]);
+				}
 			}
 
 			var countries = this.repo.getCountries();
@@ -474,7 +483,7 @@ var iadb = (function (root, ko, global, $) {
 			this.resetOutput(false);
 			//this.resetSector(true);
 			this.resetPriority(false);
-			this.resetProjectType(false);
+			this.resetProjectType(true);
 			this.resetProject();
 			//map.removeFilters(projectLayer);
 			this.pickedProject(null);
@@ -543,6 +552,7 @@ var iadb = (function (root, ko, global, $) {
 				for(var i = 0; i < projectTypes.length; i++)
 				{
 					var projectType = projectTypes[i];
+					this.toggle_tffp(projectType);
 					filter.push("$[nsgtype] == '" + projectType.name + "'")
 				}
 			}
@@ -550,6 +560,7 @@ var iadb = (function (root, ko, global, $) {
 			{
 				for (var i = 0; i < projectTypes.length; i++) {
 					var projectType = projectTypes[i];
+					this.toggle_tffp(projectType);
 					if (!projectType.picked()) continue;
 					filter.push("$[nsgtype] == '" + projectType.name + "'");
 				}
@@ -638,7 +649,7 @@ var iadb = (function (root, ko, global, $) {
 			//map.removeFilters(resultLayer);
 			this.resetSector(false);
 			this.resetProject();
-
+			this.resetProjectType(true);
 			// changing url for result filters           
 			if (this.allOutputs()) {
 				this.mainSignals.outputUnpicked.dispatch();
@@ -857,22 +868,27 @@ var iadb = (function (root, ko, global, $) {
 		unpickProjectType: function () {
 			console.log('unpickProjectType');
 			this.resetMapToDefaults();
-			this.callout.clear();
 			this.iicCallout.clear();
 			this.tffpCallout.clear();
+			this.callout.clear();
 			this.layerCallout.clear();
+			this.search("");
 			var map = this.map;
 			var projectLayer = map.getProjectLayer();
 			var resultLayer = map.getResultLayer();
-			var linesLayer = map.getLinesLayer()
-			map.setVisibility(projectLayer, true);
+			var linesLayer = map.getLinesLayer();
+			
+
 			map.setVisibility(linesLayer, false);
+			map.setVisibility(projectLayer, true);
 			map.setVisibility(resultLayer, false);
 			this.pickedProjectDetailsVisible(false);
-			this.pickedProject(null);
+			this.resetProject();
 			this.resetSector(false);
-			this.resetProjectType(true);
+			this.resetPriority(true);
+			this.resetProjectType(false);
 			this.resetOutput(false);
+			this.pickedProject(null);
 			this.filterProjectTypes();
 			//map.removeFilters(projectLayer);
 			this.bottomPanel.updateProjectTypes();
@@ -914,6 +930,7 @@ var iadb = (function (root, ko, global, $) {
 			for (var i = 0; i < projectTypes.length; i++) {
 				projectTypes[i].picked(!state);
 				console.log(state);
+				this.toggle_tffp(projectTypes[i]);//toggle TFFP when anyone reset Project type
 			}
 			this.projectTypeSetChanged.active = true;
 			console.log('end resetProjectType');
@@ -999,6 +1016,21 @@ var iadb = (function (root, ko, global, $) {
 		},
 		hideLegend: function () {
 			this.legendVisible(false);
+		},
+	
+		//toggle TFFP layer and info window if 'Private' projec type is (un)checked
+		toggle_tffp: function(project_type){
+			if (project_type.name == 'PRIVATE') {
+				try{
+					if (project_type.picked()){
+						this.map.setVisibility(this.map.getTffpLayer(), true);
+					}else{
+						this.map.setVisibility(this.map.getTffpLayer(), false);
+					}
+				}catch(error){
+					console.log('No TFFP layer to be toggle')
+				}
+			}
 		}
 	};
 
