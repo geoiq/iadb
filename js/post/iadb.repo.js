@@ -21,7 +21,8 @@
 					id: x.pronumber,
 					name: x.proname,
 					sector: x.prosector,
-					priority: x.priority,
+					priority: (x.target_cc == '1' ? 'CC' : null),
+					projectType: x.nsgtype,
 					description: x.prodescription,
 					lat: x.latitude,
 					"long": x.longitude,
@@ -43,7 +44,16 @@
 				return x.Key == "" ? "zzz" : x.Key
 			}).Select(function (x) {
 				var count = Enumerable.From(projects).Where(function (y) { return y.priority == x.Key }).Count();
-				return { name: x.Key, id: x.Value.id, count: count, imageurl: encodeURI(iadb.globals.imageurl + "/images/icons/priorities/" + x.Value.filename + ".png") };
+				return { name: x.Key, id: x.Value.id, count: count};
+			}).Where("$.count>0").ToArray();
+			
+			// create projectTypes array
+			var projectTypeIndex = 0;
+			var projectTypes = this.projectTypes = Enumerable.From(iadb.globals.projectTypes).OrderBy(function (x) {
+				return x.Value['id'] == null ? 0 : x.Value['id']
+			}).Select(function (x) {
+				var count = Enumerable.From(projects).Where(function (y) { return y.projectType == x.Key }).Count();
+				return { name: x.Key, id: x.Value.id, count: count };
 			}).Where("$.count>0").ToArray();
 
 
@@ -73,6 +83,7 @@
 			this.projects = null;
 			this.sectors = null;
 			this.priorities = null;
+			this.projectTypes = null;
 			this.outputs = null;
 			this.results = null;
 			this.basemaps = null;
@@ -96,11 +107,17 @@
 		getPriority: function (priority) {
 			return Enumerable.From(this.getPriorities()).Where(function (x) { return x.name == priority }).FirstOrDefault(null);
 		},
+		getProjectType: function (projectType) {
+			return Enumerable.From(this.getProjectTypes()).Where(function (x) { return x.name == projectType }).FirstOrDefault(null);
+		},
 		getSectors: function () {
 			return this.sectors || [];
 		},
 		getPriorities: function () {
 			return this.priorities || [];
+		},
+		getProjectTypes: function () {
+			return this.projectTypes || [];
 		},
 		getOutput: function (sector) {
 			return Enumerable.From(this.getOutputs()).Where(function (x) { return x.name == sector }).FirstOrDefault(null);
@@ -145,6 +162,22 @@
 		this.imageUrl = data['photo filename'] == null ? null : encodeURI('http://services.iadb.org/wmsfiles/images/datavis/thumbs/' + data['photo filename']);
 	}).prototype = {
 	};
+
+	(iadb.Repo.Iic = function (data, repo) {
+		this.title = data.iicname;
+		this.description = data.iicdescription+'<br/><br/>'+data.iicnumber;
+		this.lat = data.latitude;
+		this['long'] = data.longitude;
+	}).prototype = {
+	};
+
+	(iadb.Repo.Tffp = function (data, repo) {
+		this.tffpphoto = data.tffpphoto;
+		this.lat = data.latitude;
+		this['long'] = data.longitude;
+	}).prototype = {
+	};
+
 	return iadb;
 
 } (iadb || {}));

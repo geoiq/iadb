@@ -6,9 +6,12 @@
 	function priority(filename, color, id) {
 		return { color: color, filename: filename, id: id };
 	};
+	function projectType(filename, color, id) {
+		return { color: color, filename: filename, id: id };
+	};
 	iadb.globals = {
-		url: "http://iadb.geoiq.com",
-		imageurl: "http://portal.iadb.geoiq.com",
+		url: "http://staging.iadb.geoiq.com",
+		imageurl: "http://staging.portal.iadb.geoiq.com",
 		sectors: {
 			"AG": new sector("AG", 0x296e28, 1),
 			"AS": new sector("AS", 0x8cf4c5, 2),
@@ -31,6 +34,12 @@
 		},
 		priorities: {
 			"CC": new priority("CC", 0x89be89 , 1)
+		},
+		projectTypes: {
+			"PUBLIC": new projectType("PUBLIC", 0xffffff , 1),
+			"PRIVATE": new projectType("PRIVATE", 0xffffcf , 2),
+			"MIF": new projectType("MIF", 0xfffcff , 3),
+			"IIC": new projectType("IIC", 0xffcfff , 4)
 		},
 		outputs: {
 			"Other": "1",
@@ -69,7 +78,14 @@
 			"NO VISUALIZABLE": "1",
 			"Alternative renewable energy": "4",
 			"Civil, birth registry & identification": "34",
-			"Drinking water distribution": "11"
+			"Drinking water distribution": "11",
+			"Other infrastructure": "41",
+			"Rural Potable water": "49",
+			"Urban Sanitation": "52",
+			"Urban Potable water": "12",
+			"Disaster prevention": "38",
+			"Irrigation": "40",
+			"Rural Sanitation": "14"
 
 			//			"Other": "42",
 			//			"Airports and port rehabilitated": "9",//
@@ -113,6 +129,15 @@
 			}).ToArray();
 			return returnObject;
 		},
+		getOutputByProjectTypesIcons: function () {
+			var returnObject = {};
+			var outputs = Enumerable.From(this.outputs).Join(this.projectTypes, "x=>true", "x=>true", function (outer, inner) {
+				var filename = iadb.globals.projectTypes[inner.Key].filename;
+				returnObject[inner.Key + "-" + outer.Key] = encodeURI(iadb.globals.imageurl + "/images/icons/projectTypes/" + filename + "_" + outer.Value + ".png");
+				return null;
+			}).ToArray();
+			return returnObject;
+		},
 		getOutputIcons: function () {
 			var returnObject = {};
 			// Using transportation for generic images
@@ -129,6 +154,9 @@
 			return "";
 		},
 		getPriorityIcon: function (priority) {
+			return "";
+		},
+		getProjectTypeIcon: function (projectType) {
 			return "";
 		},
 		getResultIcon: function (sector, result) {
