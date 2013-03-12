@@ -73,6 +73,36 @@
         retValue.preProcessItem = function (item) {
             item.properties = [];
             for (var property in item) {
+                if (typeof (item[property]) != "object" && property != 'id' && property != 'layer' && property != 'geometry' && property != 'latitude' && property != 'longitude') {
+                    item.properties.push({ name: property, value: item[property].toString() ? item[property].toString() : " " });
+                }
+            }
+            return item;
+        };
+        return retValue;
+    });
+    
+    (iadb['IicCallout'] = function (items, element) {
+        // add html to items        
+        var retValue = new iadb['CalloutBase'](items, element);
+        retValue.preProcessItem = function (item) {
+            item.properties = [];
+            for (var property in item) {
+                if (typeof (item[property]) != "object") {
+                    item.properties.push({ name: property, value: item[property].toString() ? item[property].toString() : " " });
+                }
+            }
+            return item;
+        };
+        return retValue;
+    });
+
+    (iadb['TffpCallout'] = function (items, element) {
+        // add html to items
+        var retValue = new iadb['CalloutBase'](items, element);
+        retValue.preProcessItem = function (item) {
+            item.properties = [];
+            for (var property in item) {
                 if (typeof (item[property]) != "object") {
                     item.properties.push({ name: property, value: item[property].toString() ? item[property].toString() : " " });
                 }
