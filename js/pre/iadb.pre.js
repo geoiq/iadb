@@ -1,4 +1,4 @@
-﻿var iadb = (function (ns, ko, window) {
+var iadb = (function (ns, ko, window) {
 
 
 	var en;
