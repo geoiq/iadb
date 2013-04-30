@@ -1,4 +1,4 @@
-﻿(function (iadb) {
+(function (iadb) {
 	// sector constructor
 	function sector(filename, color, id) {
 		return { color: color, filename: filename, id: id };
@@ -42,7 +42,7 @@
 			"IIC": new projectType("IIC", 0xffcfff , 4)
 		},
 		outputs: {
-			"Other": "1",
+		/*	"Other": "1",
 			"Energy generation": "1",
 			"Energy distribution": "2",
 			"Energy transmission": "3",
@@ -85,31 +85,180 @@
 			"Urban Potable water": "12",
 			"Disaster prevention": "38",
 			"Irrigation": "40",
-			"Rural Sanitation": "14"
+			"Rural Sanitation": "14",*/
 
-			//			"Other": "42",
-			//			"Airports and port rehabilitated": "9",//
-			//			"Animals vaccinated": "45",
-			//			"Bridges built or mantained": "8",//
-			//			"Farmers supported": "31",//
-			//			"Natural disaster prevention systems": "31",//
-			//			"Households with new or upgraded dwellings": "18",//
-			//			"Households with new or upgraded water supply": "13",//
-			//			"Water infrastructure": "13",//
-			//			"Irrigation and draining canals": "13",//
-			//			"Strategies, studies, and regulations": "9",
-			//			"Individuals benefited from programs to promote higher labor market productivity": "31",//
-			//			"Power generation, transmission, and distribution infrastructure rehabilitated": "1",//
-			//			"Preventive health campaigns": "8",
-			//			"Public institutions supported": "12",
-			//			"Public officials trained": "31",//
-			//			"Roads built or maintained": "5",//
-			//			"Sanitary solutions/facilities installed": "12",//
-			//			"Sanitation infrastructure": "12",//
-			//			"Schools built or reformed": "29",//
-			//			"Schools equipped with furniture and school materials": "44",
-			//			"Students benefited from education projects": "31",//
-			//			"Teachers trained": "30"//
+		    //english
+		    "Other": "1",
+		    "NO VISUALIZABLE": "1",
+		    "Agricultural support": "24",
+		    "Airports and ports": "9",
+		    "Bridges": "8",
+		    "Citizen security": "33",
+		    "Civil, birth registry & identification": "34",
+		    "Credit financing": "22",
+		    "Direct support to MSME": "23",
+		    "Disaster prevention": "38",
+		    "Educational facilities and equipment": "29",
+		    "Energy distribution": "2",
+		    "Energy generation": "1",
+		    "Energy transmission": "3",
+		    "Environmental management": "27",
+		    "Food safety, animal and plant health": "25",
+		    "Health facilities and equipment": "28",
+		    "Historical, Cultural & Natural Heritage": "20",
+		    "Housing and shelters": "18",
+		    "Infrastructure works": "41",
+		    "Institutional support": "35",
+		    "Irrigation": "40",
+		    "Land demarcation and titling": "32",
+		    "Neighborhood improvement": "19",
+		    "Pluvial drainage": "16",
+		    "Roads and highways": "5",
+		    "Rural Potable water": "49",
+		    "Rural roads": "7",
+		    "Rural Sanitation": "51",
+		    "Solid waste": "17",
+		    "Sustainable tourism": "26",
+		    "Trade Facilitation and logistics": "21",
+		    "Training to direct beneficiaries": "30",
+		    "Urban Potable water": "50",
+		    "Urban Sanitation": "52",
+		    "Urban transport": "6",
+		    "Vulnerable people support": "31",
+		    "Water resources": "13",
+
+            //Spanish
+
+		    "Apoyo a la agricultura": "24",
+		    "Aeropuertos y puertos": "9",
+		    "Puentes": "8",
+		    "Seguridad ciudadana": "33",
+		    "Registro civil e identificación": "34",
+		    "Financiamiento de créditos": "22",
+		    "Apoyo directo a PYMEs": "23",
+		    "Prevención de Desastres": "38",
+		    "Infraestructura y equipamiento educativo": "29",
+		    "Distribución de energía": "2",
+		    "Generación eléctrica": "1",
+		    "Transmisión eléctrica": "3",
+		    "Gestión ambiental": "27",
+		    "Seguridad aliment., salud animal/vegetal": "25",
+		    "Infraestructura y equipamiento de salud": "28",
+		    "Patrimonio histórico, cultural y natural": "20",
+		    "Viviendas y refugios": "18",
+		    "Obras de Infraestructura": "41",
+		    "Apoyo institucional": "35",
+		    "Riego": "40",
+		    "Titulación y saneamiento de tierras": "32",
+		    "Mejoramiento de barrios": "19",
+		    "Drenaje pluvial": "16",
+		    "Caminos y carreteras": "5",
+		    "Agua Potable Rural": "49",
+		    "Caminos rurales": "7",
+		    "Saneamiento rural": "51",
+		    "Residuos sólidos": "17",
+		    "Turismo sostenible": "26",
+		    "Facilitación y logística de intercambios": "21",
+		    "Capacitación a beneficiarios directos": "30",
+		    "Agua potable urbana": "50",
+		    "Saneamiento urbano": "52",
+		    "Transporte urbano": "6",
+		    "Apoyo a grupos vulnerables": "31",
+		    "Recursos hídricos": "13",
+
+		    //French
+
+		    "Soutien à l’Agriculture": "24",
+		    "Aéroports et Ports": "9",
+		    "Ponts": "8",
+		    "Sécurité Citoyenne": "33",
+		    "Enregistrement Civil/Pièces Identificat.": "34",
+		    "Financement de Crédit": "22",
+		    "Support Direct aux MPMEs": "23",
+		    "Prévention de catastrophe": "38",
+		    "Infraestructura y equipamiento educativo": "29",
+		    "Distribution d’Energie": "2",
+		    "Production d’Energie": "1",
+		    "Transmission d’Energie": "3",
+		    "Gestion Environnementale": "27",
+		    "Sécurité Alimen., Santé Animale/Végétale": "25",
+		    "Etablissements et Equipements de Santé": "28",
+		    "Patrimoine Historique, Culturel et Natur": "20",
+		    "Logements et Abris": "18",
+		    "Travaux d’Infrastructure": "41",
+		    "Support Institutionnel": "35",
+		    "Irriguation": "40",
+		    "Délimitation Terres/Titres de Propriété": "32",
+		    "Amélioration des Quartiers": "19",
+		    "Drainage Pluvial": "16",
+		    "Routes et Autoroutes": "5",
+		    "Eau potable rurale": "49",
+		    "Routes Rurales": "7",
+		    "Assainissement rural": "51",
+		    "Déchets Solides": "17",
+		    "Tourisme Durable": "26",
+		    "Facilitation et Logistique des Echanges": "21",
+		    "Formation des Bénéficiaires Directs": "30",
+		    "Eau potable urbaine": "50",
+		    "Assainissement urbain": "52",
+		    "Transport Urbain": "6",
+		    "Soutien aux Personnes Vulnérables": "31",
+		    "Ressources en eau/ hydriques": "13",
+
+		    //Portuguese
+
+		    "O apoio à agricultura": "24",
+		    "Aeroportos e portos": "9",
+		    "Pontes": "8",
+		    "Segurança cidadão": "33",
+		    "Registro civil e identificação": "34",
+		    "Financiamento de crédito": "22",
+		    "Apoio directo às PME": "23",
+		    "Prevenção de Desastre": "38",
+		    "Instalações e equipamentos educativos": "29",
+		    "Distribuição de energia": "2",
+		    "Geração de energia": "1",
+		    "Transmissão de energia": "3",
+		    "Gestão ambiental": "27",
+		    "Segurança aliment., saúde animal/vegetal": "25",
+		    "As unidades de saúde e equipamentos": "28",
+		    "Patrimônio Histórico, Cultural e Natural": "20",
+		    "Habitação e abrigos": "18",
+		    "Obras de infraestrutura": "41",
+		    "O apoio institucional": "35",
+		    "Irrigação": "40",
+		    "Demarcação de terras e titulação": "32",
+		    "Melhoramento do bairro": "19",
+		    "Drenagem pluvial": "16",
+		    "Estradas e rodovias": "5",
+		    "Água potável  rural": "49",
+		    "As estradas rurais": "7",
+		    "Saneamento rural": "51",
+		    "Resíduos sólidos": "17",
+		    "O turismo sustentável": "26",
+		    "Facilitação do comércio e logística or": "21",
+		    "Treinamento para beneficiários diretos": "30",
+		    "Água potável  urbana": "50",
+		    "Saneamento urbano": "52",
+		    "Transporte urbano": "6",
+		    "Apoio as pessoas mais vulneráveis": "31",
+		    "Recursos hídricos": "13",
+
+            //Not Found
+
+	        "Trade Facilitation":"21",
+			"Drinking water production and storage": "10", //*
+			"Drinking water systems": "12",                //*
+			"Water resource management": "13",              //*
+			"Wastewater system": "14",                      //*
+			"Wastewater treatment": "15",                   //*
+			"Solid waste management": "17",                 //*
+			"Alternative renewable energy": "4", //*
+			"Civil, birth registry & identification": "34",
+			"Drinking water distribution": "11",//*
+			"Other infrastructure": "41",
+            "Otro tipo de Infraestructura":"41",  //*
+            "Outras infraestrutura":"41"
 		},
 		getOutputBySectorIcons: function () {
 			var returnObject = {};
