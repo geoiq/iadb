@@ -1187,7 +1187,7 @@ return hasher;
 			"NO VISUALIZABLE": "1",
 			"Alternative renewable energy": "4",
 			"Civil, birth registry & identification": "34",
-			"Drinking water distribution": "11"
+			"Drinking water distribution": "11" ,"Infrastructure works":"35"
 
 			//			"Other": "42",
 			//			"Airports and port rehabilitated": "9",//
