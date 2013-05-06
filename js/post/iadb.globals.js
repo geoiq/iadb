@@ -1,4 +1,5 @@
 (function (iadb) {
+// test to see if editing and committing from Mac will correct encoding issue
 	// sector constructor
 	function sector(filename, color, id) {
 		return { color: color, filename: filename, id: id };
