@@ -1,4 +1,4 @@
-(function (iadb) {
+﻿(function (iadb) {
 	// sector constructor
 	function sector(filename, color, id) {
 		return { color: color, filename: filename, id: id };
