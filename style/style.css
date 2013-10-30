@@ -236,3 +236,13 @@ h1, h2, h3, h4, h5, h6, p { margin: 0px; padding: 0px; }
 #modal table td .content .inner {background-color:#006993;}
 #modal table td .content .inner .text {padding:40px 10px 10px 10px;color:White;text-align:left;}
 #modal table td .content .loading {height:1px;background-image:url(../images/loading-3.gif);}
+
+.break-word {
+    white-space: normal !important;
+    width: 210px;
+    display: inline-block;
+}
+
+.verticalalign {
+    vertical-align:top;
+}
